@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -284,9 +285,9 @@ const googleProvider = new firebase.auth.GoogleAuthProvider();
 const videos = [
  {
   id:"0BXVNT1yxqw",
-  title:"DJ TIKTOK TERBARU 2026 || DJ ADAKAH KENYAMANAN DIHATIMU🎵DJ SALAH APA YANG TAK KUMAAFKAN🎵FULL ALBUM",
-  channel:"Seven Fvnk",
-  category:"Musik",
+  title:"Video Movio 1",
+  channel:"Koleksi Movio",
+  category:"Koleksi",
   duration:"Video",
   color:"#e11d48"
  },
@@ -615,7 +616,7 @@ function playVideo(index){
  document.getElementById("playerDescription").innerHTML=
   "<strong>"+escapeHTML(v.channel)+"</strong>"+
   "<br>Kategori: Koleksi Movio"+
-  "<br><br>Video diputar melalui pemutar YouTube.";
+  "<br><br>Video diputar melalui pemutar Movio.";
 
  document.getElementById("relatedVideos").innerHTML=
   videos.filter(x=>x.id!==v.id).map(x=>`
