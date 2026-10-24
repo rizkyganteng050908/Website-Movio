@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0f0f0f">
-<title>Movio - Watch Your Favorite Videos</title>
+<title>Movio Music - Your Favorite Music Streaming</title>
 
 <style>
 :root{
@@ -14,7 +14,7 @@
   --border:#3f3f3f;
   --text:#f1f1f1;
   --muted:#aaa;
-  --red:#ff0000;
+  --red:#ff0033;
   --blue:#3ea6ff;
 }
 *{box-sizing:border-box}
@@ -32,7 +32,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
 .login-screen{
  position:fixed;inset:0;z-index:1000;display:flex;align-items:center;
  justify-content:center;padding:20px;overflow-y:auto;
- background:radial-gradient(circle at center,#1f1f2e 0%,#0f0f0f 100%)
+ background:radial-gradient(circle at center,#2b1117 0%,#0f0f0f 100%)
 }
 .login-box{
  width:100%;max-width:400px;padding:36px 28px;text-align:center;
@@ -49,8 +49,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
  display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.2s
 }
 .login-btn:hover{background:#333}
-.login-btn.guest{margin-top:10px;background:white;color:black;border:none}
-.login-btn.guest:hover{background:#d9d9d9}
+.login-btn.guest{margin-top:10px;background:var(--red);color:white;border:none}
+.login-btn.guest:hover{background:#d9002a}
 .login-btn:disabled{opacity:.5;cursor:wait}
 .google-icon{font-weight:bold;color:#4285f4}
 #error{color:#ff4e45!important;font-size:12px;margin-top:12px;overflow-wrap:anywhere}
@@ -71,7 +71,7 @@ header{
  flex:1;min-width:0;padding:0 16px;border:1px solid #303030;
  border-radius:40px 0 0 40px;background:#121212;color:white;font-size:15px
 }
-.search input:focus{border-color:#1c62b9;outline:none}
+.search input:focus{border-color:var(--red);outline:none}
 .search button{
  width:64px;border:1px solid #303030;border-left:none;border-radius:0 40px 40px 0;
  background:#222;color:white;font-size:16px
@@ -80,7 +80,7 @@ header{
 
 .profile{
  width:32px;height:32px;border-radius:50%;
- background:#5b21b6;color:white;font-weight:bold;overflow:hidden;
+ background:var(--red);color:white;font-weight:bold;overflow:hidden;
  display:grid;place-items:center;font-size:14px;flex-shrink:0
 }
 .profile img{width:100%;height:100%;object-fit:cover}
@@ -109,8 +109,8 @@ header{
 }
 .categories::-webkit-scrollbar{display:none}
 .category{
- white-space:nowrap;border:none;border-radius:8px;padding:6px 12px;
- background:#272727;color:white;font-size:14px;font-weight:500;transition:0.2s
+ white-space:nowrap;border:none;border-radius:8px;padding:6px 14px;
+ background:#272727;color:white;font-size:13px;font-weight:500;transition:0.2s
 }
 .category:hover{background:#3f3f3f}
 .category.active{background:white;color:#0f0f0f}
@@ -118,7 +118,7 @@ header{
 /* MAIN CONTENT */
 main{margin-left:240px;padding:116px 24px 40px}
 .section-title{font-size:20px;margin:0 0 20px;font-weight:700}
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px 16px}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px 16px}
 .video-card{min-width:0;cursor:pointer;display:flex;flex-direction:column}
 .thumbnail{
  position:relative;aspect-ratio:16/9;overflow:hidden;
@@ -126,7 +126,7 @@ main{margin-left:240px;padding:116px 24px 40px}
 }
 .thumbnail img{width:100%;height:100%;object-fit:cover;transition:transform .2s}
 .video-card:hover .thumbnail img{transform:scale(1.03)}
-.duration{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,0.8);padding:3px 6px;border-radius:4px;font-size:12px;font-weight:500}
+.duration{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,0.85);padding:3px 6px;border-radius:4px;font-size:11px;font-weight:600;color:white}
 .video-info{display:flex;gap:12px;padding-top:12px}
 .avatar{width:36px;height:36px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;font-weight:bold;font-size:14px}
 .video-title{font-size:14px;font-weight:600;line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -147,7 +147,19 @@ main{margin-left:240px;padding:116px 24px 40px}
 .video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
 .player-frame{width:100%;height:100%;border:0}
 
-.player-title{font-size:18px;font-weight:700;line-height:1.4;margin:12px 0 8px}
+/* MUSIC VISUALIZER BAR */
+.visualizer{
+ display:flex;align-items:flex-end;gap:3px;height:24px;padding:4px 12px;
+ background:#141414;border-radius:0 0 12px 12px;margin-bottom:12px;overflow:hidden
+}
+.bar{flex:1;background:var(--red);border-radius:2px 2px 0 0;animation:bounce 1.2s infinite ease-in-out alternate}
+.bar:nth-child(2){animation-delay:.2s;background:#ff3355}
+.bar:nth-child(3){animation-delay:.4s;background:#ff6600}
+.bar:nth-child(4){animation-delay:.1s;background:#ffcc00}
+.bar:nth-child(5){animation-delay:.5s;background:#3ea6ff}
+@keyframes bounce{0%{height:4px}100%{height:20px}}
+
+.player-title{font-size:18px;font-weight:700;line-height:1.4;margin:8px 0}
 .player-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}
 .channel-info{display:flex;align-items:center;gap:12px}
 .channel-name{font-weight:600;font-size:15px}
@@ -166,7 +178,7 @@ main{margin-left:240px;padding:116px 24px 40px}
  border-radius:18px;background:#272727;font-size:13px;font-weight:500;transition:0.2s
 }
 .action-btn:hover{background:#3f3f3f}
-.action-btn.active{background:#3f3f3f;color:var(--blue)}
+.action-btn.active{background:#3f3f3f;color:var(--red)}
 
 /* DESKRIPSI & KOMENTAR */
 .player-description{padding:12px;border-radius:12px;background:#272727;font-size:13px;line-height:1.6;overflow-wrap:anywhere;margin-bottom:24px}
@@ -180,7 +192,7 @@ main{margin-left:240px;padding:116px 24px 40px}
 .comment-input-box textarea:focus{border-bottom-color:white;outline:none}
 .comment-btn-row{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
 .btn-sm{padding:6px 14px;border-radius:16px;font-size:13px;font-weight:500}
-.btn-primary{background:var(--blue);color:black}
+.btn-primary{background:var(--red);color:white}
 
 .comment-list{display:flex;flex-direction:column;gap:16px}
 .comment-item{display:flex;gap:12px}
@@ -216,15 +228,15 @@ body.collapsed .categories{left:72px}
 <!-- HALAMAN LOGIN -->
 <section class="login-screen" id="loginScreen">
  <div class="login-box">
-  <div class="brand"><span class="logo-icon">▶</span><span>movio</span></div>
-  <h1>Welcome to Movio</h1>
-  <p>Temukan video favoritmu, jelajahi hiburan, dan nikmati pengalaman menonton.</p>
+  <div class="brand"><span class="logo-icon">🎵</span><span>movio music</span></div>
+  <h1>Movio Music Streaming</h1>
+  <p>Nikmati lagu-lagu hits, pop akustik, dan musik santai pilihan terbaikmu di sini.</p>
 
   <button class="login-btn" id="googleBtn" onclick="googleLogin()">
-   <span class="google-icon">G</span> Lanjutkan dengan Google
+   <span class="google-icon">G</span> Masuk dengan Google
   </button>
 
-  <button class="login-btn guest" onclick="guestLogin()">👤 Masuk sebagai Guest</button>
+  <button class="login-btn guest" onclick="guestLogin()">🎧 Masuk sebagai Guest</button>
   <p id="error" role="alert"></p>
  </div>
 </section>
@@ -233,11 +245,11 @@ body.collapsed .categories{left:72px}
 <header>
  <div class="header-left">
   <button class="icon-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
-  <a href="#" class="brand" onclick="showHome()"><span class="logo-icon">▶</span><span>movio</span></a>
+  <a href="#" class="brand" onclick="showHome()"><span class="logo-icon">🎵</span><span>movio music</span></a>
  </div>
 
  <form class="search" id="searchForm">
-  <input id="searchInput" type="search" placeholder="Cari video..." aria-label="Cari video">
+  <input id="searchInput" type="search" placeholder="Cari lagu atau artis..." aria-label="Cari lagu">
   <button type="submit" aria-label="Cari">⌕</button>
  </form>
 
@@ -249,46 +261,62 @@ body.collapsed .categories{left:72px}
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
- <div class="nav-item active" onclick="showHome(this)"><span class="nav-icon">⌂</span><span>Beranda</span></div>
- <div class="nav-item" onclick="showHistory(this)"><span class="nav-icon">◷</span><span>Histori</span></div>
+ <div class="nav-item active" onclick="showHome(this)"><span class="nav-icon">🎧</span><span>Jelajah Musik</span></div>
+ <div class="nav-item" onclick="showHistory(this)"><span class="nav-icon">🕒</span><span>Histori Putar</span></div>
  <hr class="nav-divider">
- <div class="nav-heading">Jelajahi</div>
- <div class="nav-item" onclick="filterCategory('Musik')"><span class="nav-icon">♫</span><span>Musik</span></div>
- <div class="nav-item" onclick="filterCategory('Film')"><span class="nav-icon">▣</span><span>Film</span></div>
- <div class="nav-item" onclick="filterCategory('Gaming')"><span class="nav-icon">🎮</span><span>Gaming</span></div>
+ <div class="nav-heading">Genre Musik</div>
+ <div class="nav-item" onclick="filterCategory('Akustik')"><span class="nav-icon">🎸</span><span>Akustik & Tidur</span></div>
+ <div class="nav-item" onclick="filterCategory('Pop 2000an')"><span class="nav-icon">🎶</span><span>Pop 2000an</span></div>
+ <div class="nav-item" onclick="filterCategory('DJ & Remix')"><span class="nav-icon">🎛️</span><span>DJ & Remix TikTok</span></div>
  <hr class="nav-divider">
- <div class="nav-item" onclick="showProfile()"><span class="nav-icon">⚙</span><span>Akun & Setelan</span></div>
+ <div class="nav-item" onclick="showProfile()"><span class="nav-icon">⚙️</span><span>Akun & Setelan</span></div>
 </aside>
 
 <!-- KATEGORI -->
 <nav class="categories" id="categories">
- <button class="category active" onclick="filterCategory('Semua',this)">Semua</button>
- <button class="category" onclick="filterCategory('Koleksi',this)">Video Saya</button>
- <button class="category" onclick="filterCategory('Musik',this)">Musik</button>
- <button class="category" onclick="filterCategory('Film',this)">Film</button>
- <button class="category" onclick="filterCategory('Gaming',this)">Gaming</button>
+ <button class="category active" onclick="filterCategory('Semua',this)">Semua Musik</button>
+ <button class="category" onclick="filterCategory('Koleksi',this)">❤️ Lagu Disimpan</button>
+ <button class="category" onclick="filterCategory('Akustik',this)">🎸 Akustik</button>
+ <button class="category" onclick="filterCategory('Pop 2000an',this)">🎶 Pop 2000an</button>
+ <button class="category" onclick="filterCategory('DJ & Remix',this)">🎛️ DJ & Remix</button>
 </nav>
 
 <main>
  <div id="contentArea">
-  <h2 class="section-title" id="pageTitle">Video pilihanmu</h2>
+  <h2 class="section-title" id="pageTitle">Daftar Musik Pilihan</h2>
   <div class="video-grid" id="videoGrid"></div>
  </div>
 </main>
 
-<!-- PEMUTAR VIDEO -->
+<!-- PEMUTAR MUSIK MODAL -->
 <section class="player-modal" id="playerModal">
  <div class="player-top">
-  <div class="brand"><span class="logo-icon">▶</span><span>movio</span></div>
+  <div class="brand"><span class="logo-icon">🎵</span><span>movio music</span></div>
   <button class="icon-btn" onclick="closePlayer()" aria-label="Tutup">✕</button>
  </div>
  <div class="player-layout">
   <div>
    <div class="video-container" id="videoContainer">
     <iframe class="player-frame" id="videoFrame" src=""
-     title="Pemutar video Movio"
+     title="Pemutar Musik Movio"
      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
      allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+   </div>
+   
+   <!-- VISUALIZER SPEKTRUM AUDIO -->
+   <div class="visualizer">
+    <div class="bar" style="height:12px"></div>
+    <div class="bar" style="height:20px"></div>
+    <div class="bar" style="height:8px"></div>
+    <div class="bar" style="height:18px"></div>
+    <div class="bar" style="height:14px"></div>
+    <div class="bar" style="height:22px"></div>
+    <div class="bar" style="height:10px"></div>
+    <div class="bar" style="height:16px"></div>
+    <div class="bar" style="height:19px"></div>
+    <div class="bar" style="height:13px"></div>
+    <div class="bar" style="height:17px"></div>
+    <div class="bar" style="height:9px"></div>
    </div>
 
    <h2 class="player-title" id="playerTitle"></h2>
@@ -305,7 +333,7 @@ body.collapsed .categories{left:72px}
      <button class="action-btn" id="likeBtn" onclick="toggleLike()">👍 <span id="likeCount">12K</span></button>
      <button class="action-btn" id="dislikeBtn" onclick="toggleDislike()">👎</button>
      <button class="action-btn" onclick="shareVideo()">↪ Bagikan</button>
-     <button class="action-btn" id="saveBtn" onclick="toggleSave()">💾 Simpan</button>
+     <button class="action-btn" id="saveBtn" onclick="toggleSave()">❤️ Simpan</button>
     </div>
    </div>
 
@@ -313,11 +341,11 @@ body.collapsed .categories{left:72px}
 
    <!-- KOMENTAR -->
    <div class="comments-section">
-    <div class="comments-header"><span id="commentCount">3</span> Komentar</div>
+    <div class="comments-header"><span id="commentCount">2</span> Komentar Pendengar</div>
     <div class="comment-input-box">
-     <div class="avatar" style="background:#5b21b6">G</div>
+     <div class="avatar" style="background:#ff0033">G</div>
      <div style="flex:1">
-      <textarea id="commentInput" placeholder="Tambahkan komentar..."></textarea>
+      <textarea id="commentInput" placeholder="Tulis komentar atau tanggapan lagu..."></textarea>
       <div class="comment-btn-row">
        <button class="btn-sm btn-primary" onclick="addComment()">Kirim</button>
       </div>
@@ -327,7 +355,7 @@ body.collapsed .categories{left:72px}
    </div>
   </div>
 
-  <div><h3 style="font-size:16px;margin:0 0 16px">Video lainnya</h3><div id="relatedVideos"></div></div>
+  <div><h3 style="font-size:16px;margin:0 0 16px">Rekomendasi Musik</h3><div id="relatedVideos"></div></div>
  </div>
 </section>
 
@@ -353,14 +381,14 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-/* VIDEO DATA */
+/* MUSIC DATABASE */
 const videos = [
  {
   id:"ifBXLaPp_uY",
-  title:"Lagu Jawa Akustik Pengantar Tidur",
+  title:"Lagu Jawa Akustik Pengantar Tidur Nyaman",
   channel:"Koleksi Musik",
-  category:"Musik",
-  duration:"Video",
+  category:"Akustik",
+  duration:"AUDIO",
   color:"#e11d48",
   views:"1.5M views",
   likes: 15400,
@@ -370,7 +398,7 @@ const videos = [
   id:"GB09st7rtv0",
   title:"Lagu Pop Indonesia Tahun 2000an With Video Lirik",
   channel:"91 FM",
-  category:"Musik",
+  category:"Pop 2000an",
   duration:"FULL",
   color:"#d97706",
   views:"28M views",
@@ -379,21 +407,21 @@ const videos = [
  },
  {
   id:"0BXVNT1yxqw",
-  title:"DJ TIKTOK TERBARU 2026 || DJ ADAKAH KENYAMANAN DIHATIMU🎵DJ SALAH APA YANG TAK KUMAAFKAN🎵FULL ALBUM",
+  title:"DJ TIKTOK TERBARU 2026 || DJ ADAKAH KENYAMANAN DIHATIMU 🎵 FULL ALBUM",
   channel:"Seven Fvnky",
-  category:"Musik",
-  duration:"FULL",
-  color:"#e11d48",
+  category:"DJ & Remix",
+  duration:"REMIX",
+  color:"#ff0033",
   views:"5.2M views",
   likes: 42000,
   subscribers: "890K subscriber"
  },
  {
   id:"ZsijEIkhAcc",
-  title:"DJ TIKTOK TERBARU 2026🎵DJ HELIKOPTER TURUN KE PADANG🎵DJ ANAK KAMPUNG KERJAKU KERJA MOTONG 🔥",
+  title:"DJ TIKTOK TERBARU 2026 🎵 DJ HELIKOPTER TURUN KE PADANG 🔥",
   channel:"DJ AMOYCAN RMX",
-  category:"Musik",
-  duration:"FULL",
+  category:"DJ & Remix",
+  duration:"REMIX",
   color:"#7c3aed",
   views:"3.1M views",
   likes: 28000,
@@ -401,9 +429,9 @@ const videos = [
  },
  {
   id:"Mn4G8dr2Yw4",
-  title:"Top Hits Spotify Indonesia 2026 | Top Spotify Indonesia 2026 | Lagu Hits Spotify 2026 | Lagu Terbaru",
+  title:"Top Hits Spotify Indonesia 2026 | Lagu Hits Populer Terbaru",
   channel:"Aemj Gaming",
-  category:"Musik",
+  category:"Pop 2000an",
   duration:"FULL",
   color:"#059669",
   views:"8.7M views",
@@ -423,8 +451,8 @@ let isSubscribed = false;
 let isLiked = false;
 let isDisliked = false;
 let currentComments = [
- { author: "Rizky R", text: "Lagu-lagunya mantap banget buat nemenin kerja!" },
- { author: "Ahmad", text: "Mantap Movio, tampilannya persis Youtube!" }
+ { author: "Kiki R", text: "Lagu akustiknya bikin tenang banget buat nemenin coding malam." },
+ { author: "Rizky", text: "Playlist pop 2000an nya juara, nostalgia masa muda!" }
 ];
 
 /* AUTHENTICATION */
@@ -442,7 +470,7 @@ async function googleLogin(){
   error.textContent="Gagal login Google. Silakan coba lagi.";
  }finally{
   button.disabled=false;
-  button.innerHTML='<span class="google-icon">G</span> Lanjutkan dengan Google';
+  button.innerHTML='<span class="google-icon">G</span> Masuk dengan Google';
  }
 }
 
@@ -468,7 +496,7 @@ auth.onAuthStateChanged(user=>{
 });
 
 function showProfile(){
- if(confirm("Keluar dari Movio?")){
+ if(confirm("Keluar dari Movio Music?")){
   if(!isGuest) auth.signOut();
   currentUser=null;
   isGuest=false;
@@ -486,7 +514,7 @@ function showHome(el){
  currentQuery="";
  document.getElementById("searchInput").value="";
  document.getElementById("categories").classList.remove("hidden");
- document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">Video pilihanmu</h2><div class="video-grid" id="videoGrid"></div>';
+ document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">Daftar Musik Pilihan</h2><div class="video-grid" id="videoGrid"></div>';
  renderVideos();
 }
 
@@ -495,11 +523,11 @@ function filterCategory(category,el=null){
  currentQuery="";
  document.getElementById("searchInput").value="";
  document.getElementById("categories").classList.remove("hidden");
- document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">'+(category==="Koleksi"?"Video Saya":category)+'</h2><div class="video-grid" id="videoGrid"></div>';
+ document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">'+(category==="Koleksi"?"Lagu Disimpan":"Genre: "+category)+'</h2><div class="video-grid" id="videoGrid"></div>';
  renderVideos();
 }
 
-/* RENDER VIDEOS */
+/* RENDER MUSIC */
 function renderVideos(list=null){
  const grid=document.getElementById("videoGrid");
  if(!grid)return;
@@ -518,7 +546,7 @@ function renderVideos(list=null){
  }
 
  if(!filtered || !filtered.length){
-  grid.innerHTML='<div class="empty"><h3>Video tidak ditemukan</h3></div>';
+  grid.innerHTML='<div class="empty"><h3>Tidak ada musik ditemukan</h3><p>Coba pilih kategori atau kata kunci lain.</p></div>';
   return;
  }
 
@@ -542,7 +570,7 @@ function renderVideos(list=null){
  }).join("");
 }
 
-/* VIDEO PLAYER & INTERACTION */
+/* MUSIC PLAYER & INTERACTION */
 function playVideo(index){
  activeVideoIndex = index;
  const v=videos[index];
@@ -558,11 +586,10 @@ function playVideo(index){
  document.getElementById("playerSubCount").textContent=v.subscribers;
  document.getElementById("playerAvatar").textContent=v.channel.charAt(0);
  document.getElementById("playerAvatar").style.background=v.color;
- document.getElementById("playerDescription").textContent=v.views + " • " + v.title;
+ document.getElementById("playerDescription").textContent="Genre Musik: " + v.category + " • " + v.views;
 
  document.getElementById("likeCount").textContent = v.likes.toLocaleString();
 
- // Reset UI States
  isSubscribed = false;
  isLiked = false;
  isDisliked = false;
@@ -636,7 +663,7 @@ function toggleSave(){
 function shareVideo(){
  const v = videos[activeVideoIndex];
  navigator.clipboard.writeText("https://youtu.be/" + v.id);
- alert("Link video berhasil disalin ke clipboard!");
+ alert("Link lagu berhasil disalin ke clipboard!");
 }
 
 /* COMMENTS SYSTEM */
@@ -673,7 +700,7 @@ function closePlayer(){
 /* HISTORY */
 function showHistory(){
  document.getElementById("categories").classList.add("hidden");
- document.getElementById("contentArea").innerHTML='<h2 class="section-title">Histori tontonan</h2><div class="video-grid" id="videoGrid"></div>';
+ document.getElementById("contentArea").innerHTML='<h2 class="section-title">Histori Putar Musik</h2><div class="video-grid" id="videoGrid"></div>';
  renderVideos(watchHistory);
 }
 
