@@ -315,12 +315,12 @@ const videos = [
   color:"#e11d48"
  },
  {
-  id:"Xq0V_OvwV5o",
-  title:"🌙 Lagu Jawa Akustik & Slow Pop Jawa Galau – Live Musik Pengantar Malam",
-  channel:"Javanova",
+  id:"GB09st7rtv0",
+  title:"Lagu Pop Indonesia Tahun 2000an With Video Lirik",
+  channel:"91 FM",
   category:"Musik",
-  duration:"LIVE",
-  color:"#0284c7"
+  duration:"FULL",
+  color:"#d97706"
  },
  {
   id:"0BXVNT1yxqw",
@@ -449,71 +449,4 @@ function renderVideos(list=null){
    <article class="video-card" onclick="playVideo(${i})">
     <div class="thumbnail">
      <img src="${thumb}" alt="" loading="lazy">
-     <span class="duration">${v.duration}</span>
-    </div>
-    <div class="video-info">
-     <div class="avatar" style="background:${v.color}">${v.channel.charAt(0)}</div>
-     <div>
-      <div class="video-title">${v.title}</div>
-      <div class="meta">${v.channel}</div>
-     </div>
-    </div>
-   </article>`;
- }).join("");
-}
-
-/* VIDEO PLAYER */
-function playVideo(index){
- const v=videos[index];
- if(!v)return;
-
- watchHistory=[v,...watchHistory.filter(x=>x.id!==v.id)];
-
- document.getElementById("videoFrame").src=
-  "https://www.youtube-nocookie.com/embed/"+encodeURIComponent(v.id)+"?autoplay=1&rel=0";
-
- document.getElementById("playerTitle").textContent=v.title;
- document.getElementById("playerChannel").textContent=v.channel;
- document.getElementById("playerAvatar").textContent=v.channel.charAt(0);
- document.getElementById("playerAvatar").style.background=v.color;
- document.getElementById("playerDescription").textContent="Kategori: "+v.category+" • Diputar melalui pemutar Movio.";
-
- document.getElementById("relatedVideos").innerHTML=
-  videos.filter(x=>x.id!==v.id).map(x=>`
-   <div class="related-item" onclick="playVideo(${videos.indexOf(x)})">
-    <img src="https://img.youtube.com/vi/${encodeURIComponent(x.id)}/mqdefault.jpg" alt="">
-    <div>
-     <div class="related-title">${x.title}</div>
-     <div class="meta">${x.channel}</div>
-    </div>
-   </div>
-  `).join("");
-
- document.getElementById("playerModal").classList.add("open");
- document.body.style.overflow="hidden";
-}
-
-function closePlayer(){
- document.getElementById("playerModal").classList.remove("open");
- document.getElementById("videoFrame").src="";
- document.body.style.overflow="";
-}
-
-/* HISTORY */
-function showHistory(){
- document.getElementById("categories").classList.add("hidden");
- document.getElementById("contentArea").innerHTML='<h2 class="section-title">Histori tontonan</h2><div class="video-grid" id="videoGrid"></div>';
- renderVideos(watchHistory);
-}
-
-/* SEARCH */
-document.getElementById("searchForm").addEventListener("submit",e=>{
- e.preventDefault();
- currentQuery=document.getElementById("searchInput").value.trim();
- filterCategory("Semua");
-});
-
-renderVideos();
-</script>
-</body>
-</html>
+     <span class
