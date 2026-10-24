@@ -15,13 +15,14 @@
   --text:#f1f1f1;
   --muted:#aaa;
   --red:#ff0000;
+  --blue:#3ea6ff;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"Roboto","Arial",sans-serif;-webkit-font-smoothing:antialiased}
-button,input{font:inherit}
+button,input,textarea{font:inherit}
 button{cursor:pointer;border:none;background:none;color:inherit}
 .hidden{display:none!important}
-button:focus-visible,input:focus-visible{outline:2px solid #3ea6ff;outline-offset:2px}
+button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 
 /* BRAND LOGO */
 .brand{display:flex;align-items:center;gap:6px;font-size:19px;font-weight:700;letter-spacing:-0.5px;color:white;text-decoration:none;user-select:none}
@@ -146,17 +147,45 @@ main{margin-left:240px;padding:116px 24px 40px}
 .video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
 .player-frame{width:100%;height:100%;border:0}
 
-.player-title{font-size:18px;font-weight:700;line-height:1.4;margin:12px 0}
+.player-title{font-size:18px;font-weight:700;line-height:1.4;margin:12px 0 8px}
 .player-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}
 .channel-info{display:flex;align-items:center;gap:12px}
 .channel-name{font-weight:600;font-size:15px}
-.action-btns{display:flex;gap:8px}
+.sub-count{font-size:12px;color:var(--muted)}
+
+.sub-btn{
+ padding:8px 16px;border-radius:18px;background:white;color:black;
+ font-weight:600;font-size:14px;margin-left:12px;transition:all 0.2s
+}
+.sub-btn:hover{background:#d9d9d9}
+.sub-btn.subscribed{background:#272727;color:white}
+
+.action-btns{display:flex;gap:8px;flex-wrap:wrap}
 .action-btn{
  display:flex;align-items:center;gap:6px;padding:8px 14px;
- border-radius:18px;background:#272727;font-size:13px;font-weight:500
+ border-radius:18px;background:#272727;font-size:13px;font-weight:500;transition:0.2s
 }
 .action-btn:hover{background:#3f3f3f}
-.player-description{padding:12px;border-radius:12px;background:#272727;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+.action-btn.active{background:#3f3f3f;color:var(--blue)}
+
+/* DESKRIPSI & KOMENTAR */
+.player-description{padding:12px;border-radius:12px;background:#272727;font-size:13px;line-height:1.6;overflow-wrap:anywhere;margin-bottom:24px}
+.comments-section{margin-top:20px}
+.comments-header{font-weight:700;font-size:16px;margin-bottom:16px}
+.comment-input-box{display:flex;gap:12px;margin-bottom:24px}
+.comment-input-box textarea{
+ flex:1;background:none;border:none;border-bottom:1px solid var(--border);
+ color:white;padding:4px 0;resize:none;height:36px
+}
+.comment-input-box textarea:focus{border-bottom-color:white;outline:none}
+.comment-btn-row{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
+.btn-sm{padding:6px 14px;border-radius:16px;font-size:13px;font-weight:500}
+.btn-primary{background:var(--blue);color:black}
+
+.comment-list{display:flex;flex-direction:column;gap:16px}
+.comment-item{display:flex;gap:12px}
+.comment-author{font-weight:600;font-size:13px;margin-bottom:2px}
+.comment-text{font-size:13px;line-height:1.4;color:#ddd}
 
 .related-item{display:flex;gap:10px;margin-bottom:12px;cursor:pointer}
 .related-item img{width:140px;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
@@ -268,16 +297,36 @@ body.collapsed .categories{left:72px}
      <div class="avatar" id="playerAvatar" style="background:#e11d48">M</div>
      <div>
       <div class="channel-name" id="playerChannel"></div>
-      <div class="meta">Koleksi Movio</div>
+      <div class="sub-count" id="playerSubCount">1.2M subscriber</div>
      </div>
+     <button class="sub-btn" id="subBtn" onclick="toggleSubscribe()">Subscribe</button>
     </div>
     <div class="action-btns">
-     <button class="action-btn">👍 Suka</button>
-     <button class="action-btn">↪ Bagikan</button>
+     <button class="action-btn" id="likeBtn" onclick="toggleLike()">👍 <span id="likeCount">12K</span></button>
+     <button class="action-btn" id="dislikeBtn" onclick="toggleDislike()">👎</button>
+     <button class="action-btn" onclick="shareVideo()">↪ Bagikan</button>
+     <button class="action-btn" id="saveBtn" onclick="toggleSave()">💾 Simpan</button>
     </div>
    </div>
+
    <div class="player-description" id="playerDescription"></div>
+
+   <!-- KOMENTAR -->
+   <div class="comments-section">
+    <div class="comments-header"><span id="commentCount">3</span> Komentar</div>
+    <div class="comment-input-box">
+     <div class="avatar" style="background:#5b21b6">G</div>
+     <div style="flex:1">
+      <textarea id="commentInput" placeholder="Tambahkan komentar..."></textarea>
+      <div class="comment-btn-row">
+       <button class="btn-sm btn-primary" onclick="addComment()">Kirim</button>
+      </div>
+     </div>
+    </div>
+    <div class="comment-list" id="commentList"></div>
+   </div>
   </div>
+
   <div><h3 style="font-size:16px;margin:0 0 16px">Video lainnya</h3><div id="relatedVideos"></div></div>
  </div>
 </section>
@@ -312,7 +361,10 @@ const videos = [
   channel:"Koleksi Musik",
   category:"Musik",
   duration:"Video",
-  color:"#e11d48"
+  color:"#e11d48",
+  views:"1.5M views",
+  likes: 15400,
+  subscribers: "450K subscriber"
  },
  {
   id:"GB09st7rtv0",
@@ -320,7 +372,10 @@ const videos = [
   channel:"91 FM",
   category:"Musik",
   duration:"FULL",
-  color:"#d97706"
+  color:"#d97706",
+  views:"28M views",
+  likes: 115150,
+  subscribers: "1.2M subscriber"
  },
  {
   id:"0BXVNT1yxqw",
@@ -328,7 +383,10 @@ const videos = [
   channel:"Seven Fvnky",
   category:"Musik",
   duration:"FULL",
-  color:"#e11d48"
+  color:"#e11d48",
+  views:"5.2M views",
+  likes: 42000,
+  subscribers: "890K subscriber"
  },
  {
   id:"ZsijEIkhAcc",
@@ -336,7 +394,10 @@ const videos = [
   channel:"DJ AMOYCAN RMX",
   category:"Musik",
   duration:"FULL",
-  color:"#7c3aed"
+  color:"#7c3aed",
+  views:"3.1M views",
+  likes: 28000,
+  subscribers: "620K subscriber"
  },
  {
   id:"Mn4G8dr2Yw4",
@@ -344,7 +405,10 @@ const videos = [
   channel:"Aemj Gaming",
   category:"Musik",
   duration:"FULL",
-  color:"#059669"
+  color:"#059669",
+  views:"8.7M views",
+  likes: 95000,
+  subscribers: "2.1M subscriber"
  }
 ];
 
@@ -353,6 +417,15 @@ let isGuest = false;
 let currentCategory = "Semua";
 let currentQuery = "";
 let watchHistory = [];
+let savedVideos = [];
+let activeVideoIndex = null;
+let isSubscribed = false;
+let isLiked = false;
+let isDisliked = false;
+let currentComments = [
+ { author: "Rizky R", text: "Lagu-lagunya mantap banget buat nemenin kerja!" },
+ { author: "Ahmad", text: "Mantap Movio, tampilannya persis Youtube!" }
+];
 
 /* AUTHENTICATION */
 async function googleLogin(){
@@ -422,7 +495,7 @@ function filterCategory(category,el=null){
  currentQuery="";
  document.getElementById("searchInput").value="";
  document.getElementById("categories").classList.remove("hidden");
- document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">'+category+'</h2><div class="video-grid" id="videoGrid"></div>';
+ document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">'+(category==="Koleksi"?"Video Saya":category)+'</h2><div class="video-grid" id="videoGrid"></div>';
  renderVideos();
 }
 
@@ -431,13 +504,20 @@ function renderVideos(list=null){
  const grid=document.getElementById("videoGrid");
  if(!grid)return;
 
- const filtered=list||videos.filter(v=>{
-  const categoryMatches=currentCategory==="Semua"||v.category===currentCategory;
-  const searchable=(v.title+" "+v.channel).toLowerCase();
-  return categoryMatches&&searchable.includes(currentQuery.toLowerCase());
- });
+ let filtered = list;
+ if(!filtered) {
+  if(currentCategory === "Koleksi") {
+   filtered = savedVideos;
+  } else {
+   filtered = videos.filter(v=>{
+    const categoryMatches=currentCategory==="Semua"||v.category===currentCategory;
+    const searchable=(v.title+" "+v.channel).toLowerCase();
+    return categoryMatches&&searchable.includes(currentQuery.toLowerCase());
+   });
+  }
+ }
 
- if(!filtered.length){
+ if(!filtered || !filtered.length){
   grid.innerHTML='<div class="empty"><h3>Video tidak ditemukan</h3></div>';
   return;
  }
@@ -449,4 +529,162 @@ function renderVideos(list=null){
    <article class="video-card" onclick="playVideo(${i})">
     <div class="thumbnail">
      <img src="${thumb}" alt="" loading="lazy">
-     <span class
+     <span class="duration">${v.duration}</span>
+    </div>
+    <div class="video-info">
+     <div class="avatar" style="background:${v.color}">${v.channel.charAt(0)}</div>
+     <div>
+      <div class="video-title">${v.title}</div>
+      <div class="meta">${v.channel} • ${v.views}</div>
+     </div>
+    </div>
+   </article>`;
+ }).join("");
+}
+
+/* VIDEO PLAYER & INTERACTION */
+function playVideo(index){
+ activeVideoIndex = index;
+ const v=videos[index];
+ if(!v)return;
+
+ watchHistory=[v,...watchHistory.filter(x=>x.id!==v.id)];
+
+ document.getElementById("videoFrame").src=
+  "https://www.youtube-nocookie.com/embed/"+encodeURIComponent(v.id)+"?autoplay=1&rel=0";
+
+ document.getElementById("playerTitle").textContent=v.title;
+ document.getElementById("playerChannel").textContent=v.channel;
+ document.getElementById("playerSubCount").textContent=v.subscribers;
+ document.getElementById("playerAvatar").textContent=v.channel.charAt(0);
+ document.getElementById("playerAvatar").style.background=v.color;
+ document.getElementById("playerDescription").textContent=v.views + " • " + v.title;
+
+ document.getElementById("likeCount").textContent = v.likes.toLocaleString();
+
+ // Reset UI States
+ isSubscribed = false;
+ isLiked = false;
+ isDisliked = false;
+ updateInteractions();
+
+ renderComments();
+
+ document.getElementById("relatedVideos").innerHTML=
+  videos.filter(x=>x.id!==v.id).map(x=>`
+   <div class="related-item" onclick="playVideo(${videos.indexOf(x)})">
+    <img src="https://img.youtube.com/vi/${encodeURIComponent(x.id)}/mqdefault.jpg" alt="">
+    <div>
+     <div class="related-title">${x.title}</div>
+     <div class="meta">${x.channel}<br>${x.views}</div>
+    </div>
+   </div>
+  `).join("");
+
+ document.getElementById("playerModal").classList.add("open");
+ document.body.style.overflow="hidden";
+}
+
+function updateInteractions(){
+ const subBtn = document.getElementById("subBtn");
+ subBtn.textContent = isSubscribed ? "Subscribed" : "Subscribe";
+ subBtn.className = "sub-btn" + (isSubscribed ? " subscribed" : "");
+
+ const saveBtn = document.getElementById("saveBtn");
+ const isSaved = savedVideos.includes(videos[activeVideoIndex]);
+ saveBtn.className = "action-btn" + (isSaved ? " active" : "");
+
+ document.getElementById("likeBtn").className = "action-btn" + (isLiked ? " active" : "");
+ document.getElementById("dislikeBtn").className = "action-btn" + (isDisliked ? " active" : "");
+}
+
+function toggleSubscribe(){
+ isSubscribed = !isSubscribed;
+ updateInteractions();
+}
+
+function toggleLike(){
+ if(isLiked) {
+  isLiked = false;
+ } else {
+  isLiked = true;
+  isDisliked = false;
+ }
+ updateInteractions();
+}
+
+function toggleDislike(){
+ if(isDisliked) {
+  isDisliked = false;
+ } else {
+  isDisliked = true;
+  isLiked = false;
+ }
+ updateInteractions();
+}
+
+function toggleSave(){
+ const v = videos[activeVideoIndex];
+ if(savedVideos.includes(v)) {
+  savedVideos = savedVideos.filter(x => x.id !== v.id);
+ } else {
+  savedVideos.push(v);
+ }
+ updateInteractions();
+}
+
+function shareVideo(){
+ const v = videos[activeVideoIndex];
+ navigator.clipboard.writeText("https://youtu.be/" + v.id);
+ alert("Link video berhasil disalin ke clipboard!");
+}
+
+/* COMMENTS SYSTEM */
+function renderComments(){
+ document.getElementById("commentCount").textContent = currentComments.length;
+ document.getElementById("commentList").innerHTML = currentComments.map(c => `
+  <div class="comment-item">
+   <div class="avatar" style="background:#444;width:32px;height:32px;font-size:12px">${c.author.charAt(0)}</div>
+   <div>
+    <div class="comment-author">${c.author}</div>
+    <div class="comment-text">${c.text}</div>
+   </div>
+  </div>
+ `).join("");
+}
+
+function addComment(){
+ const input = document.getElementById("commentInput");
+ const val = input.value.trim();
+ if(!val) return;
+
+ const name = currentUser ? currentUser.name : "Guest";
+ currentComments.unshift({ author: name, text: val });
+ input.value = "";
+ renderComments();
+}
+
+function closePlayer(){
+ document.getElementById("playerModal").classList.remove("open");
+ document.getElementById("videoFrame").src="";
+ document.body.style.overflow="";
+}
+
+/* HISTORY */
+function showHistory(){
+ document.getElementById("categories").classList.add("hidden");
+ document.getElementById("contentArea").innerHTML='<h2 class="section-title">Histori tontonan</h2><div class="video-grid" id="videoGrid"></div>';
+ renderVideos(watchHistory);
+}
+
+/* SEARCH */
+document.getElementById("searchForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ currentQuery=document.getElementById("searchInput").value.trim();
+ filterCategory("Semua");
+});
+
+renderVideos();
+</script>
+</body>
+</html>
