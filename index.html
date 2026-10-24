@@ -10,160 +10,180 @@
 :root{
   --bg:#0f0f0f;
   --panel:#181818;
-  --hover:#303030;
+  --hover:#272727;
+  --border:#3f3f3f;
   --text:#f1f1f1;
   --muted:#aaa;
-  --red:#ff3155;
+  --red:#ff0000;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Roboto","Arial",sans-serif;-webkit-font-smoothing:antialiased}
 button,input{font:inherit}
-button{cursor:pointer}
+button{cursor:pointer;border:none;background:none;color:inherit}
 .hidden{display:none!important}
-button:focus-visible,input:focus-visible{outline:2px solid #8ab4ff;outline-offset:2px}
-.brand{display:flex;align-items:center;gap:9px;font-size:25px;font-weight:800;letter-spacing:-1px}
-.logo{display:grid;place-items:center;width:36px;height:29px;border-radius:8px;background:var(--red);color:white;font-size:17px}
-.muted,.meta{color:var(--muted)}
+button:focus-visible,input:focus-visible{outline:2px solid #3ea6ff;outline-offset:2px}
 
-/* LOGIN */
+/* BRAND LOGO */
+.brand{display:flex;align-items:center;gap:6px;font-size:19px;font-weight:700;letter-spacing:-0.5px;color:white;text-decoration:none;user-select:none}
+.logo-icon{display:grid;place-items:center;width:30px;height:22px;border-radius:6px;background:var(--red);color:white;font-size:12px;font-weight:900}
+
+/* LOGIN SCREEN */
 .login-screen{
  position:fixed;inset:0;z-index:1000;display:flex;align-items:center;
  justify-content:center;padding:20px;overflow-y:auto;
- background:radial-gradient(ellipse at 10% 10%,#51213d,transparent 45%),
- radial-gradient(ellipse at 90% 90%,#20265b,transparent 45%),#0b0b0f
+ background:radial-gradient(circle at center,#1f1f2e 0%,#0f0f0f 100%)
 }
 .login-box{
- width:100%;max-width:420px;padding:35px 28px;text-align:center;
- border:1px solid #ffffff20;border-radius:24px;background:#18181df5;
- box-shadow:0 25px 90px #0008
+ width:100%;max-width:400px;padding:36px 28px;text-align:center;
+ border:1px solid rgba(255,255,255,0.1);border-radius:16px;background:#181818;
+ box-shadow:0 20px 50px rgba(0,0,0,0.8)
 }
-.login-box .brand{justify-content:center}
-.login-box h1{margin:28px 0 10px;font-size:28px}
-.login-box p{font-size:14px;line-height:1.7;color:var(--muted)}
+.login-box .brand{justify-content:center;font-size:24px;margin-bottom:12px}
+.login-box .logo-icon{width:38px;height:26px;font-size:16px}
+.login-box h1{margin:12px 0;font-size:22px;font-weight:500}
+.login-box p{font-size:13px;line-height:1.6;color:var(--muted);margin-bottom:24px}
 .login-btn{
- width:100%;margin-top:14px;padding:14px;border:1px solid #444;
- border-radius:30px;background:#fff;color:#222;font-weight:bold
+ width:100%;padding:12px;border:1px solid var(--border);
+ border-radius:20px;background:#222;color:white;font-weight:500;
+ display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.2s
 }
-.login-btn:hover{filter:brightness(.92)}
-.login-btn.guest{background:var(--red);border-color:var(--red);color:white}
-.login-btn:disabled{opacity:.6;cursor:wait}
-.google-icon{color:#4285f4;font-size:19px;margin-right:9px}
-#error{color:#ff9999!important;overflow-wrap:anywhere}
+.login-btn:hover{background:#333}
+.login-btn.guest{margin-top:10px;background:white;color:black;border:none}
+.login-btn.guest:hover{background:#d9d9d9}
+.login-btn:disabled{opacity:.5;cursor:wait}
+.google-icon{font-weight:bold;color:#4285f4}
+#error{color:#ff4e45!important;font-size:12px;margin-top:12px;overflow-wrap:anywhere}
 
 /* HEADER */
 header{
- height:64px;position:fixed;z-index:100;top:0;left:0;right:0;
- display:flex;align-items:center;justify-content:space-between;gap:18px;
- padding:0 22px;background:var(--bg)
+ height:56px;position:fixed;z-index:100;top:0;left:0;right:0;
+ display:flex;align-items:center;justify-content:space-between;gap:16px;
+ padding:0 16px;background:var(--bg)
 }
 .header-left,.header-right{display:flex;align-items:center;gap:12px}
-.icon-btn{width:40px;height:40px;border:0;border-radius:50%;background:transparent;color:white;font-size:21px}
+.icon-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:white;font-size:18px}
 .icon-btn:hover{background:var(--hover)}
-.search{display:flex;width:min(48vw,600px);height:42px}
+
+/* SEARCH BAR */
+.search{display:flex;width:min(46vw,640px);height:40px}
 .search input{
- flex:1;min-width:0;padding:0 18px;border:1px solid #393939;
- border-radius:24px 0 0 24px;background:#121212;color:white
+ flex:1;min-width:0;padding:0 16px;border:1px solid #303030;
+ border-radius:40px 0 0 40px;background:#121212;color:white;font-size:15px
 }
+.search input:focus{border-color:#1c62b9;outline:none}
 .search button{
- width:62px;border:1px solid #393939;border-radius:0 24px 24px 0;
- background:#272727;color:white;font-size:21px
+ width:64px;border:1px solid #303030;border-left:none;border-radius:0 40px 40px 0;
+ background:#222;color:white;font-size:16px
 }
+.search button:hover{background:#2a2a2a}
+
 .profile{
- width:36px;height:36px;border:0;border-radius:50%;
- background:#7439a8;color:white;font-weight:bold;overflow:hidden;flex-shrink:0
+ width:32px;height:32px;border-radius:50%;
+ background:#5b21b6;color:white;font-weight:bold;overflow:hidden;
+ display:grid;place-items:center;font-size:14px;flex-shrink:0
 }
 .profile img{width:100%;height:100%;object-fit:cover}
-.user-label{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--muted)}
+.user-label{max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:var(--text)}
 
 /* SIDEBAR */
 .sidebar{
- position:fixed;top:64px;bottom:0;left:0;width:220px;overflow-y:auto;
+ position:fixed;top:56px;bottom:0;left:0;width:240px;overflow-y:auto;
  padding:12px;background:var(--bg);z-index:90
 }
 .nav-item{
- display:flex;align-items:center;gap:20px;padding:13px 14px;
- border-radius:10px;cursor:pointer;font-size:14px
+ display:flex;align-items:center;gap:24px;padding:10px 12px;
+ border-radius:10px;cursor:pointer;font-size:14px;font-weight:400
 }
-.nav-item:hover,.nav-item.active{background:var(--hover)}
-.nav-icon{width:23px;text-align:center;font-size:20px}
-.nav-divider{border:0;border-top:1px solid #333;margin:14px 0}
-.nav-heading{padding:10px 14px;font-weight:bold}
+.nav-item:hover{background:var(--hover)}
+.nav-item.active{background:var(--hover);font-weight:600}
+.nav-icon{width:24px;text-align:center;font-size:18px}
+.nav-divider{border:0;border-top:1px solid #272727;margin:12px 0}
+.nav-heading{padding:6px 12px;font-size:14px;font-weight:600;color:var(--muted)}
 
-/* KATEGORI */
+/* CATEGORY PILLS */
 .categories{
- position:fixed;z-index:80;top:64px;left:220px;right:0;
- display:flex;gap:12px;overflow-x:auto;padding:14px 24px;
+ position:fixed;z-index:80;top:56px;left:240px;right:0;
+ display:flex;gap:12px;overflow-x:auto;padding:12px 24px;
  background:var(--bg);scrollbar-width:none
 }
 .categories::-webkit-scrollbar{display:none}
 .category{
- white-space:nowrap;border:0;border-radius:8px;padding:9px 15px;
- background:#272727;color:white;font-size:13px
+ white-space:nowrap;border:none;border-radius:8px;padding:6px 12px;
+ background:#272727;color:white;font-size:14px;font-weight:500;transition:0.2s
 }
-.category.active{background:white;color:#111;font-weight:bold}
-main{margin-left:220px;padding:125px 25px 40px}
-.section-title{font-size:22px;margin:15px 0 22px}
-.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 17px}
-.video-card{min-width:0;cursor:pointer}
+.category:hover{background:#3f3f3f}
+.category.active{background:white;color:#0f0f0f}
+
+/* MAIN CONTENT */
+main{margin-left:240px;padding:116px 24px 40px}
+.section-title{font-size:20px;margin:0 0 20px;font-weight:700}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px 16px}
+.video-card{min-width:0;cursor:pointer;display:flex;flex-direction:column}
 .thumbnail{
  position:relative;aspect-ratio:16/9;overflow:hidden;
- border-radius:12px;background:#252525
+ border-radius:12px;background:#212121
 }
 .thumbnail img{width:100%;height:100%;object-fit:cover;transition:transform .2s}
-.video-card:hover .thumbnail img{transform:scale(1.04)}
-.duration{position:absolute;right:8px;bottom:8px;background:#000d;padding:4px 6px;border-radius:4px;font-size:11px}
-.video-info{display:flex;gap:11px;padding-top:12px}
-.avatar{width:36px;height:36px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;font-weight:bold}
-.video-title{font-size:14px;font-weight:bold;line-height:1.5;margin-bottom:6px}
-.meta{font-size:12px;line-height:1.7}
+.video-card:hover .thumbnail img{transform:scale(1.03)}
+.duration{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,0.8);padding:3px 6px;border-radius:4px;font-size:12px;font-weight:500}
+.video-info{display:flex;gap:12px;padding-top:12px}
+.avatar{width:36px;height:36px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;font-weight:bold;font-size:14px}
+.video-title{font-size:14px;font-weight:600;line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{font-size:12px;color:var(--muted);line-height:1.5}
 .empty{grid-column:1/-1;text-align:center;padding:60px 10px;color:var(--muted)}
 
-/* PLAYER */
+/* PLAYER MODAL */
 .player-modal{
  display:none;position:fixed;inset:0;z-index:500;overflow-y:auto;
- background:#0f0f0f;padding:20px
+ background:#0f0f0f;padding:16px 24px
 }
 .player-modal.open{display:block}
-.player-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.player-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .player-layout{
- max-width:1250px;margin:auto;
- display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:24px
+ max-width:1280px;margin:auto;
+ display:grid;grid-template-columns:1fr 380px;gap:24px
 }
-.player-frame{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#000}
-.player-title{font-size:21px;line-height:1.5}
-.player-description{padding:16px;border-radius:12px;background:#242424;font-size:13px;line-height:1.8;overflow-wrap:anywhere}
-.related-item{display:flex;gap:10px;margin-bottom:15px;cursor:pointer}
-.related-item img{width:135px;aspect-ratio:16/9;object-fit:cover;border-radius:7px}
-.related-title{font-size:12px;font-weight:bold;line-height:1.5}
+.video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
+.player-frame{width:100%;height:100%;border:0}
+.fullscreen-overlay-btn{
+ position:absolute;bottom:12px;right:12px;z-index:10;
+ background:rgba(0,0,0,0.7);color:white;padding:6px 12px;border-radius:6px;
+ font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;backdrop-filter:blur(4px)
+}
+.fullscreen-overlay-btn:hover{background:rgba(0,0,0,0.9)}
 
-body.collapsed .sidebar{width:75px}
-body.collapsed .sidebar .nav-item{flex-direction:column;gap:6px;padding:12px 2px;font-size:10px;text-align:center}
+.player-title{font-size:18px;font-weight:700;line-height:1.4;margin:12px 0}
+.player-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.channel-info{display:flex;align-items:center;gap:12px}
+.channel-name{font-weight:600;font-size:15px}
+.action-btns{display:flex;gap:8px}
+.action-btn{
+ display:flex;align-items:center;gap:6px;padding:8px 14px;
+ border-radius:18px;background:#272727;font-size:13px;font-weight:500
+}
+.action-btn:hover{background:#3f3f3f}
+.player-description{padding:12px;border-radius:12px;background:#272727;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+
+.related-item{display:flex;gap:10px;margin-bottom:12px;cursor:pointer}
+.related-item img{width:140px;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
+.related-title{font-size:13px;font-weight:600;line-height:1.3;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* COLLAPSED & RESPONSIVE */
+body.collapsed .sidebar{width:72px;padding:12px 4px}
+body.collapsed .sidebar .nav-item{flex-direction:column;gap:6px;padding:14px 0;font-size:10px;text-align:center;justify-content:center}
+body.collapsed .sidebar .nav-icon{font-size:20px}
 body.collapsed .sidebar .nav-heading,body.collapsed .sidebar .nav-divider{display:none}
-body.collapsed main{margin-left:75px}
-body.collapsed .categories{left:75px}
+body.collapsed main{margin-left:72px}
+body.collapsed .categories{left:72px}
 
-@media(max-width:1050px){
- .video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:1024px){
  .player-layout{grid-template-columns:1fr}
 }
-@media(max-width:650px){
- header{height:58px;padding:0 8px;gap:5px}
- .header-left,.header-right{gap:4px}
- .brand{font-size:20px;gap:5px}
- .logo{width:30px;height:25px}
- .search{height:37px;flex:1;width:auto}
- .search input{width:30px;padding:0 9px}
- .search button{width:40px}
- .user-label{display:none}
- .sidebar{top:58px;width:65px;padding:5px}
- .sidebar .nav-item{flex-direction:column;gap:5px;padding:12px 1px;font-size:9px;text-align:center}
- .sidebar .nav-heading,.sidebar .nav-divider{display:none}
- .categories{top:58px;left:65px;padding:12px 10px}
- main{margin-left:65px;padding:115px 10px 30px}
- .video-grid{grid-template-columns:1fr;gap:25px}
- .player-modal{padding:10px}
- .player-title{font-size:17px}
- .login-box{padding:27px 20px}
+@media(max-width:768px){
+ .sidebar{display:none}
+ .categories{left:0}
+ main{margin-left:0;padding-top:110px}
+ .search{width:auto;flex:1}
 }
 </style>
 </head>
@@ -173,7 +193,7 @@ body.collapsed .categories{left:75px}
 <!-- HALAMAN LOGIN -->
 <section class="login-screen" id="loginScreen">
  <div class="login-box">
-  <div class="brand"><span class="logo">▶</span><span>movio</span></div>
+  <div class="brand"><span class="logo-icon">▶</span><span>movio</span></div>
   <h1>Welcome to Movio</h1>
   <p>Temukan video favoritmu, jelajahi hiburan, dan nikmati pengalaman menonton.</p>
 
@@ -183,7 +203,6 @@ body.collapsed .categories{left:75px}
 
   <button class="login-btn guest" onclick="guestLogin()">👤 Masuk sebagai Guest</button>
   <p id="error" role="alert"></p>
-  <p>Mulai jelajahi video pilihanmu di Movio.</p>
  </div>
 </section>
 
@@ -191,7 +210,7 @@ body.collapsed .categories{left:75px}
 <header>
  <div class="header-left">
   <button class="icon-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
-  <div class="brand"><span class="logo">▶</span><span>movio</span></div>
+  <a href="#" class="brand" onclick="showHome()"><span class="logo-icon">▶</span><span>movio</span></a>
  </div>
 
  <form class="search" id="searchForm">
@@ -237,19 +256,39 @@ body.collapsed .categories{left:75px}
 <!-- PEMUTAR VIDEO -->
 <section class="player-modal" id="playerModal">
  <div class="player-top">
-  <div class="brand"><span class="logo">▶</span><span>movio</span></div>
+  <div class="brand"><span class="logo-icon">▶</span><span>movio</span></div>
   <button class="icon-btn" onclick="closePlayer()" aria-label="Tutup">✕</button>
  </div>
  <div class="player-layout">
   <div>
-   <iframe class="player-frame" id="videoFrame" src=""
-    title="Pemutar video Movio"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+   <div class="video-container" id="videoContainer">
+    <iframe class="player-frame" id="videoFrame" src=""
+     title="Pemutar video Movio"
+     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+     allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <button class="fullscreen-overlay-btn" onclick="toggleFullScreen()">
+     <span>⛶</span> Fullscreen
+    </button>
+   </div>
+
    <h2 class="player-title" id="playerTitle"></h2>
+   <div class="player-actions">
+    <div class="channel-info">
+     <div class="avatar" id="playerAvatar" style="background:#e11d48">M</div>
+     <div>
+      <div class="channel-name" id="playerChannel"></div>
+      <div class="meta">Koleksi Movio</div>
+     </div>
+    </div>
+    <div class="action-btns">
+     <button class="action-btn" onclick="toggleFullScreen()">⛶ Layar Penuh</button>
+     <button class="action-btn">👍 Suka</button>
+     <button class="action-btn">↪ Bagikan</button>
+    </div>
+   </div>
    <div class="player-description" id="playerDescription"></div>
   </div>
-  <div><h3>Video lainnya</h3><div id="relatedVideos"></div></div>
+  <div><h3 style="font-size:16px;margin:0 0 16px">Video lainnya</h3><div id="relatedVideos"></div></div>
  </div>
 </section>
 
@@ -260,9 +299,7 @@ body.collapsed .categories{left:75px}
 <script>
 "use strict";
 
-/* =================================
-    KONFIGURASI FIREBASE
-================================= */
+/* FIREBASE CONFIG */
 const firebaseConfig = {
  apiKey: "AIzaSyC2MfL9EFzVyxOyxemFV-_ywR01S2uEtAc",
  authDomain: "movio-6211e.firebaseapp.com",
@@ -277,16 +314,14 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-/* =================================
-    DAFTAR VIDEO (Video Movio 3 telah dihapus)
-================================= */
+/* VIDEO DATA */
 const videos = [
  {
   id:"0BXVNT1yxqw",
   title:"DJ TIKTOK TERBARU 2026 || DJ ADAKAH KENYAMANAN DIHATIMU🎵DJ SALAH APA YANG TAK KUMAAFKAN🎵FULL ALBUM",
   channel:"Seven Fvnky",
   category:"Musik",
-  duration:"Video",
+  duration:"FULL",
   color:"#e11d48"
  },
  {
@@ -294,7 +329,7 @@ const videos = [
   title:"DJ TIKTOK TERBARU 2026🎵DJ HELIKOPTER TURUN KE PADANG🎵DJ ANAK KAMPUNG KERJAKU KERJA MOTONG 🔥",
   channel:"DJ AMOYCAN RMX",
   category:"Musik",
-  duration:"Video",
+  duration:"FULL",
   color:"#7c3aed"
  },
  {
@@ -302,7 +337,7 @@ const videos = [
   title:"Top Hits Spotify Indonesia 2026 | Top Spotify Indonesia 2026 | Lagu Hits Spotify 2026 | Lagu Terbaru",
   channel:"Aemj Gaming",
   category:"Musik",
-  duration:"Video",
+  duration:"FULL",
   color:"#059669"
  }
 ];
@@ -313,39 +348,19 @@ let currentCategory = "Semua";
 let currentQuery = "";
 let watchHistory = [];
 
-/* =================================
-    LOGIN GOOGLE
-================================= */
+/* AUTHENTICATION */
 async function googleLogin(){
  const button=document.getElementById("googleBtn");
  const error=document.getElementById("error");
-
  button.disabled=true;
- button.textContent="Menghubungkan ke Google...";
+ button.textContent="Menghubungkan...";
  error.textContent="";
 
  try{
   const result=await auth.signInWithPopup(googleProvider);
   enterGoogleUser(result.user);
  }catch(e){
-  console.error("Google login:",e);
-
-  if(e.code==="auth/popup-blocked"){
-   try{
-    await auth.signInWithRedirect(googleProvider);
-    return;
-   }catch(err){
-    error.textContent="Popup diblokir. Izinkan popup di browser.";
-   }
-  }else if(e.code==="auth/unauthorized-domain"){
-   error.textContent="Domain belum terdaftar di Firebase Authorized domains.";
-  }else if(e.code==="auth/operation-not-allowed"){
-   error.textContent="Aktifkan Google di Firebase Authentication.";
-  }else if(e.code==="auth/popup-closed-by-user"){
-   error.textContent="Login dibatalkan. Silakan coba kembali.";
-  }else{
-   error.textContent="Login gagal: "+(e.message||e.code||"Kesalahan tidak diketahui");
-  }
+  error.textContent="Gagal login Google. Silakan coba lagi.";
  }finally{
   button.disabled=false;
   button.innerHTML='<span class="google-icon">G</span> Lanjutkan dengan Google';
@@ -354,112 +369,37 @@ async function googleLogin(){
 
 function enterGoogleUser(user){
  isGuest=false;
- currentUser={
-  name:user.displayName||"Pengguna Movio",
-  email:user.email||"",
-  photo:user.photoURL||"",
-  type:"google"
- };
-
+ currentUser={name:user.displayName||"Pengguna Movio",email:user.email||"",photo:user.photoURL||""};
  document.getElementById("loginScreen").classList.add("hidden");
  document.getElementById("userLabel").textContent=currentUser.name;
-
- const profile=document.getElementById("profileBtn");
- profile.replaceChildren();
-
- if(currentUser.photo){
-  const img=document.createElement("img");
-  img.src=currentUser.photo;
-  img.alt="Foto profil";
-  profile.appendChild(img);
- }else{
-  profile.textContent=currentUser.name.charAt(0).toUpperCase();
- }
  renderVideos();
 }
 
-/* =================================
-    LOGIN GUEST
-================================= */
 function guestLogin(){
  isGuest=true;
- currentUser={name:"Guest",email:"",photo:"",type:"guest"};
-
+ currentUser={name:"Guest",email:"",photo:""};
  document.getElementById("loginScreen").classList.add("hidden");
- document.getElementById("error").textContent="";
  document.getElementById("userLabel").textContent="Guest";
-
- const profile=document.getElementById("profileBtn");
- profile.replaceChildren();
- profile.textContent="G";
-
- showHome(document.querySelector(".sidebar .nav-item"));
+ renderVideos();
 }
-
-/* =================================
-    MEMULIHKAN LOGIN FIREBASE
-================================= */
-auth.getRedirectResult().then(result=>{
- if(result&&result.user)enterGoogleUser(result.user);
-}).catch(e=>{
- console.error("Redirect login:",e);
- document.getElementById("error").textContent="Login redirect gagal. Coba lagi.";
-});
 
 auth.onAuthStateChanged(user=>{
- if(user){
-  enterGoogleUser(user);
- }else if(!isGuest){
-  currentUser=null;
-  document.getElementById("loginScreen").classList.remove("hidden");
- }
+ if(user) enterGoogleUser(user);
+ else if(!isGuest) document.getElementById("loginScreen").classList.remove("hidden");
 });
 
-/* =================================
-    PROFIL DAN KELUAR
-================================= */
-async function showProfile(){
- if(!currentUser)return;
-
- const message="Akun: "+currentUser.name+
-  (currentUser.email?"\nEmail: "+currentUser.email:"")+
-  "\n\nKeluar dari Movio?";
-
- if(!confirm(message))return;
-
- try{
-  if(!isGuest&&auth.currentUser)await auth.signOut();
-
+function showProfile(){
+ if(confirm("Keluar dari Movio?")){
+  if(!isGuest) auth.signOut();
   currentUser=null;
   isGuest=false;
-  closePlayer();
-
   document.getElementById("loginScreen").classList.remove("hidden");
-  document.getElementById("userLabel").textContent="Guest";
-
-  const profile=document.getElementById("profileBtn");
-  profile.replaceChildren();
-  profile.textContent="G";
- }catch(e){
-  alert("Gagal keluar: "+e.message);
  }
 }
 
-/* =================================
-    NAVIGASI
-================================= */
+/* NAVIGATION */
 function toggleSidebar(){
  document.body.classList.toggle("collapsed");
-}
-
-function setActiveNav(el){
- document.querySelectorAll(".sidebar .nav-item").forEach(x=>x.classList.remove("active"));
- if(el)el.classList.add("active");
-}
-
-function setActiveCategory(el){
- document.querySelectorAll(".category").forEach(x=>x.classList.remove("active"));
- if(el)el.classList.add("active");
 }
 
 function showHome(el){
@@ -467,13 +407,7 @@ function showHome(el){
  currentQuery="";
  document.getElementById("searchInput").value="";
  document.getElementById("categories").classList.remove("hidden");
-
- document.getElementById("contentArea").innerHTML=
-  '<h2 class="section-title" id="pageTitle">Video pilihanmu</h2>'+
-  '<div class="video-grid" id="videoGrid"></div>';
-
- setActiveNav(el);
- setActiveCategory(document.querySelector(".category"));
+ document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">Video pilihanmu</h2><div class="video-grid" id="videoGrid"></div>';
  renderVideos();
 }
 
@@ -482,174 +416,117 @@ function filterCategory(category,el=null){
  currentQuery="";
  document.getElementById("searchInput").value="";
  document.getElementById("categories").classList.remove("hidden");
-
- if(!el){
-  el=[...document.querySelectorAll(".category")]
-   .find(b=>b.textContent.trim()===(category==="Koleksi"?"Video Saya":category));
- }
-
- setActiveCategory(el);
-
- document.getElementById("contentArea").innerHTML=
-  '<h2 class="section-title" id="pageTitle"></h2>'+
-  '<div class="video-grid" id="videoGrid"></div>';
-
- document.getElementById("pageTitle").textContent=
-  category==="Semua"?"Video pilihanmu":category==="Koleksi"?"Video Saya":category;
-
+ document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">'+category+'</h2><div class="video-grid" id="videoGrid"></div>';
  renderVideos();
 }
 
-/* =================================
-    PENCARIAN VIDEO
-================================= */
-document.getElementById("searchForm").addEventListener("submit",e=>{
- e.preventDefault();
-
- currentQuery=document.getElementById("searchInput").value.trim();
- currentCategory="Semua";
- setActiveCategory(document.querySelector(".category"));
- document.getElementById("categories").classList.remove("hidden");
-
- document.getElementById("contentArea").innerHTML=
-  '<h2 class="section-title" id="pageTitle"></h2>'+
-  '<div class="video-grid" id="videoGrid"></div>';
-
- document.getElementById("pageTitle").textContent=
-  currentQuery?"Hasil pencarian: "+currentQuery:"Semua video";
-
- renderVideos();
-});
-
-document.getElementById("searchInput").addEventListener("input",e=>{
- if(!e.target.value.trim()){
-  currentQuery="";
-  renderVideos();
- }
-});
-
-function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,c=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
- }[c]));
-}
-
-/* =================================
-    RENDER KARTU VIDEO
-================================= */
+/* RENDER VIDEOS */
 function renderVideos(list=null){
  const grid=document.getElementById("videoGrid");
  if(!grid)return;
 
  const filtered=list||videos.filter(v=>{
-  const categoryMatches=
-   currentCategory==="Semua"||v.category===currentCategory;
-
-  const searchable=(v.title+" "+v.channel+" "+v.category).toLowerCase();
-
+  const categoryMatches=currentCategory==="Semua"||v.category===currentCategory;
+  const searchable=(v.title+" "+v.channel).toLowerCase();
   return categoryMatches&&searchable.includes(currentQuery.toLowerCase());
  });
 
  if(!filtered.length){
-  grid.innerHTML=
-   '<div class="empty"><h3>Video tidak ditemukan</h3>'+
-   '<p>Coba kata pencarian lain.</p></div>';
+  grid.innerHTML='<div class="empty"><h3>Video tidak ditemukan</h3></div>';
   return;
  }
 
  grid.innerHTML=filtered.map(v=>{
   const i=videos.indexOf(v);
-  const thumb="https://img.youtube.com/vi/"+
-   encodeURIComponent(v.id)+"/hqdefault.jpg";
-
+  const thumb="https://img.youtube.com/vi/"+encodeURIComponent(v.id)+"/hqdefault.jpg";
   return `
    <article class="video-card" onclick="playVideo(${i})">
     <div class="thumbnail">
-     <img src="${thumb}" alt="${escapeHTML(v.title)}" loading="lazy"
-      onerror="this.style.opacity='.35'">
-     <span class="duration">${escapeHTML(v.duration)}</span>
+     <img src="${thumb}" alt="" loading="lazy">
+     <span class="duration">${v.duration}</span>
     </div>
     <div class="video-info">
-     <div class="avatar" style="background:${v.color}">
-      ${escapeHTML(v.channel.charAt(0))}
-     </div>
+     <div class="avatar" style="background:${v.color}">${v.channel.charAt(0)}</div>
      <div>
-      <div class="video-title">${escapeHTML(v.title)}</div>
-      <div class="meta">${escapeHTML(v.channel)}<br>
-       Koleksi video pilihan
-      </div>
+      <div class="video-title">${v.title}</div>
+      <div class="meta">${v.channel}</div>
      </div>
     </div>
    </article>`;
  }).join("");
 }
 
-/* =================================
-    PEMUTAR VIDEO YOUTUBE
-================================= */
-function playVideo(index){
+/* VIDEO PLAYER & FULLSCREEN */
+function playVideo(index, autoFullscreen = false){
  const v=videos[index];
  if(!v)return;
 
  watchHistory=[v,...watchHistory.filter(x=>x.id!==v.id)];
 
  document.getElementById("videoFrame").src=
-  "https://www.youtube-nocookie.com/embed/"+
-  encodeURIComponent(v.id)+"?autoplay=1&rel=0";
+  "https://www.youtube-nocookie.com/embed/"+encodeURIComponent(v.id)+"?autoplay=1&rel=0";
 
  document.getElementById("playerTitle").textContent=v.title;
-
- document.getElementById("playerDescription").innerHTML=
-  "<strong>"+escapeHTML(v.channel)+"</strong>"+
-  "<br>Kategori: Koleksi Movio"+
-  "<br><br>Video diputar melalui pemutar Movio.";
+ document.getElementById("playerChannel").textContent=v.channel;
+ document.getElementById("playerAvatar").textContent=v.channel.charAt(0);
+ document.getElementById("playerAvatar").style.background=v.color;
+ document.getElementById("playerDescription").textContent="Kategori: "+v.category+" • Diputar melalui pemutar Movio.";
 
  document.getElementById("relatedVideos").innerHTML=
   videos.filter(x=>x.id!==v.id).map(x=>`
    <div class="related-item" onclick="playVideo(${videos.indexOf(x)})">
-    <img src="https://img.youtube.com/vi/${encodeURIComponent(x.id)}/mqdefault.jpg"
-     alt="" loading="lazy">
-    <div class="related-title">${escapeHTML(x.title)}
-     <div class="meta">${escapeHTML(x.channel)}</div>
+    <img src="https://img.youtube.com/vi/${encodeURIComponent(x.id)}/mqdefault.jpg" alt="">
+    <div>
+     <div class="related-title">${x.title}</div>
+     <div class="meta">${x.channel}</div>
     </div>
    </div>
   `).join("");
 
  document.getElementById("playerModal").classList.add("open");
  document.body.style.overflow="hidden";
+
+ if(autoFullscreen){
+  setTimeout(() => { toggleFullScreen(); }, 300);
+ }
+}
+
+function toggleFullScreen(){
+ const elem = document.getElementById("videoContainer");
+ if (!document.fullscreenElement) {
+  if (elem.requestFullscreen) elem.requestFullscreen();
+  else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+  else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+ } else {
+  if (document.exitFullscreen) document.exitFullscreen();
+  else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+  else if (document.msExitFullscreen) document.msExitFullscreen();
+ }
 }
 
 function closePlayer(){
+ if (document.fullscreenElement) {
+  document.exitFullscreen().catch(()=>{});
+ }
  document.getElementById("playerModal").classList.remove("open");
  document.getElementById("videoFrame").src="";
  document.body.style.overflow="";
 }
 
-/* =================================
-    HISTORI TONTONAN
-================================= */
-function showHistory(el){
- setActiveNav(el);
+/* HISTORY */
+function showHistory(){
  document.getElementById("categories").classList.add("hidden");
-
- document.getElementById("contentArea").innerHTML=
-  '<h2 class="section-title">Histori tontonan</h2>'+
-  '<div class="video-grid" id="videoGrid"></div>';
-
- if(!watchHistory.length){
-  document.getElementById("videoGrid").innerHTML=
-   '<div class="empty"><h3>Belum ada histori</h3>'+
-   '<p>Video yang kamu tonton akan muncul di sini selama sesi ini.</p></div>';
- }else{
-  renderVideos(watchHistory);
-}
+ document.getElementById("contentArea").innerHTML='<h2 class="section-title">Histori tontonan</h2><div class="video-grid" id="videoGrid"></div>';
+ renderVideos(watchHistory);
 }
 
-/* TAMPILAN AWAL */
+/* SEARCH */
+document.getElementById("searchForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ currentQuery=document.getElementById("searchInput").value.trim();
+ filterCategory("Semua");
+});
+
 renderVideos();
 </script>
 </body>
