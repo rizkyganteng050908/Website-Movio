@@ -230,7 +230,7 @@ body.collapsed .categories{left:72px}
  <div class="login-box">
   <div class="brand"><span class="logo-icon">🎵</span><span>movio music</span></div>
   <h1>Movio Music Streaming</h1>
-  <p>Nikmati lagu-lagu hits, pop akustik, dan musik santai pilihan terbaikmu di sini.</p>
+  <p>Nikmati lagu-lagu hits, pop nostalgia, album Wali & Tipe-X, hingga dugem remix full bass.</p>
 
   <button class="login-btn" id="googleBtn" onclick="googleLogin()">
    <span class="google-icon">G</span> Masuk dengan Google
@@ -249,7 +249,7 @@ body.collapsed .categories{left:72px}
  </div>
 
  <form class="search" id="searchForm">
-  <input id="searchInput" type="search" placeholder="Cari lagu atau artis..." aria-label="Cari lagu">
+  <input id="searchInput" type="search" placeholder="Cari lagu, wali band, tipe-x, dj..." aria-label="Cari lagu">
   <button type="submit" aria-label="Cari">⌕</button>
  </form>
 
@@ -264,10 +264,11 @@ body.collapsed .categories{left:72px}
  <div class="nav-item active" onclick="showHome(this)"><span class="nav-icon">🎧</span><span>Jelajah Musik</span></div>
  <div class="nav-item" onclick="showHistory(this)"><span class="nav-icon">🕒</span><span>Histori Putar</span></div>
  <hr class="nav-divider">
- <div class="nav-heading">Genre Musik</div>
- <div class="nav-item" onclick="filterCategory('Akustik')"><span class="nav-icon">🎸</span><span>Akustik & Tidur</span></div>
- <div class="nav-item" onclick="filterCategory('Pop 2000an')"><span class="nav-icon">🎶</span><span>Pop 2000an</span></div>
- <div class="nav-item" onclick="filterCategory('DJ & Remix')"><span class="nav-icon">🎛️</span><span>DJ & Remix TikTok</span></div>
+ <div class="nav-heading">Genre & Kategori</div>
+ <div class="nav-item" onclick="filterCategory('Pop Nostalgia')"><span class="nav-icon">📻</span><span>Pop Nostalgia (80s-2000s)</span></div>
+ <div class="nav-item" onclick="filterCategory('Pop 2000an')"><span class="nav-icon">🎶</span><span>Band Pop 2000an (Wali / Tipe-X)</span></div>
+ <div class="nav-item" onclick="filterCategory('DJ & Remix')"><span class="nav-icon">🎛️</span><span>DJ Dugem & Breakbeat</span></div>
+ <div class="nav-item" onclick="filterCategory('Akustik')"><span class="nav-icon">🎸</span><span>Akustik Santai</span></div>
  <hr class="nav-divider">
  <div class="nav-item" onclick="showProfile()"><span class="nav-icon">⚙️</span><span>Akun & Setelan</span></div>
 </aside>
@@ -276,9 +277,10 @@ body.collapsed .categories{left:72px}
 <nav class="categories" id="categories">
  <button class="category active" onclick="filterCategory('Semua',this)">Semua Musik</button>
  <button class="category" onclick="filterCategory('Koleksi',this)">❤️ Lagu Disimpan</button>
- <button class="category" onclick="filterCategory('Akustik',this)">🎸 Akustik</button>
+ <button class="category" onclick="filterCategory('Pop Nostalgia',this)">📻 Pop Nostalgia</button>
  <button class="category" onclick="filterCategory('Pop 2000an',this)">🎶 Pop 2000an</button>
  <button class="category" onclick="filterCategory('DJ & Remix',this)">🎛️ DJ & Remix</button>
+ <button class="category" onclick="filterCategory('Akustik',this)">🎸 Akustik</button>
 </nav>
 
 <main>
@@ -384,6 +386,83 @@ const googleProvider = new firebase.auth.GoogleAuthProvider();
 /* MUSIC DATABASE */
 const videos = [
  {
+  id:"85Ek_ihAur0",
+  title:"Lagu Nostalgia 80an dan 90an Terbaik Sepanjang Masa",
+  channel:"Nostalgia Sintetis",
+  category:"Pop Nostalgia",
+  duration:"FULL ALBUM",
+  color:"#d97706",
+  views:"9.5M views",
+  likes: 40450,
+  subscribers: "820K subscriber"
+ },
+ {
+  id:"VwF6A76Xylk",
+  title:"Lagu Nostalgia 90an 2000an Hit Pilihan",
+  channel:"Lalala",
+  category:"Pop Nostalgia",
+  duration:"FULL ALBUM",
+  color:"#2563eb",
+  views:"4.9M views",
+  likes: 16260,
+  subscribers: "350K subscriber"
+ },
+ {
+  id:"YNgYYLCZ1hI",
+  title:"Nostalgia Lagu-Lagu Terbaik Wali Band - Full Album Hits Bikin Baper",
+  channel:"Kedai Chana",
+  category:"Pop 2000an",
+  duration:"FULL ALBUM",
+  color:"#059669",
+  views:"1.4M views",
+  likes: 7554,
+  subscribers: "210K subscriber"
+ },
+ {
+  id:"VP6mRngugVA",
+  title:"Nostalgia Lagu-Lagu Terbaik Wali Band - Full Album Paling Hits",
+  channel:"Petir music ⚡",
+  category:"Pop 2000an",
+  duration:"FULL ALBUM",
+  color:"#e11d48",
+  views:"1.1M views",
+  likes: 4946,
+  subscribers: "180K subscriber"
+ },
+ {
+  id:"TUBVJcalKqs",
+  title:"Tipe - X Full Album Terbaik 2024 | Lagu Indonesia Hits Pilihan",
+  channel:"tamaryn",
+  category:"Pop 2000an",
+  duration:"FULL ALBUM",
+  color:"#7c3aed",
+  views:"20M views",
+  likes: 114137,
+  subscribers: "1.5M subscriber"
+ },
+ {
+  id:"NDNnmQYyxyI",
+  title:"DUGEM TERBARU NONSTOP FULL BASS - DJ TAK MUNGKIN BERKASIH 2026",
+  channel:"Dj Mona belando",
+  category:"DJ & Remix",
+  duration:"FULL BASS",
+  color:"#ff0033",
+  views:"11K views",
+  likes: 124,
+  subscribers: "12K subscriber"
+ },
+ {
+  id:"pbvAzjb81f8",
+  title:"BREAKBEAT STADIUM GEN-Z 2026 🔥 FULL BASS NONSTOP 2 JAM",
+  channel:"Egy Sadewong",
+  category:"DJ & Remix",
+  duration:"2 JAM",
+  color:"#db2777",
+  views:"2.5M views",
+  likes: 19175,
+  subscribers: "410K subscriber"
+ },
+ {
   id:"ifBXLaPp_uY",
   title:"Lagu Jawa Akustik Pengantar Tidur Nyaman",
   channel:"Koleksi Musik",
@@ -398,7 +477,7 @@ const videos = [
   id:"GB09st7rtv0",
   title:"Lagu Pop Indonesia Tahun 2000an With Video Lirik",
   channel:"91 FM",
-  category:"Pop 2000an",
+  category:"Pop Nostalgia",
   duration:"FULL",
   color:"#d97706",
   views:"28M views",
@@ -415,28 +494,6 @@ const videos = [
   views:"5.2M views",
   likes: 42000,
   subscribers: "890K subscriber"
- },
- {
-  id:"ZsijEIkhAcc",
-  title:"DJ TIKTOK TERBARU 2026 🎵 DJ HELIKOPTER TURUN KE PADANG 🔥",
-  channel:"DJ AMOYCAN RMX",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#7c3aed",
-  views:"3.1M views",
-  likes: 28000,
-  subscribers: "620K subscriber"
- },
- {
-  id:"Mn4G8dr2Yw4",
-  title:"Top Hits Spotify Indonesia 2026 | Lagu Hits Populer Terbaru",
-  channel:"Aemj Gaming",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#059669",
-  views:"8.7M views",
-  likes: 95000,
-  subscribers: "2.1M subscriber"
  }
 ];
 
@@ -451,8 +508,8 @@ let isSubscribed = false;
 let isLiked = false;
 let isDisliked = false;
 let currentComments = [
- { author: "Kiki R", text: "Lagu akustiknya bikin tenang banget buat nemenin coding malam." },
- { author: "Rizky", text: "Playlist pop 2000an nya juara, nostalgia masa muda!" }
+ { author: "Kiki R", text: "Komplit banget lagu-lagunya dari Wali, Tipe-X, sampai DJ Breakbeat!" },
+ { author: "Rizky", text: "Mantap Movio Music, nostalgia lagu 80an & 90an nemenin pas santai." }
 ];
 
 /* AUTHENTICATION */
@@ -523,7 +580,7 @@ function filterCategory(category,el=null){
  currentQuery="";
  document.getElementById("searchInput").value="";
  document.getElementById("categories").classList.remove("hidden");
- document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">'+(category==="Koleksi"?"Lagu Disimpan":"Genre: "+category)+'</h2><div class="video-grid" id="videoGrid"></div>';
+ document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">'+(category==="Koleksi"?"Lagu Disimpan":"Kategori: "+category)+'</h2><div class="video-grid" id="videoGrid"></div>';
  renderVideos();
 }
 
@@ -586,7 +643,7 @@ function playVideo(index){
  document.getElementById("playerSubCount").textContent=v.subscribers;
  document.getElementById("playerAvatar").textContent=v.channel.charAt(0);
  document.getElementById("playerAvatar").style.background=v.color;
- document.getElementById("playerDescription").textContent="Genre Musik: " + v.category + " • " + v.views;
+ document.getElementById("playerDescription").textContent="Kategori Musik: " + v.category + " • " + v.views;
 
  document.getElementById("likeCount").textContent = v.likes.toLocaleString();
 
