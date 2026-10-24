@@ -1,175 +1,130 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0f0f0f">
-<title>Movio — Watch Something Amazing</title>
+<title>Movio - Watch Something Amazing</title>
 
 <style>
-:root{
-  --bg:#0f0f0f;--panel:#181818;--hover:#292929;
-  --text:#f1f1f1;--muted:#aaa;--red:#ff3155;--border:#303030;
-}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+:root{--bg:#0f0f0f;--panel:#181818;--hover:#303030;--text:#f1f1f1;--muted:#aaa;--red:#ff3155}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
 button,input{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
-button:focus-visible,input:focus-visible{outline:2px solid #79aaff;outline-offset:3px}
-
-/* BRAND */
-.brand{display:flex;align-items:center;gap:9px;font-size:25px;font-weight:800;letter-spacing:-1px}
-.brand-icon{display:grid;place-items:center;width:38px;height:29px;border-radius:8px;background:var(--red);color:white;font-size:17px}
-.muted{color:var(--muted)}
+.brand{display:flex;align-items:center;gap:9px;font-size:25px;font-weight:800}
+.logo{background:var(--red);padding:6px 9px;border-radius:8px}
+.muted,.meta{color:var(--muted)}
+button:focus-visible,input:focus-visible{outline:2px solid #78aaff}
 
 /* LOGIN */
-.login-screen{
- position:fixed;inset:0;z-index:1000;display:flex;align-items:center;
- justify-content:center;padding:20px;overflow-y:auto;
- background:radial-gradient(ellipse at 15% 20%,#63223b 0,transparent 42%),
- radial-gradient(ellipse at 85% 85%,#20295c 0,transparent 45%),#0b0b0f
-}
-.login-box{
- width:100%;max-width:420px;padding:36px 30px;text-align:center;
- border:1px solid #ffffff20;border-radius:24px;background:#17171bf5;
- box-shadow:0 25px 90px #0008
-}
+.login-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(ellipse at 10% 10%,#51213d,transparent 45%),radial-gradient(ellipse at 90% 90%,#20265b,transparent 45%),#0b0b0f}
+.login-box{width:100%;max-width:420px;padding:35px 28px;text-align:center;border:1px solid #ffffff20;border-radius:24px;background:#18181df5}
 .login-box .brand{justify-content:center}
-.login-box h1{font-size:28px;margin:30px 0 10px}
+.login-box h1{margin:28px 0 10px}
 .login-box p{font-size:14px;line-height:1.7;color:var(--muted)}
-.login-btn{
- width:100%;padding:14px;margin-top:13px;border:1px solid #444;
- border-radius:30px;background:#fff;color:#222;font-weight:bold
-}
-.login-btn:hover{filter:brightness(.92)}
-.login-btn.guest{background:var(--red);color:white;border-color:var(--red)}
-.google-g{font-weight:bold;font-size:18px;color:#4285f4;margin-right:9px}
-.login-note{font-size:11px!important;margin-top:23px}
-.login-error{color:#ff8585!important;font-size:13px!important}
+.login-btn{width:100%;margin-top:14px;padding:14px;border:1px solid #444;border-radius:30px;background:#fff;color:#222;font-weight:bold}
+.login-btn.guest{background:var(--red);border-color:var(--red);color:white}
+.login-btn:disabled{opacity:.6;cursor:wait}
+.google-icon{color:#4285f4;font-size:19px;margin-right:9px}
+#error{color:#ff9999!important;overflow-wrap:anywhere}
 
 /* HEADER */
-header{
- position:fixed;z-index:100;inset:0 0 auto;height:64px;background:var(--bg);
- display:flex;align-items:center;justify-content:space-between;gap:18px;padding:0 24px
-}
-.header-left,.header-right{display:flex;align-items:center;gap:14px}
+header{height:64px;position:fixed;z-index:100;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:0 22px;background:var(--bg)}
+.header-left,.header-right{display:flex;align-items:center;gap:12px}
 .icon-btn{width:40px;height:40px;border:0;border-radius:50%;background:transparent;color:white;font-size:21px}
 .icon-btn:hover{background:var(--hover)}
-.search{display:flex;width:min(48vw,590px);height:42px}
-.search input{
- min-width:0;flex:1;background:#121212;color:white;border:1px solid #393939;
- border-radius:25px 0 0 25px;padding:0 18px;outline:none
-}
-.search button{width:65px;background:#252525;color:white;border:1px solid #393939;border-radius:0 25px 25px 0;font-size:20px}
-.profile{
- width:36px;height:36px;border:0;border-radius:50%;background:#7439a8;
- color:white;font-weight:bold;overflow:hidden;flex-shrink:0
-}
+.search{display:flex;width:min(48vw,600px);height:42px}
+.search input{flex:1;min-width:0;padding:0 18px;border:1px solid #393939;border-radius:24px 0 0 24px;background:#121212;color:white}
+.search button{width:62px;border:1px solid #393939;border-radius:0 24px 24px 0;background:#272727;color:white;font-size:21px}
+.profile{width:36px;height:36px;border:0;border-radius:50%;background:#7439a8;color:white;font-weight:bold;overflow:hidden;flex-shrink:0}
 .profile img{width:100%;height:100%;object-fit:cover}
-.user-label{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--muted)}
+.user-label{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--muted)}
 
 /* SIDEBAR */
-.sidebar{
- position:fixed;z-index:90;left:0;top:64px;bottom:0;width:235px;
- overflow-y:auto;padding:12px;background:var(--bg)
-}
-.nav-item{
- display:flex;align-items:center;gap:22px;padding:13px 14px;border-radius:11px;
- cursor:pointer;font-size:14px
-}
+.sidebar{position:fixed;top:64px;bottom:0;left:0;width:220px;overflow-y:auto;padding:12px;background:var(--bg);z-index:90}
+.nav-item{display:flex;align-items:center;gap:20px;padding:13px 14px;border-radius:10px;cursor:pointer;font-size:14px}
 .nav-item:hover,.nav-item.active{background:var(--hover)}
-.nav-icon{width:22px;text-align:center;font-size:20px}
-.nav-divider{border:0;border-top:1px solid var(--border);margin:14px 0}
+.nav-icon{width:23px;text-align:center;font-size:20px}
+.nav-divider{border:0;border-top:1px solid #333;margin:14px 0}
 .nav-heading{padding:10px 14px;font-weight:bold}
 
-/* CATEGORIES AND VIDEO GRID */
-.categories{
- position:fixed;z-index:80;top:64px;left:235px;right:0;display:flex;gap:12px;
- overflow-x:auto;padding:14px 25px;background:var(--bg);scrollbar-width:none
-}
-.categories::-webkit-scrollbar{display:none}
-.category{white-space:nowrap;border:0;border-radius:8px;padding:9px 14px;background:#272727;color:white;font-size:13px}
+/* CATEGORIES */
+.categories{position:fixed;z-index:80;top:64px;left:220px;right:0;display:flex;gap:12px;overflow-x:auto;padding:14px 24px;background:var(--bg);scrollbar-width:none}
+.category{white-space:nowrap;border:0;border-radius:8px;padding:9px 15px;background:#272727;color:white;font-size:13px}
 .category.active{background:white;color:#111;font-weight:bold}
-main{margin-left:235px;padding:126px 26px 40px}
-.section-title{font-size:23px;margin:15px 0 23px}
-.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px 17px}
+main{margin-left:220px;padding:125px 25px 40px}
+.section-title{font-size:22px;margin:15px 0 22px}
+.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 17px}
 .video-card{min-width:0;cursor:pointer}
-.thumbnail{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:#252525}
-.thumbnail img{width:100%;height:100%;object-fit:cover;transition:transform .25s}
+.thumbnail{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:#252525}
+.thumbnail img{width:100%;height:100%;object-fit:cover;transition:transform .2s}
 .video-card:hover .thumbnail img{transform:scale(1.04)}
-.duration{position:absolute;bottom:8px;right:8px;background:#000d;padding:4px 6px;border-radius:4px;font-size:11px}
-.video-info{display:flex;gap:12px;padding-top:13px}
-.avatar{width:37px;height:37px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;font-weight:bold;color:white}
-.video-title{font-size:14px;line-height:1.5;font-weight:bold;margin-bottom:7px}
-.video-meta{font-size:12px;color:var(--muted);line-height:1.7}
-.empty{text-align:center;padding:60px 10px;color:var(--muted)}
-/* PLAYER */
+.duration{position:absolute;right:8px;bottom:8px;background:#000d;padding:4px 6px;border-radius:4px;font-size:11px}
+.video-info{display:flex;gap:11px;padding-top:12px}
+.avatar{width:36px;height:36px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;font-weight:bold}
+.video-title{font-size:14px;font-weight:bold;line-height:1.5;margin-bottom:6px}
+.meta{font-size:12px;line-height:1.7}
+.empty{grid-column:1/-1;text-align:center;padding:60px 10px;color:var(--muted)}
+
+/* VIDEO PLAYER */
 .player-modal{display:none;position:fixed;inset:0;z-index:500;overflow-y:auto;background:#0f0f0f;padding:20px}
 .player-modal.open{display:block}
 .player-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .player-layout{max-width:1250px;margin:auto;display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:24px}
-.player-frame{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:black}
-.player-title{font-size:21px;line-height:1.4}
-.player-description{padding:16px;background:#242424;border-radius:12px;font-size:13px;line-height:1.8;overflow-wrap:anywhere}
+.player-frame{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#000}
+.player-title{font-size:21px;line-height:1.5}
+.player-description{padding:16px;border-radius:12px;background:#242424;font-size:13px;line-height:1.8;overflow-wrap:anywhere}
 .related-item{display:flex;gap:10px;margin-bottom:15px;cursor:pointer}
-.related-item img{width:145px;aspect-ratio:16/9;object-fit:cover;border-radius:7px}
-.related-title{font-size:12px;line-height:1.5;font-weight:bold}
-.shorts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
-.short-card{cursor:pointer}
-.short-card img{width:100%;aspect-ratio:9/14;object-fit:cover;border-radius:12px}
-.short-card h3{font-size:14px;line-height:1.5}
-.notice{padding:14px;background:#272727;border-radius:10px;color:#ddd;font-size:13px;line-height:1.7}
+.related-item img{width:135px;aspect-ratio:16/9;object-fit:cover;border-radius:7px}
+.related-title{font-size:12px;font-weight:bold;line-height:1.5}
+.notice{padding:14px;border-radius:10px;background:#252525;font-size:13px;line-height:1.7}
 
-body.collapsed .sidebar{width:78px}
-body.collapsed .sidebar .nav-item{flex-direction:column;gap:6px;padding:13px 2px;font-size:10px;text-align:center}
+body.collapsed .sidebar{width:75px}
+body.collapsed .sidebar .nav-item{flex-direction:column;gap:6px;padding:12px 2px;font-size:10px;text-align:center}
 body.collapsed .sidebar .nav-heading,body.collapsed .sidebar .nav-divider{display:none}
-body.collapsed main{margin-left:78px}
-body.collapsed .categories{left:78px}
+body.collapsed main{margin-left:75px}
+body.collapsed .categories{left:75px}
 
-@media(max-width:1100px){
- .video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .player-layout{grid-template-columns:1fr}
-}
+@media(max-width:1050px){.video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.player-layout{grid-template-columns:1fr}}
 @media(max-width:650px){
- header{height:58px;padding:0 9px;gap:7px}
- .header-left,.header-right{gap:5px}
- .brand{font-size:21px;gap:6px}
- .brand-icon{width:31px;height:25px}
- .search{flex:1;width:auto;height:37px}
- .search input{width:40px;padding:0 10px}
+ header{height:58px;padding:0 8px;gap:5px}
+ .header-left,.header-right{gap:4px}
+ .brand{font-size:20px;gap:5px}
+ .logo{padding:5px 7px}
+ .search{height:37px;flex:1;width:auto}
+ .search input{width:30px;padding:0 9px}
  .search button{width:40px}
  .user-label{display:none}
- .sidebar{top:58px;width:68px;padding:6px}
- .sidebar .nav-item{flex-direction:column;gap:6px;padding:12px 2px;font-size:9px;text-align:center}
+ .sidebar{top:58px;width:65px;padding:5px}
+ .sidebar .nav-item{flex-direction:column;gap:5px;padding:12px 1px;font-size:9px;text-align:center}
  .sidebar .nav-heading,.sidebar .nav-divider{display:none}
- .categories{top:58px;left:68px;padding:12px 10px}
- main{margin-left:68px;padding:115px 10px 30px}
+ .categories{top:58px;left:65px;padding:12px 10px}
+ main{margin-left:65px;padding:115px 10px 30px}
  .video-grid{grid-template-columns:1fr;gap:25px}
- .section-title{font-size:20px}
  .player-modal{padding:10px}
  .player-title{font-size:17px}
- .login-box{padding:28px 20px}
+ .login-box{padding:27px 20px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN MOVIO -->
+<!-- HALAMAN LOGIN -->
 <section class="login-screen" id="loginScreen">
  <div class="login-box">
-  <div class="brand"><span class="brand-icon">▶</span><span>movio</span></div>
+  <div class="brand"><span class="logo">▶</span><span>movio</span></div>
   <h1>Welcome to Movio</h1>
-  <p>Temukan video favoritmu, nikmati hiburan, dan jelajahi dunia tanpa batas.</p>
+  <p>Temukan video favoritmu, jelajahi hiburan, dan nikmati pengalaman menonton.</p>
 
   <button class="login-btn" id="googleBtn" onclick="googleLogin()">
-   <span class="google-g">G</span> Lanjutkan dengan Google
+   <span class="google-icon">G</span> Lanjutkan dengan Google
   </button>
   <button class="login-btn guest" onclick="guestLogin()">👤 Masuk sebagai Guest</button>
-  <p id="loginError" class="login-error" role="alert"></p>
-  <p class="login-note">Masuk dan mulai jelajahi video di Movio.</p>
+  <p id="error" role="alert"></p>
+  <p>Dengan masuk, kamu dapat menjelajahi Movio.</p>
  </div>
 </section>
 
@@ -177,12 +132,14 @@ body.collapsed .categories{left:78px}
 <header>
  <div class="header-left">
   <button class="icon-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
-  <div class="brand"><span class="brand-icon">▶</span><span>movio</span></div>
+  <div class="brand"><span class="logo">▶</span><span>movio</span></div>
  </div>
+
  <form class="search" id="searchForm">
-  <input id="searchInput" type="search" placeholder="Cari video..." autocomplete="off" aria-label="Cari video">
+  <input id="searchInput" type="search" placeholder="Cari video..." aria-label="Cari video">
   <button type="submit" aria-label="Cari">⌕</button>
  </form>
+
  <div class="header-right">
   <span class="user-label" id="userLabel">Guest</span>
   <button class="profile" id="profileBtn" onclick="showProfile()" aria-label="Profil">G</button>
@@ -192,12 +149,12 @@ body.collapsed .categories{left:78px}
 <!-- SIDEBAR -->
 <aside class="sidebar">
  <div class="nav-item active" onclick="showHome(this)"><span class="nav-icon">⌂</span><span>Beranda</span></div>
- <div class="nav-item" onclick="showShorts(this)"><span class="nav-icon">▣</span><span>Shorts</span></div>
+ <div class="nav-item" onclick="showMessage('Fitur Shorts belum dibuat.')"><span class="nav-icon">▣</span><span>Shorts</span></div>
  <div class="nav-item" onclick="showMessage('Fitur subscription belum tersedia.')"><span class="nav-icon">▤</span><span>Subscription</span></div>
  <hr class="nav-divider">
  <div class="nav-heading">Kamu ›</div>
  <div class="nav-item" onclick="showHistory(this)"><span class="nav-icon">◷</span><span>Histori</span></div>
- <div class="nav-item" onclick="showMessage('Playlist akan ditambahkan pada versi berikutnya.')"><span class="nav-icon">☷</span><span>Playlist</span></div>
+ <div class="nav-item" onclick="showMessage('Playlist belum tersedia.')"><span class="nav-icon">☷</span><span>Playlist</span></div>
  <div class="nav-item" onclick="showMessage('Fitur video disukai belum tersedia.')"><span class="nav-icon">♡</span><span>Video disukai</span></div>
  <hr class="nav-divider">
  <div class="nav-heading">Jelajahi</div>
@@ -217,6 +174,7 @@ body.collapsed .categories{left:78px}
  <button class="category" onclick="filterCategory('Teknologi',this)">Teknologi</button>
  <button class="category" onclick="filterCategory('Edukasi',this)">Edukasi</button>
  <button class="category" onclick="filterCategory('Film',this)">Film</button>
+ <button class="category" onclick="filterCategory('Koleksi',this)">Koleksi Movio</button>
 </nav>
 
 <main>
@@ -226,11 +184,11 @@ body.collapsed .categories{left:78px}
  </div>
 </main>
 
-<!-- PLAYER -->
+<!-- PEMUTAR VIDEO -->
 <section class="player-modal" id="playerModal">
  <div class="player-top">
-  <div class="brand"><span class="brand-icon">▶</span><span>movio</span></div>
-  <button class="icon-btn" onclick="closePlayer()" aria-label="Tutup pemutar">✕</button>
+  <div class="brand"><span class="logo">▶</span><span>movio</span></div>
+  <button class="icon-btn" onclick="closePlayer()" aria-label="Tutup">✕</button>
  </div>
  <div class="player-layout">
   <div>
@@ -240,23 +198,20 @@ body.collapsed .categories{left:78px}
    <h2 class="player-title" id="playerTitle"></h2>
    <div class="player-description" id="playerDescription"></div>
   </div>
-  <div>
-   <h3>Video lainnya</h3>
-   <div id="relatedVideos"></div>
-  </div>
+  <div><h3>Video lainnya</h3><div id="relatedVideos"></div></div>
  </div>
 </section>
 
-<!-- Firebase SDK: kompatibel dengan kode Movio satu file -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
 <script>
 "use strict";
 
-/* =========================================
-   1. KONFIGURASI FIREBASE MOVIO
-========================================= */
+/* ===================================
+   KONFIGURASI FIREBASE MOVIO
+=================================== */
 const firebaseConfig = {
   apiKey: "AIzaSyC2MfL9EFzVyxOyxemFV-_ywR01S2uEtAc",
   authDomain: "movio-6211e.firebaseapp.com",
@@ -268,399 +223,260 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-/* =========================================
-   2. DATA VIDEO DEMO
-========================================= */
+/* ===================================
+   DATA VIDEO
+   4 video dari tautan kamu ditambahkan
+=================================== */
 const videos = [
- {id:"jfKfPfyJRdk",title:"Lofi hip hop radio — beats to relax / study to",channel:"Lofi Girl",category:"Musik",duration:"LIVE",color:"#8b5cf6"},
+ {id:"jfKfPfyJRdk",title:"Lofi hip hop radio",channel:"Lofi Girl",category:"Musik",duration:"LIVE",color:"#8b5cf6"},
  {id:"aqz-KE-bpKQ",title:"Big Buck Bunny — Animated Short Film",channel:"Blender Studio",category:"Film",duration:"9:56",color:"#16a085"},
  {id:"M7lc1UVf-VE",title:"Contoh pemutar video YouTube",channel:"Movio Studio",category:"Teknologi",duration:"Demo",color:"#db2777"},
  {id:"kJQP7kiw5Fk",title:"Despacito — Luis Fonsi ft. Daddy Yankee",channel:"Luis Fonsi",category:"Musik",duration:"4:42",color:"#dc2626"},
  {id:"L_jWHffIx5E",title:"Smash Mouth — All Star",channel:"Smash Mouth",category:"Musik",duration:"3:57",color:"#ca8a04"},
- {id:"ysz5S6PUM-U",title:"Contoh video untuk belajar dan eksplorasi",channel:"Web Developer",category:"Edukasi",duration:"Demo",color:"#0891b2"},
- {id:"ScMzIvxBSi4",title:"Video hiburan pilihan Movio",channel:"Movio Entertainment",category:"Komedi",duration:"Demo",color:"#9333ea"},
- {id:"aqz-KE-bpKQ",title:"Animasi kreatif untuk waktu santai",channel:"Creative Studio",category:"Film",duration:"9:56",color:"#059669"},
- {id:"M7lc1UVf-VE",title:"Mengenal teknologi digital",channel:"Tech Channel",category:"Teknologi",duration:"Demo",color:"#4f46e5"},
- {id:"jfKfPfyJRdk",title:"Musik santai menemani aktivitas",channel:"Music Space",category:"Musik",duration:"LIVE",color:"#db2777"},
- {id:"kJQP7kiw5Fk",title:"Playlist musik pilihan Movio",channel:"Movio Music",category:"Musik",duration:"4:42",color:"#ea580c"},
- {id:"ScMzIvxBSi4",title:"Video menarik untuk kamu",channel:"Movio Explore",category:"Gaming",duration:"Demo",color:"#2563eb"}
+ {id:"ysz5S6PUM-U",title:"Video belajar dan eksplorasi",channel:"Web Developer",category:"Edukasi",duration:"Demo",color:"#0891b2"},
+ {id:"ScMzIvxBSi4",title:"Video hiburan Movio",channel:"Movio Entertainment",category:"Komedi",duration:"Demo",color:"#9333ea"},
+
+ {id:"0BXVNT1yxqw",title:"Video tambahan 1",channel:"Koleksi Movio",category:"Koleksi",duration:"Video",color:"#e11d48"},
+ {id:"ZsijEIkhAcc",title:"Video tambahan 2",channel:"Koleksi Movio",category:"Koleksi",duration:"Video",color:"#7c3aed"},
+ {id:"wu_pYYbSCG4",title:"Video tambahan 3",channel:"Koleksi Movio",category:"Koleksi",duration:"Video",color:"#0284c7"},
+ {id:"Mn4G8dr2Yw4",title:"Video tambahan 4",channel:"Koleksi Movio",category:"Koleksi",duration:"Video",color:"#059669"}
 ];
 
 let currentUser = null;
+let isGuest = false;
 let currentCategory = "Semua";
 let currentQuery = "";
 let watchHistory = [];
-let currentVideo = null;
-let isGuest = false;
 
-/* =========================================
-   3. LOGIN GOOGLE FIREBASE
-========================================= */
-async function googleLogin() {
-  const button = document.getElementById("googleBtn");
-  const errorBox = document.getElementById("loginError");
+/* LOGIN GOOGLE */
+async function googleLogin(){
+ const button=document.getElementById("googleBtn");
+ const error=document.getElementById("error");
+ button.disabled=true;
+ button.textContent="Menghubungkan ke Google...";
+ error.textContent="";
 
-  button.disabled = true;
-  button.textContent = "Menghubungkan ke Google...";
-  errorBox.textContent = "";
-
-  try {
-    const result = await auth.signInWithPopup(googleProvider);
-    enterGoogleUser(result.user);
-  } catch (error) {
-    console.error("Login Google:", error);
-
-    if (error.code === "auth/popup-blocked") {
-      try {
-        const result = await auth.signInWithRedirect(googleProvider);
-        return;
-      } catch (redirectError) {
-        errorBox.textContent = "Popup diblokir. Izinkan popup lalu coba lagi.";
-      }
-    } else if (error.code === "auth/popup-closed-by-user") {
-      errorBox.textContent = "Jendela login ditutup sebelum selesai.";
-    } else if (error.code === "auth/unauthorized-domain") {
-      errorBox.textContent = "Domain belum diizinkan di Firebase Authentication.";
-    } else if (
-      error.code === "auth/operation-not-allowed" ||
-      error.code === "auth/provider-already-linked"
-    ) {
-      errorBox.textContent = "Periksa apakah provider Google sudah diaktifkan.";
-    } else {
-      errorBox.textContent = "Login gagal: " + (error.message || error.code);
-    }
-  } finally {
-    button.disabled = false;
-    button.innerHTML = '<span class="google-g">G</span> Lanjutkan dengan Google';
-  }
-}
-
-function enterGoogleUser(user) {
-  isGuest = false;
-  currentUser = {
-    name: user.displayName || "Pengguna Movio",
-    email: user.email || "",
-    photo: user.photoURL || "",
-    type: "google"
-  };
-
-  document.getElementById("loginScreen").classList.add("hidden");
-  document.getElementById("userLabel").textContent = currentUser.name;
-
-  const profile = document.getElementById("profileBtn");
-  profile.replaceChildren();
-
-  if (currentUser.photo) {
-    const img = document.createElement("img");
-    img.src = currentUser.photo;
-    img.alt = "Foto profil";
-    profile.appendChild(img);
-  } else {
-    profile.textContent = currentUser.name.charAt(0).toUpperCase();
-  }
-
-  renderVideos();
-}
-
-/* =========================================
-   4. LOGIN GUEST
-========================================= */
-function guestLogin() {
-  isGuest = true;
-  currentUser = {name:"Guest",email:"",photo:"",type:"guest"};
-  document.getElementById("loginScreen").classList.add("hidden");
-  document.getElementById("loginError").textContent = "";
-  document.getElementById("userLabel").textContent = "Guest";
-
-  const profile = document.getElementById("profileBtn");
-  profile.replaceChildren();
-  profile.textContent = "G";
-
-  showHome(document.querySelector(".sidebar .nav-item"));
-}
-
-/* =========================================
-   5. PEMULIHAN SESI FIREBASE
-========================================= */
-auth.getRedirectResult().then(result => {
-  if (result && result.user) enterGoogleUser(result.user);
-}).catch(error => {
-  console.error("Hasil redirect:", error);
-  document.getElementById("loginError").textContent =
-    "Login redirect gagal. Coba login Google sekali lagi.";
-});
-
-auth.onAuthStateChanged(user => {
-  if (user) {
-    enterGoogleUser(user);
-  } else if (!isGuest) {
-    currentUser = null;
-    document.getElementById("loginScreen").classList.remove("hidden");
-  }
-});
-
-/* =========================================
-   6. PROFIL DAN LOGOUT
-========================================= */
-async function showProfile() {
-  if (!currentUser) return;
-
-  const details = "Akun: " + currentUser.name +
-    (currentUser.email ? "\nEmail: " + currentUser.email : "") +
-    "\nJenis: " + (isGuest ? "Guest" : "Google") +
-    "\n\nKeluar dari Movio?";
-
-  if (!confirm(details)) return;
-
-  try {
-    if (!isGuest && auth.currentUser) await auth.signOut();
-
-    isGuest = false;
-    currentUser = null;
-    closePlayer();
-
-    document.getElementById("loginScreen").classList.remove("hidden");
-    document.getElementById("userLabel").textContent = "Guest";
-
-    const profile = document.getElementById("profileBtn");
-    profile.replaceChildren();
-    profile.textContent = "G";
-  } catch (error) {
-    alert("Gagal keluar: " + error.message);
-  }
-}
-
-/* =========================================
-   7. NAVIGASI DAN PENCARIAN
-========================================= */
-function toggleSidebar() {
-  document.body.classList.toggle("collapsed");
-}
-
-function showMessage(message) {
-  alert(message);
-}
-
-function setActiveNav(element) {
-  document.querySelectorAll(".sidebar .nav-item").forEach(item => {
-    item.classList.remove("active");
-  });
-  if (element) element.classList.add("active");
-}
-
-function setActiveCategory(element) {
-  document.querySelectorAll(".category").forEach(item => {
-    item.classList.remove("active");
-  });
-  if (element) element.classList.add("active");
-}
-
-function filterCategory(category, element = null) {
-  currentCategory = category;
-  currentQuery = "";
-  document.getElementById("searchInput").value = "";
-  document.getElementById("categories").classList.remove("hidden");
-
-  if (element) {
-    setActiveCategory(element);
-  } else {
-    const button = [...document.querySelectorAll(".category")]
-      .find(item => item.textContent.trim() === category);
-    setActiveCategory(button);
-  }
-
-  document.getElementById("contentArea").innerHTML =
-    '<h2 class="section-title" id="pageTitle"></h2>' +
-    '<div class="video-grid" id="videoGrid"></div>';
-
-  document.getElementById("pageTitle").textContent =
-    category === "Semua" ? "Rekomendasi untuk kamu" : category;
-
-  renderVideos();
-}
-
-function showHome(element) {
-  currentCategory = "Semua";
-  currentQuery = "";
-  document.getElementById("searchInput").value = "";
-  setActiveNav(element);
-  document.getElementById("categories").classList.remove("hidden");
-  document.getElementById("contentArea").innerHTML =
-    '<h2 class="section-title" id="pageTitle">Rekomendasi untuk kamu</h2>' +
-    '<div class="video-grid" id="videoGrid"></div>';
-  setActiveCategory(document.querySelector(".category"));
-  renderVideos();
-}
-
-document.getElementById("searchForm").addEventListener("submit", event => {
-  event.preventDefault();
-  currentQuery = document.getElementById("searchInput").value.trim();
-  currentCategory = "Semua";
-  setActiveCategory(document.querySelector(".category"));
-
-  document.getElementById("categories").classList.remove("hidden");
-  document.getElementById("contentArea").innerHTML =
-    '<h2 class="section-title" id="pageTitle"></h2>' +
-    '<div class="video-grid" id="videoGrid"></div>';
-
-  document.getElementById("pageTitle").textContent =
-    currentQuery ? "Hasil pencarian: " + currentQuery : "Semua video";
-
-  renderVideos();
-});
-
-document.getElementById("searchInput").addEventListener("input", event => {
-  if (event.target.value.trim() === "") {
-    currentQuery = "";
-    renderVideos();
-  }
-});
-
-/* =========================================
-   8. RENDER VIDEO
-========================================= */
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[char]);
-}
-
-function renderVideos(list = null) {
-  const grid = document.getElementById("videoGrid");
-  if (!grid) return;
-
-  const filtered = list || videos.filter(video => {
-    const categoryMatches =
-      currentCategory === "Semua" || video.category === currentCategory;
-    const searchable =
-      (video.title + " " + video.channel + " " + video.category).toLowerCase();
-    return categoryMatches && searchable.includes(currentQuery.toLowerCase());
-  });
-
-  if (!filtered.length) {
-    grid.innerHTML =
-      '<div class="empty" style="grid-column:1/-1">' +
-      '<div style="font-size:40px">⌕</div><h3>Video tidak ditemukan</h3>' +
-      '<p>Coba kata pencarian atau kategori lainnya.</p></div>';
+ try{
+  const result=await auth.signInWithPopup(googleProvider);
+  enterGoogleUser(result.user);
+ }catch(e){
+  console.error(e);
+  if(e.code==="auth/popup-blocked"){
+   try{
+    await auth.signInWithRedirect(googleProvider);
     return;
+   }catch(err){error.textContent="Popup diblokir. Izinkan popup di browser.";}
+  }else if(e.code==="auth/unauthorized-domain"){
+   error.textContent="Domain belum terdaftar di Firebase Authorized domains.";
+  }else if(e.code==="auth/operation-not-allowed"){
+   error.textContent="Aktifkan provider Google di Firebase Authentication.";
+  }else if(e.code==="auth/popup-closed-by-user"){
+   error.textContent="Login dibatalkan. Silakan coba kembali.";
+  }else{
+   error.textContent="Login gagal: "+(e.message||e.code||"Kesalahan tidak diketahui");
   }
-
-  grid.innerHTML = filtered.map(video => {
-    const index = videos.indexOf(video);
-    const thumbnail = "https://img.youtube.com/vi/" +
-      encodeURIComponent(video.id) + "/hqdefault.jpg";
-
-    return `
-      <article class="video-card" onclick="playVideo(${index})">
-        <div class="thumbnail">
-          <img src="${thumbnail}" alt="${escapeHTML(video.title)}"
-            loading="lazy" onerror="this.style.opacity='.3'">
-          <span class="duration">${escapeHTML(video.duration)}</span>
-        </div>
-        <div class="video-info">
-          <div class="avatar" style="background:${video.color}">
-            ${escapeHTML(video.channel.charAt(0).toUpperCase())}
-          </div>
-          <div>
-            <div class="video-title">${escapeHTML(video.title)}</div>
-            <div class="video-meta">${escapeHTML(video.channel)}<br>
-              ${escapeHTML(video.category)} · Video demo
-            </div>
-          </div>
-        </div>
-      </article>`;
-  }).join("");
+ }finally{
+  button.disabled=false;
+  button.innerHTML='<span class="google-icon">G</span> Lanjutkan dengan Google';
+ }
 }
 
-/* =========================================
-   9. PEMUTAR VIDEO
-========================================= */
-function playVideo(index) {
-  const video = videos[index];
-  if (!video) return;
-
-  currentVideo = video;
-  watchHistory = [video, ...watchHistory.filter(item => item !== video)];
-
-  document.getElementById("videoFrame").src =
-    "https://www.youtube-nocookie.com/embed/" +
-    encodeURIComponent(video.id) + "?autoplay=1&rel=0";
-
-  document.getElementById("playerTitle").textContent = video.title;
-  document.getElementById("playerDescription").innerHTML =
-    "<strong>" + escapeHTML(video.channel) + "</strong><br>" +
-    "Kategori: " + escapeHTML(video.category) +
-    "<br><br>Selamat menonton di Movio. Video diputar melalui YouTube Embed.";
-
-  document.getElementById("relatedVideos").innerHTML =
-    videos.filter(item => item !== video).slice(0, 7).map(item => `
-      <div class="related-item" onclick="playVideo(${videos.indexOf(item)})">
-        <img src="https://img.youtube.com/vi/${encodeURIComponent(item.id)}/mqdefault.jpg"
-          alt="" loading="lazy">
-        <div class="related-title">${escapeHTML(item.title)}
-          <div class="video-meta">${escapeHTML(item.channel)}</div>
-        </div>
-      </div>
-    `).join("");
-
-  document.getElementById("playerModal").classList.add("open");
-  document.body.style.overflow = "hidden";
+function enterGoogleUser(user){
+ isGuest=false;
+ currentUser={name:user.displayName||"Pengguna Movio",email:user.email||"",photo:user.photoURL||"",type:"google"};
+ document.getElementById("loginScreen").classList.add("hidden");
+ document.getElementById("userLabel").textContent=currentUser.name;
+ const profile=document.getElementById("profileBtn");
+ profile.replaceChildren();
+ if(currentUser.photo){
+  const img=document.createElement("img");
+  img.src=currentUser.photo;img.alt="Foto profil";profile.appendChild(img);
+ }else{
+  profile.textContent=currentUser.name.charAt(0).toUpperCase();
+ }
+ renderVideos();
 }
 
-function closePlayer() {
-  document.getElementById("playerModal").classList.remove("open");
-  document.getElementById("videoFrame").src = "";
-  document.body.style.overflow = "";
+/* LOGIN GUEST */
+function guestLogin(){
+ isGuest=true;
+ currentUser={name:"Guest",email:"",photo:"",type:"guest"};
+ document.getElementById("loginScreen").classList.add("hidden");
+ document.getElementById("userLabel").textContent="Guest";
+ document.getElementById("profileBtn").textContent="G";
+ showHome(document.querySelector(".sidebar .nav-item"));
 }
 
-/* =========================================
-   10. HISTORI TONTONAN
-========================================= */
-function showHistory(element) {
-  setActiveNav(element);
-  document.getElementById("categories").classList.add("hidden");
+/* MEMULIHKAN SESI */
+auth.getRedirectResult().then(result=>{
+ if(result&&result.user)enterGoogleUser(result.user);
+}).catch(e=>{
+ console.error("Redirect login:",e);
+ document.getElementById("error").textContent="Login redirect gagal. Coba lagi.";
+});
 
-  document.getElementById("contentArea").innerHTML =
-    '<h2 class="section-title">Histori tontonan</h2>' +
-    '<div class="video-grid" id="videoGrid"></div>';
+auth.onAuthStateChanged(user=>{
+ if(user)enterGoogleUser(user);
+ else if(!isGuest){
+  currentUser=null;
+  document.getElementById("loginScreen").classList.remove("hidden");
+ }
+});
 
-  if (!watchHistory.length) {
-    document.getElementById("videoGrid").innerHTML =
-      '<div class="empty" style="grid-column:1/-1">' +
-      '<h3>Belum ada histori</h3><p>Video yang kamu tonton di sesi ini muncul di sini.</p></div>';
-  } else {
-    renderVideos(watchHistory);
-  }
+/* PROFIL / LOGOUT */
+async function showProfile(){
+ if(!currentUser)return;
+ const message="Akun: "+currentUser.name+
+ (currentUser.email?"\nEmail: "+currentUser.email:"")+
+ "\n\nKeluar dari Movio?";
+ if(!confirm(message))return;
+
+ try{
+  if(!isGuest&&auth.currentUser)await auth.signOut();
+  currentUser=null;isGuest=false;
+  closePlayer();
+  document.getElementById("loginScreen").classList.remove("hidden");
+  document.getElementById("userLabel").textContent="Guest";
+  document.getElementById("profileBtn").textContent="G";
+ }catch(e){alert("Gagal keluar: "+e.message);}
 }
 
-/* =========================================
-   11. SHORTS DEMO
-========================================= */
-function showShorts(element) {
-  setActiveNav(element);
-  document.getElementById("categories").classList.add("hidden");
+/* NAVIGASI */
+function toggleSidebar(){document.body.classList.toggle("collapsed");}
+function showMessage(message){alert(message);}
 
-  document.getElementById("contentArea").innerHTML =
-    '<h2 class="section-title">⚡ Movio Shorts</h2>' +
-    '<p class="muted">Video pilihan untuk kamu.</p>' +
-    '<div class="shorts-grid" id="shortsGrid"></div>';
-
-  document.getElementById("shortsGrid").innerHTML =
-    videos.slice(0, 8).map((video, index) => `
-      <article class="short-card" onclick="playVideo(${index})">
-        <img src="https://img.youtube.com/vi/${encodeURIComponent(video.id)}/hqdefault.jpg"
-          alt="${escapeHTML(video.title)}" loading="lazy">
-        <h3>${escapeHTML(video.title)}</h3>
-        <div class="video-meta">${escapeHTML(video.channel)}</div>
-      </article>
-    `).join("");
+function setActiveNav(el){
+ document.querySelectorAll(".sidebar .nav-item").forEach(x=>x.classList.remove("active"));
+ if(el)el.classList.add("active");
+}
+function setActiveCategory(el){
+ document.querySelectorAll(".category").forEach(x=>x.classList.remove("active"));
+ if(el)el.classList.add("active");
 }
 
-/* TAMPILAN AWAL */
+function showHome(el){
+ currentCategory="Semua";currentQuery="";
+ document.getElementById("searchInput").value="";
+ document.getElementById("categories").classList.remove("hidden");
+ document.getElementById("contentArea").innerHTML=
+ '<h2 class="section-title" id="pageTitle">Rekomendasi untuk kamu</h2><div class="video-grid" id="videoGrid"></div>';
+ setActiveNav(el);
+ setActiveCategory(document.querySelector(".category"));
+ renderVideos();
+}
+
+function filterCategory(category,el=null){
+ currentCategory=category;currentQuery="";
+ document.getElementById("searchInput").value="";
+ document.getElementById("categories").classList.remove("hidden");
+ if(!el)el=[...document.querySelectorAll(".category")].find(b=>b.textContent.trim()===category);
+ setActiveCategory(el);
+ document.getElementById("contentArea").innerHTML=
+ '<h2 class="section-title" id="pageTitle"></h2><div class="video-grid" id="videoGrid"></div>';
+ document.getElementById("pageTitle").textContent=category==="Semua"?"Rekomendasi untuk kamu":category;
+ renderVideos();
+}
+
+/* PENCARIAN */
+document.getElementById("searchForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ currentQuery=document.getElementById("searchInput").value.trim();
+ currentCategory="Semua";
+ setActiveCategory(document.querySelector(".category"));
+ document.getElementById("categories").classList.remove("hidden");
+ document.getElementById("contentArea").innerHTML=
+ '<h2 class="section-title" id="pageTitle"></h2><div class="video-grid" id="videoGrid"></div>';
+ document.getElementById("pageTitle").textContent=currentQuery?"Hasil pencarian: "+currentQuery:"Semua video";
+ renderVideos();
+});
+
+document.getElementById("searchInput").addEventListener("input",e=>{
+ if(!e.target.value.trim()){currentQuery="";renderVideos();}
+});
+
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+/* MENAMPILKAN VIDEO */
+function renderVideos(list=null){
+ const grid=document.getElementById("videoGrid");
+ if(!grid)return;
+
+ const filtered=list||videos.filter(v=>{
+  const cat=currentCategory==="Semua"||v.category===currentCategory;
+  const text=(v.title+" "+v.channel+" "+v.category).toLowerCase();
+  return cat&&text.includes(currentQuery.toLowerCase());
+ });
+
+ if(!filtered.length){
+  grid.innerHTML='<div class="empty"><h3>Video tidak ditemukan</h3><p>Coba kata pencarian lain.</p></div>';
+  return;
+ }
+
+ grid.innerHTML=filtered.map(v=>{
+  const i=videos.indexOf(v);
+  const thumb="https://img.youtube.com/vi/"+encodeURIComponent(v.id)+"/hqdefault.jpg";
+  return `<article class="video-card" onclick="playVideo(${i})">
+   <div class="thumbnail">
+    <img src="${thumb}" alt="${escapeHTML(v.title)}" loading="lazy">
+    <span class="duration">${escapeHTML(v.duration)}</span>
+   </div>
+   <div class="video-info">
+    <div class="avatar" style="background:${v.color}">${escapeHTML(v.channel.charAt(0))}</div>
+    <div><div class="video-title">${escapeHTML(v.title)}</div>
+     <div class="meta">${escapeHTML(v.channel)}<br>${escapeHTML(v.category)}</div>
+    </div>
+   </div>
+  </article>`;
+ }).join("");
+}
+
+/* PEMUTAR VIDEO */
+function playVideo(index){
+ const v=videos[index];
+ if(!v)return;
+ watchHistory=[v,...watchHistory.filter(x=>x.id!==v.id)];
+
+ document.getElementById("videoFrame").src=
+ "https://www.youtube-nocookie.com/embed/"+encodeURIComponent(v.id)+"?autoplay=1&rel=0";
+ document.getElementById("playerTitle").textContent=v.title;
+ document.getElementById("playerDescription").innerHTML=
+ "<strong>"+escapeHTML(v.channel)+"</strong><br>Kategori: "+escapeHTML(v.category)+
+ "<br><br>Video diputar melalui pemutar YouTube.";
+ document.getElementById("relatedVideos").innerHTML=
+ videos.filter(x=>x.id!==v.id).slice(0,8).map(x=>`
+ <div class="related-item" onclick="playVideo(${videos.indexOf(x)})">
+  <img src="https://img.youtube.com/vi/${encodeURIComponent(x.id)}/mqdefault.jpg" alt="" loading="lazy">
+  <div class="related-title">${escapeHTML(x.title)}<div class="meta">${escapeHTML(x.channel)}</div></div>
+ </div>`).join("");
+
+ document.getElementById("playerModal").classList.add("open");
+ document.body.style.overflow="hidden";
+}
+
+function closePlayer(){
+ document.getElementById("playerModal").classList.remove("open");
+ document.getElementById("videoFrame").src="";
+ document.body.style.overflow="";
+}
+
+/* HISTORI TONTONAN */
+function showHistory(el){
+ setActiveNav(el);
+ document.getElementById("categories").classList.add("hidden");
+ document.getElementById("contentArea").innerHTML=
+ '<h2 class="section-title">Histori tontonan</h2><div class="video-grid" id="videoGrid"></div>';
+ if(!watchHistory.length){
+  document.getElementById("videoGrid").innerHTML=
+  '<div class="empty"><h3>Belum ada histori</h3><p>Video yang ditonton selama sesi ini akan muncul di sini.</p></div>';
+ }else renderVideos(watchHistory);
+}
+
+/* RENDER AWAL */
 renderVideos();
 </script>
 </body>
