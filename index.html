@@ -19,10 +19,10 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"Roboto","Arial",sans-serif;-webkit-font-smoothing:antialiased}
-button,input,textarea{font:inherit}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer;border:none;background:none;color:inherit}
 .hidden{display:none!important}
-button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 
 /* BRAND LOGO */
 .brand{display:flex;align-items:center;gap:6px;font-size:19px;font-weight:700;letter-spacing:-0.5px;color:white;text-decoration:none;user-select:none}
@@ -117,7 +117,23 @@ header{
 
 /* MAIN CONTENT */
 main{margin-left:240px;padding:116px 24px 40px}
-.section-title{font-size:20px;margin:0 0 20px;font-weight:700}
+
+.content-header{
+ display:flex;align-items:center;justify-content:space-between;
+ flex-wrap:wrap;gap:12px;margin-bottom:20px
+}
+.section-title{font-size:20px;margin:0;font-weight:700}
+
+/* SORT SELECTOR */
+.sort-box{display:flex;align-items:center;gap:8px}
+.sort-box label{font-size:13px;color:var(--muted)}
+.sort-select{
+ background:#1e1e1e;color:white;border:1px solid var(--border);
+ padding:6px 12px;border-radius:8px;font-size:13px;cursor:pointer;transition:border-color 0.2s
+}
+.sort-select:hover{border-color:#666}
+.sort-select:focus{border-color:var(--red);outline:none}
+
 .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px 16px}
 .video-card{min-width:0;cursor:pointer;display:flex;flex-direction:column}
 .thumbnail{
@@ -126,6 +142,12 @@ main{margin-left:240px;padding:116px 24px 40px}
 }
 .thumbnail img{width:100%;height:100%;object-fit:cover;transition:transform .2s}
 .video-card:hover .thumbnail img{transform:scale(1.03)}
+.category-badge{
+ position:absolute;top:8px;left:8px;background:rgba(0, 0, 0, 0.75);
+ backdrop-filter:blur(4px);color:#fff;font-size:10px;font-weight:600;
+ padding:3px 8px;border-radius:6px;border:1px solid rgba(255, 255, 255, 0.15);
+ text-transform:uppercase;letter-spacing:0.5px
+}
 .duration{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,0.85);padding:3px 6px;border-radius:4px;font-size:11px;font-weight:600;color:white}
 .video-info{display:flex;gap:12px;padding-top:12px}
 .avatar{width:36px;height:36px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;font-weight:bold;font-size:14px}
@@ -285,7 +307,18 @@ body.collapsed .categories{left:72px}
 
 <main>
  <div id="contentArea">
-  <h2 class="section-title" id="pageTitle">Daftar Musik Pilihan</h2>
+  <div class="content-header">
+   <h2 class="section-title" id="pageTitle">Daftar Musik Pilihan</h2>
+   <div class="sort-box">
+    <label for="sortSelect">Urutkan:</label>
+    <select id="sortSelect" class="sort-select" onchange="changeSort(this.value)">
+     <option value="default">Default</option>
+     <option value="popular">🔥 Paling Populer (Views)</option>
+     <option value="likes">❤️ Suka Terbanyak</option>
+     <option value="az">🔤 Judul (A-Z)</option>
+    </select>
+   </div>
+  </div>
   <div class="video-grid" id="videoGrid"></div>
  </div>
 </main>
@@ -393,6 +426,7 @@ const videos = [
   duration:"FULL ALBUM",
   color:"#d97706",
   views:"9.5M views",
+  rawViews: 9500000,
   likes: 40450,
   subscribers: "820K subscriber"
  },
@@ -404,6 +438,7 @@ const videos = [
   duration:"FULL ALBUM",
   color:"#2563eb",
   views:"4.9M views",
+  rawViews: 4900000,
   likes: 16260,
   subscribers: "350K subscriber"
  },
@@ -415,6 +450,7 @@ const videos = [
   duration:"FULL ALBUM",
   color:"#059669",
   views:"1.4M views",
+  rawViews: 1400000,
   likes: 7554,
   subscribers: "210K subscriber"
  },
@@ -426,6 +462,7 @@ const videos = [
   duration:"FULL ALBUM",
   color:"#e11d48",
   views:"1.1M views",
+  rawViews: 1100000,
   likes: 4946,
   subscribers: "180K subscriber"
  },
@@ -437,6 +474,7 @@ const videos = [
   duration:"FULL ALBUM",
   color:"#7c3aed",
   views:"20M views",
+  rawViews: 20000000,
   likes: 114137,
   subscribers: "1.5M subscriber"
  },
@@ -448,6 +486,7 @@ const videos = [
   duration:"FULL BASS",
   color:"#ff0033",
   views:"11K views",
+  rawViews: 11000,
   likes: 124,
   subscribers: "12K subscriber"
  },
@@ -459,6 +498,7 @@ const videos = [
   duration:"2 JAM",
   color:"#db2777",
   views:"2.5M views",
+  rawViews: 2500000,
   likes: 19175,
   subscribers: "410K subscriber"
  },
@@ -470,6 +510,7 @@ const videos = [
   duration:"AUDIO",
   color:"#e11d48",
   views:"1.5M views",
+  rawViews: 1500000,
   likes: 15400,
   subscribers: "450K subscriber"
  },
@@ -481,6 +522,7 @@ const videos = [
   duration:"FULL",
   color:"#d97706",
   views:"28M views",
+  rawViews: 28000000,
   likes: 115150,
   subscribers: "1.2M subscriber"
  },
@@ -492,128 +534,139 @@ const videos = [
   duration:"REMIX",
   color:"#ff0033",
   views:"5.2M views",
+  rawViews: 5200000,
   likes: 42000,
   subscribers: "890K subscriber"
  },
- /* Lagu Tambahan dari URL baru */
  {
   id:"i-qe0W_Av6M",
-  title:"Koleksi Musik Pilihan Tambahan 1",
-  channel:"Movio Music Selection",
+  title:"Koleksi Hits Pop Kenangan Tembang Lawas 80-90an",
+  channel:"Tembang Nostalgia ID",
   category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#2563eb",
+  duration:"1 JAM",
+  color:"#b45309",
   views:"850K views",
+  rawViews: 850000,
   likes: 3400,
   subscribers: "100K subscriber"
  },
  {
   id:"X-q39sf-Wz0",
-  title:"Koleksi Musik Pilihan Tambahan 2",
-  channel:"Movio Music Selection",
+  title:"Slow Rock & Pop Melayu Nostalgia Paling Syahdu",
+  channel:"Melayu Acoustic Live",
   category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#d97706",
+  duration:"FULL ALBUM",
+  color:"#1d4ed8",
   views:"1.2M views",
+  rawViews: 1200000,
   likes: 5200,
   subscribers: "120K subscriber"
  },
  {
   id:"mOL-KEw4_LQ",
-  title:"Koleksi Musik Pilihan Tambahan 3",
-  channel:"Movio Music Selection",
+  title:"Koleksi Band Pop Indonesia 2000an - Sheila on 7, Peterpan, Ungu",
+  channel:"Dunia Band ID",
   category:"Pop 2000an",
-  duration:"FULL",
-  color:"#059669",
+  duration:"FULL ALBUM",
+  color:"#047857",
   views:"2.1M views",
+  rawViews: 2100000,
   likes: 8900,
   subscribers: "250K subscriber"
  },
  {
   id:"JbsyEKorevk",
-  title:"Koleksi Musik Pilihan Tambahan 4",
-  channel:"Movio Music Selection",
+  title:"Kompilasi Lagu Hits Band Indie & Pop Indonesia 2000an",
+  channel:"Indie Pop Sound",
   category:"Pop 2000an",
-  duration:"FULL",
-  color:"#7c3aed",
+  duration:"45 MIN",
+  color:"#6d28d9",
   views:"950K views",
+  rawViews: 950000,
   likes: 4100,
   subscribers: "140K subscriber"
  },
  {
   id:"jtYpG2t3gX4",
-  title:"Koleksi Musik Pilihan Tambahan 5",
-  channel:"Movio Music Selection",
+  title:"DJ Breakbeat Clubbing Funk - Slow Bass Jedag Jedug 2026",
+  channel:"BeatMaster Remix",
   category:"DJ & Remix",
   duration:"REMIX",
-  color:"#ff0033",
+  color:"#e11d48",
   views:"3.4M views",
+  rawViews: 3400000,
   likes: 15200,
   subscribers: "300K subscriber"
  },
  {
   id:"JeGPVGMiM5c",
-  title:"Koleksi Musik Pilihan Tambahan 6",
-  channel:"Movio Music Selection",
+  title:"DJ Funky Kota Full Bass Melintir Party Night",
+  channel:"DJ Electro Bass",
   category:"DJ & Remix",
   duration:"FULL BASS",
-  color:"#db2777",
+  color:"#c026d3",
   views:"1.8M views",
+  rawViews: 1800000,
   likes: 7200,
   subscribers: "190K subscriber"
  },
  {
   id:"UV6MYU_1O1I",
-  title:"Koleksi Musik Pilihan Tambahan 7",
-  channel:"Movio Music Selection",
+  title:"Pop Akustik Chill - Lagu Pengantar Kerja & Belajar",
+  channel:"Acoustic Lounge",
   category:"Akustik",
   duration:"AUDIO",
-  color:"#e11d48",
+  color:"#059669",
   views:"620K views",
+  rawViews: 620000,
   likes: 2900,
   subscribers: "90K subscriber"
  },
  {
   id:"PbjqEy6rfrQ",
-  title:"Koleksi Musik Pilihan Tambahan 8",
-  channel:"Movio Music Selection",
+  title:"Lagu Nostalgia Kenangan Manis 90an Acoustic Cover",
+  channel:"Koleksi Nostalgia",
   category:"Pop Nostalgia",
   duration:"FULL",
-  color:"#2563eb",
+  color:"#0284c7",
   views:"450K views",
+  rawViews: 450000,
   likes: 1800,
   subscribers: "75K subscriber"
  },
  {
   id:"Vb19yb_o67A",
-  title:"Koleksi Musik Pilihan Tambahan 9",
-  channel:"Movio Music Selection",
+  title:"Kumpulan Lagu Galau Band Pop 2000an Terbaik",
+  channel:"Sobat Galau Band",
   category:"Pop 2000an",
-  duration:"FULL",
-  color:"#059669",
+  duration:"FULL ALBUM",
+  color:"#4338ca",
   views:"1.6M views",
+  rawViews: 1600000,
   likes: 6700,
   subscribers: "220K subscriber"
  },
  {
   id:"-Hjb3OQaAV0",
-  title:"Koleksi Musik Pilihan Tambahan 10",
-  channel:"Movio Music Selection",
+  title:"DJ Dugem Tiktok Viral Bass Glerr Nonstop",
+  channel:"DJ Remixer ID",
   category:"DJ & Remix",
   duration:"REMIX",
-  color:"#ff0033",
+  color:"#dc2626",
   views:"2.3M views",
+  rawViews: 2300000,
   likes: 9800,
   subscribers: "310K subscriber"
  },
  {
   id:"b99cRgW99UY",
-  title:"Koleksi Musik Pilihan Tambahan 11",
-  channel:"Movio Music Selection",
+  title:"Petikan Gitar Akustik Santai Sore Hari & Senja",
+  channel:"Acoustic Vibe",
   category:"Akustik",
   duration:"AUDIO",
-  color:"#e11d48",
+  color:"#d97706",
   views:"920K views",
+  rawViews: 920000,
   likes: 4300,
   subscribers: "150K subscriber"
  }
@@ -623,6 +676,7 @@ let currentUser = null;
 let isGuest = false;
 let currentCategory = "Semua";
 let currentQuery = "";
+let currentSort = "default";
 let watchHistory = [];
 let savedVideos = [];
 let activeVideoIndex = null;
@@ -693,7 +747,7 @@ function showHome(el){
  currentQuery="";
  document.getElementById("searchInput").value="";
  document.getElementById("categories").classList.remove("hidden");
- document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">Daftar Musik Pilihan</h2><div class="video-grid" id="videoGrid"></div>';
+ document.getElementById("pageTitle").textContent="Daftar Musik Pilihan";
  renderVideos();
 }
 
@@ -702,11 +756,16 @@ function filterCategory(category,el=null){
  currentQuery="";
  document.getElementById("searchInput").value="";
  document.getElementById("categories").classList.remove("hidden");
- document.getElementById("contentArea").innerHTML='<h2 class="section-title" id="pageTitle">'+(category==="Koleksi"?"Lagu Disimpan":"Kategori: "+category)+'</h2><div class="video-grid" id="videoGrid"></div>';
+ document.getElementById("pageTitle").textContent=category==="Koleksi"?"Lagu Disimpan":"Kategori: "+category;
  renderVideos();
 }
 
-/* RENDER MUSIC */
+function changeSort(sortVal){
+ currentSort = sortVal;
+ renderVideos();
+}
+
+/* RENDER MUSIC WITH SORTING */
 function renderVideos(list=null){
  const grid=document.getElementById("videoGrid");
  if(!grid)return;
@@ -714,7 +773,7 @@ function renderVideos(list=null){
  let filtered = list;
  if(!filtered) {
   if(currentCategory === "Koleksi") {
-   filtered = savedVideos;
+   filtered = [...savedVideos];
   } else {
    filtered = videos.filter(v=>{
     const categoryMatches=currentCategory==="Semua"||v.category===currentCategory;
@@ -722,6 +781,17 @@ function renderVideos(list=null){
     return categoryMatches&&searchable.includes(currentQuery.toLowerCase());
    });
   }
+ } else {
+  filtered = [...filtered];
+ }
+
+ // Sorting Logic
+ if(currentSort === "popular") {
+  filtered.sort((a, b) => b.rawViews - a.rawViews);
+ } else if(currentSort === "likes") {
+  filtered.sort((a, b) => b.likes - a.likes);
+ } else if(currentSort === "az") {
+  filtered.sort((a, b) => a.title.localeCompare(b.title));
  }
 
  if(!filtered || !filtered.length){
@@ -736,6 +806,7 @@ function renderVideos(list=null){
    <article class="video-card" onclick="playVideo(${i})">
     <div class="thumbnail">
      <img src="${thumb}" alt="" loading="lazy">
+     <span class="category-badge">${v.category}</span>
      <span class="duration">${v.duration}</span>
     </div>
     <div class="video-info">
@@ -879,7 +950,7 @@ function closePlayer(){
 /* HISTORY */
 function showHistory(){
  document.getElementById("categories").classList.add("hidden");
- document.getElementById("contentArea").innerHTML='<h2 class="section-title">Histori Putar Musik</h2><div class="video-grid" id="videoGrid"></div>';
+ document.getElementById("pageTitle").textContent="Histori Putar Musik";
  renderVideos(watchHistory);
 }
 
