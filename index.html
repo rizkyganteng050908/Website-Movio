@@ -307,6 +307,22 @@ const googleProvider = new firebase.auth.GoogleAuthProvider();
 /* VIDEO DATA */
 const videos = [
  {
+  id:"ifBXLaPp_uY",
+  title:"Lagu Jawa Akustik Pengantar Tidur",
+  channel:"Koleksi Musik",
+  category:"Musik",
+  duration:"Video",
+  color:"#e11d48"
+ },
+ {
+  id:"Xq0V_OvwV5o",
+  title:"🌙 Lagu Jawa Akustik & Slow Pop Jawa Galau – Live Musik Pengantar Malam",
+  channel:"Javanova",
+  category:"Musik",
+  duration:"LIVE",
+  color:"#0284c7"
+ },
+ {
   id:"0BXVNT1yxqw",
   title:"DJ TIKTOK TERBARU 2026 || DJ ADAKAH KENYAMANAN DIHATIMU🎵DJ SALAH APA YANG TAK KUMAAFKAN🎵FULL ALBUM",
   channel:"Seven Fvnky",
@@ -383,7 +399,7 @@ function showProfile(){
   if(!isGuest) auth.signOut();
   currentUser=null;
   isGuest=false;
-  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("loginScreen").classList.remove("hidden");
  }
 }
 
