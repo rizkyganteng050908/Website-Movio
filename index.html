@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -262,16 +261,16 @@ body.collapsed .categories{left:75px}
 "use strict";
 
 /* =================================
-   KONFIGURASI FIREBASE
+    KONFIGURASI FIREBASE
 ================================= */
 const firebaseConfig = {
-  apiKey: "AIzaSyC2MfL9EFzVyxOyxemFV-_ywR01S2uEtAc",
-  authDomain: "movio-6211e.firebaseapp.com",
-  projectId: "movio-6211e",
-  storageBucket: "movio-6211e.firebasestorage.app",
-  messagingSenderId: "664861384384",
-  appId: "1:664861384384:web:c1471091e9ac2870045725",
-  measurementId: "G-30MECHH45V"
+ apiKey: "AIzaSyC2MfL9EFzVyxOyxemFV-_ywR01S2uEtAc",
+ authDomain: "movio-6211e.firebaseapp.com",
+ projectId: "movio-6211e",
+ storageBucket: "movio-6211e.firebasestorage.app",
+ messagingSenderId: "664861384384",
+ appId: "1:664861384384:web:c1471091e9ac2870045725",
+ measurementId: "G-30MECHH45V"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -279,8 +278,7 @@ const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 /* =================================
-   HANYA 4 VIDEO PILIHAN PENGGUNA
-   Video demo bawaan sudah dihapus.
+    DAFTAR VIDEO (Video Movio 3 telah dihapus)
 ================================= */
 const videos = [
  {
@@ -300,14 +298,6 @@ const videos = [
   color:"#7c3aed"
  },
  {
-  id:"wu_pYYbSCG4",
-  title:"Video Movio 3",
-  channel:"Koleksi Movio",
-  category:"Koleksi",
-  duration:"Video",
-  color:"#0284c7"
- },
- {
   id:"Mn4G8dr2Yw4",
   title:"Video Movio 4",
   channel:"Koleksi Movio",
@@ -324,7 +314,7 @@ let currentQuery = "";
 let watchHistory = [];
 
 /* =================================
-   LOGIN GOOGLE
+    LOGIN GOOGLE
 ================================= */
 async function googleLogin(){
  const button=document.getElementById("googleBtn");
@@ -389,7 +379,7 @@ function enterGoogleUser(user){
 }
 
 /* =================================
-   LOGIN GUEST
+    LOGIN GUEST
 ================================= */
 function guestLogin(){
  isGuest=true;
@@ -407,7 +397,7 @@ function guestLogin(){
 }
 
 /* =================================
-   MEMULIHKAN LOGIN FIREBASE
+    MEMULIHKAN LOGIN FIREBASE
 ================================= */
 auth.getRedirectResult().then(result=>{
  if(result&&result.user)enterGoogleUser(result.user);
@@ -426,7 +416,7 @@ auth.onAuthStateChanged(user=>{
 });
 
 /* =================================
-   PROFIL DAN KELUAR
+    PROFIL DAN KELUAR
 ================================= */
 async function showProfile(){
  if(!currentUser)return;
@@ -456,7 +446,7 @@ async function showProfile(){
 }
 
 /* =================================
-   NAVIGASI
+    NAVIGASI
 ================================= */
 function toggleSidebar(){
  document.body.classList.toggle("collapsed");
@@ -511,7 +501,7 @@ function filterCategory(category,el=null){
 }
 
 /* =================================
-   PENCARIAN VIDEO
+    PENCARIAN VIDEO
 ================================= */
 document.getElementById("searchForm").addEventListener("submit",e=>{
  e.preventDefault();
@@ -549,7 +539,7 @@ function escapeHTML(s){
 }
 
 /* =================================
-   RENDER KARTU VIDEO
+    RENDER KARTU VIDEO
 ================================= */
 function renderVideos(list=null){
  const grid=document.getElementById("videoGrid");
@@ -599,7 +589,7 @@ function renderVideos(list=null){
 }
 
 /* =================================
-   PEMUTAR VIDEO YOUTUBE
+    PEMUTAR VIDEO YOUTUBE
 ================================= */
 function playVideo(index){
  const v=videos[index];
@@ -640,7 +630,7 @@ function closePlayer(){
 }
 
 /* =================================
-   HISTORI TONTONAN
+    HISTORI TONTONAN
 ================================= */
 function showHistory(el){
  setActiveNav(el);
@@ -656,7 +646,7 @@ function showHistory(el){
    '<p>Video yang kamu tonton akan muncul di sini selama sesi ini.</p></div>';
  }else{
   renderVideos(watchHistory);
- }
+}
 }
 
 /* TAMPILAN AWAL */
