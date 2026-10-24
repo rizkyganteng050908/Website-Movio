@@ -16,6 +16,7 @@
   --muted:#aaa;
   --red:#ff0033;
   --blue:#3ea6ff;
+  --gold:#f59e0b;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"Roboto","Arial",sans-serif;-webkit-font-smoothing:antialiased}
@@ -81,8 +82,9 @@ header{
 .profile{
  width:32px;height:32px;border-radius:50%;
  background:var(--red);color:white;font-weight:bold;overflow:hidden;
- display:grid;place-items:center;font-size:14px;flex-shrink:0
+ display:grid;place-items:center;font-size:14px;flex-shrink:0;position:relative
 }
+.profile.pro{background:var(--gold);color:#0f0f0f;box-shadow:0 0 10px rgba(245,158,11,0.5)}
 .profile img{width:100%;height:100%;object-fit:cover}
 .user-label{max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:var(--text)}
 
@@ -100,6 +102,8 @@ header{
 .nav-icon{width:24px;text-align:center;font-size:18px}
 .nav-divider{border:0;border-top:1px solid #272727;margin:12px 0}
 .nav-heading{padding:6px 12px;font-size:14px;font-weight:600;color:var(--muted)}
+.nav-item.premium-menu{color:var(--gold);font-weight:600}
+.nav-item.premium-menu:hover{background:rgba(245,158,11,0.1)}
 
 /* CATEGORY PILLS */
 .categories{
@@ -168,6 +172,36 @@ main{margin-left:240px;padding:116px 24px 40px}
 }
 .video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
 .player-frame{width:100%;height:100%;border:0}
+
+/* PREMIUM MODAL */
+.modal-overlay{
+ display:none;position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,0.85);
+ align-items:center;justify-content:center;padding:20px
+}
+.modal-overlay.open{display:flex}
+.modal-card{
+ width:100%;max-width:420px;background:#181818;border:1px solid rgba(245,158,11,0.3);
+ border-radius:16px;padding:30px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.9)
+}
+.modal-card h2{margin:10px 0;color:var(--gold);font-size:22px}
+.modal-card p{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:20px}
+.modal-input{
+ width:100%;padding:12px 16px;background:#121212;border:1px solid var(--border);
+ border-radius:10px;color:white;font-size:16px;text-align:center;letter-spacing:2px;margin-bottom:16px
+}
+.modal-input:focus{border-color:var(--gold);outline:none}
+.modal-btn{
+ width:100%;padding:12px;background:var(--gold);color:#0f0f0f;font-weight:bold;
+ border-radius:10px;font-size:14px;transition:0.2s;margin-bottom:10px
+}
+.modal-btn:hover{background:#d97706}
+.wa-btn{
+ display:inline-block;color:#25d366;font-size:13px;font-weight:600;
+ text-decoration:none;margin-top:10px
+}
+.wa-btn:hover{text-decoration:underline}
+.close-modal{background:transparent;color:var(--muted);font-size:13px;margin-top:10px}
+.close-modal:hover{color:white}
 
 /* MUSIC VISUALIZER BAR */
 .visualizer{
@@ -263,6 +297,22 @@ body.collapsed .categories{left:72px}
  </div>
 </section>
 
+<!-- MODAL PREMIUM -->
+<div class="modal-overlay" id="premiumModal">
+ <div class="modal-card">
+  <div class="brand" style="justify-content:center;margin-bottom:8px"><span class="logo-icon" style="background:var(--gold)">⭐</span><span>Movio Premium</span></div>
+  <h2>Aktivasi Akun Premium</h2>
+  <p>Masukkan kode aktivasi rahasia Anda untuk menikmati streaming musik tanpa batas dan kualitas audio jernih.</p>
+  
+  <input type="password" id="premiumCodeInput" class="modal-input" placeholder="••••" maxlength="4">
+  <button class="modal-btn" onclick="verifyPremiumCode()">Aktifkan Sekarang</button>
+  <br>
+  <a href="https://wa.me/62895401061300?text=Halo%20Admin,%20saya%20ingin%20mendapatkan%20kode%20aktivasi%20akun%20Movio%20Music%20Premium." target="_blank" class="wa-btn">💬 Belum punya kode? Hubungi WhatsApp (+62 895-4010-61300)</a>
+  <br>
+  <button class="close-modal" onclick="closePremiumModal()">Tutup</button>
+ </div>
+</div>
+
 <!-- HEADER -->
 <header>
  <div class="header-left">
@@ -292,6 +342,7 @@ body.collapsed .categories{left:72px}
  <div class="nav-item" onclick="filterCategory('DJ & Remix')"><span class="nav-icon">🎛️</span><span>DJ Dugem & Breakbeat</span></div>
  <div class="nav-item" onclick="filterCategory('Akustik')"><span class="nav-icon">🎸</span><span>Akustik Santai</span></div>
  <hr class="nav-divider">
+ <div class="nav-item premium-menu" onclick="openPremiumModal()"><span class="nav-icon">⭐</span><span id="premiumMenuLabel">Upgrade Premium</span></div>
  <div class="nav-item" onclick="showProfile()"><span class="nav-icon">⚙️</span><span>Akun & Setelan</span></div>
 </aside>
 
@@ -670,7 +721,6 @@ const videos = [
   likes: 4300,
   subscribers: "150K subscriber"
  },
- /* LAGU TAMBAHAN BARU */
  {
   id:"_vlLToRjP1E",
   title:"Koleksi Musik Pilihan Terbaru 1",
@@ -723,6 +773,7 @@ const videos = [
 
 let currentUser = null;
 let isGuest = false;
+let isPremium = false;
 let currentCategory = "Semua";
 let currentQuery = "";
 let currentSort = "default";
@@ -783,6 +834,30 @@ function showProfile(){
   currentUser=null;
   isGuest=false;
   document.getElementById("loginScreen").classList.remove("hidden");
+ }
+}
+
+/* PREMIUM FEATURE LOGIC */
+function openPremiumModal(){
+ document.getElementById("premiumModal").classList.add("open");
+}
+
+function closePremiumModal(){
+ document.getElementById("premiumModal").classList.remove("open");
+ document.getElementById("premiumCodeInput").value = "";
+}
+
+function verifyPremiumCode(){
+ const code = document.getElementById("premiumCodeInput").value.trim();
+ if(code === "0509" || code === "2008"){
+  isPremium = true;
+  document.getElementById("profileBtn").classList.add("pro");
+  document.getElementById("profileBtn").textContent = "⭐";
+  document.getElementById("premiumMenuLabel").textContent = "Akun PRO Aktif";
+  alert("🎉 Selamat! Akun Anda berhasil di-upgrade ke Movio Music PRO (Premium).");
+  closePremiumModal();
+ } else {
+  alert("❌ Kode aktivasi salah! Silakan hubungi admin WhatsApp untuk mendapatkan kode.");
  }
 }
 
