@@ -276,6 +276,140 @@ body.collapsed .categories{left:72px}
  main{margin-left:0;padding-top:110px}
  .search{width:auto;flex:1}
 }
+
+/* ===== RESPONSIVE LAYOUT: LAPTOP, TABLET, HP ===== */
+html { -webkit-text-size-adjust: 100%; }
+body { min-width: 320px; overflow-x: hidden; }
+img, iframe, video { max-width: 100%; }
+button, a, input, select, textarea { touch-action: manipulation; }
+.video-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+main, .player-modal, .modal-card, .login-box { min-width: 0; }
+.video-info > div:last-child { min-width: 0; }
+.related-item > div { min-width: 0; }
+.related-item img { flex: 0 0 140px; }
+.player-layout > div { min-width: 0; }
+#searchInput { width: 100%; }
+.search { min-width: 0; }
+.user-label { max-width: 110px; }
+
+/* Laptop kecil dan tablet landscape */
+@media (max-width: 1100px) {
+  .sidebar { width: 205px; }
+  .categories { left: 205px; padding-left: 18px; padding-right: 18px; }
+  main { margin-left: 205px; padding-left: 18px; padding-right: 18px; }
+  body.collapsed .categories { left: 72px; }
+  .player-layout { grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; }
+  .related-item img { width: 120px; flex-basis: 120px; }
+}
+
+/* Tablet dan HP */
+@media (max-width: 768px) {
+  header { height: 58px; padding: 0 10px; gap: 8px; }
+  .header-left, .header-right { gap: 5px; }
+  .header-left .icon-btn { width: 36px; height: 36px; flex: 0 0 36px; }
+  .brand { font-size: 16px; gap: 5px; }
+  .logo-icon { width: 26px; height: 21px; }
+  .header-left .brand { white-space: nowrap; }
+  .search { flex: 1 1 auto; width: auto; height: 36px; }
+  .search input { padding: 0 10px; font-size: 13px; }
+  .search button { width: 40px; flex: 0 0 40px; }
+  .header-right { flex: 0 0 auto; }
+  .user-label { display: none; }
+  .profile { width: 30px; height: 30px; }
+  .sidebar { display: none; }
+  body.mobile-menu-open .sidebar {
+    display: block; position: fixed; top: 58px; bottom: 0; left: 0;
+    width: min(290px, 84vw); padding: 12px; z-index: 250;
+    overflow-y: auto; box-shadow: 12px 0 30px rgba(0,0,0,.45);
+    background: #111;
+  }
+  body.mobile-menu-open .sidebar .nav-item {
+    flex-direction: row; justify-content: flex-start; gap: 18px;
+    padding: 12px; font-size: 14px; text-align: left;
+  }
+  body.mobile-menu-open .sidebar .nav-heading,
+  body.mobile-menu-open .sidebar .nav-divider { display: block; }
+  body.collapsed .sidebar { width: min(290px, 84vw); }
+  .categories, body.collapsed .categories {
+    left: 0; top: 58px; right: 0; padding: 10px 12px;
+    gap: 8px; width: 100%; min-width: 0;
+  }
+  .category { padding: 7px 12px; font-size: 12px; }
+  main, body.collapsed main {
+    margin-left: 0; padding: 108px 12px 28px;
+  }
+  .content-header { align-items: flex-start; margin-bottom: 16px; }
+  .section-title { font-size: 18px; }
+  .sort-box { gap: 6px; }
+  .sort-box label { font-size: 12px; }
+  .sort-select { max-width: 165px; padding: 7px 8px; font-size: 12px; }
+  .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
+  .thumbnail { border-radius: 9px; }
+  .video-info { gap: 8px; padding-top: 8px; }
+  .avatar { width: 30px; height: 30px; font-size: 12px; }
+  .video-title { font-size: 13px; }
+  .meta { font-size: 11px; }
+  .player-modal { padding: 12px; }
+  .player-top { margin-bottom: 12px; }
+  .player-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .video-container { border-radius: 8px; }
+  .player-title { font-size: 17px; }
+  .player-actions { align-items: flex-start; }
+  .channel-info { flex-wrap: wrap; gap: 8px; }
+  .sub-btn { margin-left: 0; padding: 8px 12px; }
+  .action-btns { width: 100%; gap: 7px; }
+  .action-btn { padding: 8px 11px; font-size: 12px; }
+  .related-item img { width: 135px; flex-basis: 135px; }
+  .login-screen { padding: 16px; }
+  .login-box { padding: 28px 22px; }
+  .modal-overlay { padding: 12px; }
+  .modal-card { padding: 24px 18px; max-height: 90dvh; overflow-y: auto; }
+}
+
+/* HP kecil */
+@media (max-width: 480px) {
+  header { padding: 0 7px; gap: 5px; }
+  .header-left { gap: 2px; }
+  .header-left .icon-btn { width: 32px; flex-basis: 32px; font-size: 16px; }
+  .brand { font-size: 14px; letter-spacing: -.3px; }
+  .logo-icon { width: 23px; height: 19px; font-size: 10px; }
+  .search { height: 34px; }
+  .search input { padding: 0 8px; font-size: 12px; }
+  .search input::placeholder { font-size: 11px; }
+  .search button { width: 34px; flex-basis: 34px; font-size: 14px; }
+  .profile { width: 28px; height: 28px; }
+  main, body.collapsed main { padding: 104px 10px 24px; }
+  .content-header { gap: 8px; }
+  .section-title { font-size: 16px; }
+  .sort-box label { display: none; }
+  .sort-select { max-width: 135px; font-size: 11px; }
+  .video-grid { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .video-info { gap: 10px; padding-top: 10px; }
+  .avatar { width: 34px; height: 34px; }
+  .video-title { font-size: 14px; }
+  .meta { font-size: 12px; }
+  .player-modal { padding: 10px; }
+  .player-top .brand { font-size: 16px; }
+  .player-title { font-size: 16px; }
+  .player-actions { gap: 12px; }
+  .channel-info { width: 100%; }
+  .action-btns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .action-btn { justify-content: center; min-height: 38px; }
+  .player-description { font-size: 12px; padding: 10px; }
+  .comment-input-box { gap: 8px; }
+  .related-item img { width: 125px; flex-basis: 125px; }
+  .login-box { padding: 26px 18px; }
+  .login-box h1 { font-size: 20px; }
+  .login-box p { font-size: 12px; }
+  .wa-btn { line-height: 1.6; }
+}
+
+/* Layar sangat pendek: login tetap dapat digulir */
+@media (max-height: 560px) {
+  .login-screen { align-items: flex-start; }
+  .login-box { margin: auto; }
+}
+
 </style>
 </head>
 
@@ -1464,7 +1598,11 @@ function verifyPremiumCode(){
 
 /* NAVIGATION */
 function toggleSidebar(){
- document.body.classList.toggle("collapsed");
+ if (window.matchMedia("(max-width: 768px)").matches) {
+  document.body.classList.toggle("mobile-menu-open");
+ } else {
+  document.body.classList.toggle("collapsed");
+ }
 }
 
 function showHome(el){
@@ -1688,5 +1826,21 @@ document.getElementById("searchForm").addEventListener("submit",e=>{
 
 renderVideos();
 </script>
+
+/* Tutup drawer navigasi setelah memilih menu di layar HP */
+document.addEventListener("click", function(event) {
+ if (!document.body.classList.contains("mobile-menu-open")) return;
+ const sidebar = document.querySelector(".sidebar");
+ const menuButton = document.querySelector('button[aria-label="Menu"]');
+ if (sidebar && !sidebar.contains(event.target) && menuButton && !menuButton.contains(event.target)) {
+  document.body.classList.remove("mobile-menu-open");
+ }
+});
+window.addEventListener("resize", function() {
+ if (!window.matchMedia("(max-width: 768px)").matches) {
+  document.body.classList.remove("mobile-menu-open");
+ }
+});
+
 </body> 
 </html>
