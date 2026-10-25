@@ -1874,21 +1874,5 @@ document.getElementById("searchForm").addEventListener("submit",e=>{
 
 renderVideos();
 </script>
-
-/* Tutup drawer navigasi setelah memilih menu di layar HP */
-document.addEventListener("click", function(event) {
- if (!document.body.classList.contains("mobile-menu-open")) return;
- const sidebar = document.querySelector(".sidebar");
- const menuButton = document.querySelector('button[aria-label="Menu"]');
- if (sidebar && !sidebar.contains(event.target) && menuButton && !menuButton.contains(event.target)) {
-  document.body.classList.remove("mobile-menu-open");
- }
-});
-window.addEventListener("resize", function() {
- if (!window.matchMedia("(max-width: 768px)").matches) {
-  document.body.classList.remove("mobile-menu-open");
- }
-});
-
 </body> 
 </html>
