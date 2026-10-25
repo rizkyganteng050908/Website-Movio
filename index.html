@@ -82,9 +82,14 @@ header{
 .profile{
  width:32px;height:32px;border-radius:50%;
  background:var(--red);color:white;font-weight:bold;overflow:hidden;
- display:grid;place-items:center;font-size:14px;flex-shrink:0;position:relative;cursor:pointer
+ display:grid;place-items:center;font-size:14px;flex-shrink:0;position:relative;cursor:pointer;
+ transition: all 0.3s ease;
 }
-.profile.pro{background:var(--gold);color:#0f0f0f;box-shadow:0 0 10px rgba(245,158,11,0.5)}
+.profile.pro{
+ background:var(--gold);color:#0f0f0f;
+ border:2px solid var(--gold);
+ box-shadow:0 0 12px rgba(245,158,11,0.7);
+}
 .profile img{width:100%;height:100%;object-fit:cover}
 .user-label{max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:var(--text)}
 
@@ -173,7 +178,7 @@ main{margin-left:240px;padding:116px 24px 40px}
 .video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
 .player-frame{width:100%;height:100%;border:0}
 
-/* PREMIUM MODAL & PROFILE MODAL */
+/* MODAL OVERLAY */
 .modal-overlay{
  display:none;position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,0.85);
  align-items:center;justify-content:center;padding:20px
@@ -337,7 +342,7 @@ button, a, input, select, textarea { touch-action: manipulation; }
   .search button { width: 34px; flex-basis: 34px; font-size: 14px; }
   .profile { width: 28px; height: 28px; }
   main, body.collapsed main { padding: 104px 10px 24px; }
-  .video-grid { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
 }
 </style>
 </head>
@@ -367,7 +372,7 @@ button, a, input, select, textarea { touch-action: manipulation; }
   <h2>Aktivasi Akun Premium</h2>
   <p>Masukkan kode aktivasi rahasia Anda untuk menikmati streaming musik tanpa batas dan kualitas audio jernih.</p>
   
-  <input type="password" id="premiumCodeInput" class="modal-input" placeholder="••••" maxlength="4">
+  <input type="password" id="premiumCodeInput" class="modal-input" placeholder="••••" maxlength="8">
   <button class="modal-btn" onclick="verifyPremiumCode()">Aktifkan Sekarang</button>
   <br>
   <a href="https://wa.me/62895401061300?text=Halo%20Admin,%20saya%20ingin%20mendapatkan%20kode%20aktivasi%20akun%20Movio%20Music%20Premium." target="_blank" class="wa-btn">💬 Belum punya kode? Hubungi WhatsApp (+62 895-4010-61300)</a>
@@ -836,20 +841,14 @@ let isDisliked = false;
 /* INIT APP & AUTH STATE */
 auth.onAuthStateChanged(user => {
  const userLabel = document.getElementById('userLabel');
- const profileBtn = document.getElementById('profileBtn');
  const loginScreen = document.getElementById('loginScreen');
 
  if (user) {
   currentUser = user;
   loginScreen.classList.add('hidden');
   userLabel.textContent = user.displayName || user.email || 'User';
-  if (user.photoURL) {
-   profileBtn.innerHTML = `<img src="${user.photoURL}" alt="Profile">`;
-  } else {
-   profileBtn.textContent = (user.displayName || 'U')[0].toUpperCase();
-  }
+  updateProfileAvatarUI(user.photoURL, user.displayName);
  } else {
-  // Cek apakah user sedang login sebagai Guest di session lokal
   const guestMode = localStorage.getItem('movio_guest');
   if (guestMode === 'true') {
    setGuestUserSession();
@@ -858,6 +857,7 @@ auth.onAuthStateChanged(user => {
    loginScreen.classList.remove('hidden');
   }
  }
+ checkSavedPremiumStatus();
  renderVideos();
 });
 
@@ -878,8 +878,18 @@ function setGuestUserSession() {
  document.getElementById('loginScreen').classList.add('hidden');
  currentUser = { displayName: 'Guest', email: 'Pengguna Tamu (Tanpa Akun)', isGuest: true };
  document.getElementById('userLabel').textContent = 'Guest';
- document.getElementById('profileBtn').textContent = 'G';
+ updateProfileAvatarUI(null, 'Guest');
+ checkSavedPremiumStatus();
  renderVideos();
+}
+
+function updateProfileAvatarUI(photoUrl, name) {
+ const profileBtn = document.getElementById('profileBtn');
+ if (photoUrl) {
+  profileBtn.innerHTML = `<img src="${photoUrl}" alt="Profile">`;
+ } else {
+  profileBtn.textContent = (name || 'U')[0].toUpperCase();
+ }
 }
 
 function toggleSidebar() {
@@ -1180,7 +1190,7 @@ function addComment() {
  loadComments(currentVideo.id);
 }
 
-/* PREMIUM MODAL */
+/* PREMIUM MODAL & ACTIVATION */
 function openPremiumModal() {
  document.getElementById('premiumModal').classList.add('open');
 }
@@ -1191,13 +1201,25 @@ function closePremiumModal() {
 
 function verifyPremiumCode() {
  const code = document.getElementById('premiumCodeInput').value.trim();
- if (code === '7777' || code === '8888' || code === '2026') {
+ // Menerima kode 0509, 2008, 05092008, serta kode alternatif umum
+ if (code === '0509' || code === '2008' || code === '05092008' || code === '7777' || code === '8888' || code === '2026') {
+  localStorage.setItem('movio_premium', 'true');
+  applyPremiumUI();
   alert('🎉 Selamat! Akun Anda berhasil di-upgrade ke MOVIO PREMIUM.');
-  document.getElementById('profileBtn').className = 'profile pro';
-  document.getElementById('premiumMenuLabel').textContent = 'Status: Premium ⭐';
   closePremiumModal();
  } else {
-  alert('❌ Kode aktivasi salah! Silakan hubungi admin via WhatsApp untuk mendapatkan kode resmi.');
+  alert('❌ Kode aktivasi salah! Silakan masukkan kode Anda (0509 / 2008) atau hubungi admin.');
+ }
+}
+
+function applyPremiumUI() {
+ document.getElementById('profileBtn').classList.add('pro');
+ document.getElementById('premiumMenuLabel').textContent = 'Status: Premium ⭐';
+}
+
+function checkSavedPremiumStatus() {
+ if (localStorage.getItem('movio_premium') === 'true') {
+  applyPremiumUI();
  }
 }
 
@@ -1219,7 +1241,7 @@ function showProfile() {
    avatarBig.textContent = (currentUser.displayName || 'U')[0].toUpperCase();
   }
  }
- statusEl.textContent = isPro ? 'Status: Premium Member ⭐' : 'Status: Free Account';
+ statusEl.textContent = isPro ? 'Status: Premium Member ⭐ (VIP)' : 'Status: Free Account';
  modal.classList.add('open');
 }
 
@@ -1230,12 +1252,16 @@ function closeProfileModal() {
 function logoutAccount() {
  if (confirm('Apakah Anda yakin ingin keluar dan mengganti akun?')) {
   localStorage.removeItem('movio_guest');
+  localStorage.removeItem('movio_premium');
+  // Reset UI Premium
+  document.getElementById('profileBtn').classList.remove('pro');
+  document.getElementById('premiumMenuLabel').textContent = 'Upgrade Premium';
+  
   auth.signOut().then(() => {
    currentUser = null;
    closeProfileModal();
    document.getElementById('loginScreen').classList.remove('hidden');
-  }).catch((error) => {
-   // Jika error dari firebase auth, tetap bersihkan session lokal guest
+  }).catch(() => {
    currentUser = null;
    closeProfileModal();
    document.getElementById('loginScreen').classList.remove('hidden');
