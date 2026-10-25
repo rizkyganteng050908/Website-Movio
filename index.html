@@ -82,7 +82,7 @@ header{
 .profile{
  width:32px;height:32px;border-radius:50%;
  background:var(--red);color:white;font-weight:bold;overflow:hidden;
- display:grid;place-items:center;font-size:14px;flex-shrink:0;position:relative
+ display:grid;place-items:center;font-size:14px;flex-shrink:0;position:relative;cursor:pointer
 }
 .profile.pro{background:var(--gold);color:#0f0f0f;box-shadow:0 0 10px rgba(245,158,11,0.5)}
 .profile img{width:100%;height:100%;object-fit:cover}
@@ -173,7 +173,7 @@ main{margin-left:240px;padding:116px 24px 40px}
 .video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
 .player-frame{width:100%;height:100%;border:0}
 
-/* PREMIUM MODAL */
+/* PREMIUM MODAL & PROFILE MODAL */
 .modal-overlay{
  display:none;position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,0.85);
  align-items:center;justify-content:center;padding:20px
@@ -195,6 +195,9 @@ main{margin-left:240px;padding:116px 24px 40px}
  border-radius:10px;font-size:14px;transition:0.2s;margin-bottom:10px
 }
 .modal-btn:hover{background:#d97706}
+.modal-btn.logout-btn{background:var(--red);color:white;margin-top:8px}
+.modal-btn.logout-btn:hover{background:#b91c1c}
+
 .wa-btn{
  display:inline-block;color:#25d366;font-size:13px;font-weight:600;
  text-decoration:none;margin-top:10px
@@ -277,22 +280,13 @@ body.collapsed .categories{left:72px}
  .search{width:auto;flex:1}
 }
 
-/* ===== RESPONSIVE LAYOUT: LAPTOP, TABLET, HP ===== */
+/* RESPONSIVE LAYOUT */
 html { -webkit-text-size-adjust: 100%; }
 body { min-width: 320px; overflow-x: hidden; }
 img, iframe, video { max-width: 100%; }
 button, a, input, select, textarea { touch-action: manipulation; }
 .video-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
-main, .player-modal, .modal-card, .login-box { min-width: 0; }
-.video-info > div:last-child { min-width: 0; }
-.related-item > div { min-width: 0; }
-.related-item img { flex: 0 0 140px; }
-.player-layout > div { min-width: 0; }
-#searchInput { width: 100%; }
-.search { min-width: 0; }
-.user-label { max-width: 110px; }
 
-/* Laptop kecil dan tablet landscape */
 @media (max-width: 1100px) {
   .sidebar { width: 205px; }
   .categories { left: 205px; padding-left: 18px; padding-right: 18px; }
@@ -302,18 +296,15 @@ main, .player-modal, .modal-card, .login-box { min-width: 0; }
   .related-item img { width: 120px; flex-basis: 120px; }
 }
 
-/* Tablet dan HP */
 @media (max-width: 768px) {
   header { height: 58px; padding: 0 10px; gap: 8px; }
   .header-left, .header-right { gap: 5px; }
   .header-left .icon-btn { width: 36px; height: 36px; flex: 0 0 36px; }
   .brand { font-size: 16px; gap: 5px; }
   .logo-icon { width: 26px; height: 21px; }
-  .header-left .brand { white-space: nowrap; }
   .search { flex: 1 1 auto; width: auto; height: 36px; }
   .search input { padding: 0 10px; font-size: 13px; }
   .search button { width: 40px; flex: 0 0 40px; }
-  .header-right { flex: 0 0 auto; }
   .user-label { display: none; }
   .profile { width: 30px; height: 30px; }
   .sidebar { display: none; }
@@ -330,84 +321,23 @@ main, .player-modal, .modal-card, .login-box { min-width: 0; }
   body.mobile-menu-open .sidebar .nav-heading,
   body.mobile-menu-open .sidebar .nav-divider { display: block; }
   body.collapsed .sidebar { width: min(290px, 84vw); }
-  .categories, body.collapsed .categories {
-    left: 0; top: 58px; right: 0; padding: 10px 12px;
-    gap: 8px; width: 100%; min-width: 0;
-  }
+  .categories, body.collapsed .categories { left: 0; top: 58px; right: 0; padding: 10px 12px; gap: 8px; width: 100%; }
   .category { padding: 7px 12px; font-size: 12px; }
-  main, body.collapsed main {
-    margin-left: 0; padding: 108px 12px 28px;
-  }
-  .content-header { align-items: flex-start; margin-bottom: 16px; }
-  .section-title { font-size: 18px; }
-  .sort-box { gap: 6px; }
-  .sort-box label { font-size: 12px; }
-  .sort-select { max-width: 165px; padding: 7px 8px; font-size: 12px; }
+  main, body.collapsed main { margin-left: 0; padding: 108px 12px 28px; }
   .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
-  .thumbnail { border-radius: 9px; }
-  .video-info { gap: 8px; padding-top: 8px; }
-  .avatar { width: 30px; height: 30px; font-size: 12px; }
-  .video-title { font-size: 13px; }
-  .meta { font-size: 11px; }
-  .player-modal { padding: 12px; }
-  .player-top { margin-bottom: 12px; }
   .player-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
-  .video-container { border-radius: 8px; }
-  .player-title { font-size: 17px; }
-  .player-actions { align-items: flex-start; }
-  .channel-info { flex-wrap: wrap; gap: 8px; }
-  .sub-btn { margin-left: 0; padding: 8px 12px; }
-  .action-btns { width: 100%; gap: 7px; }
-  .action-btn { padding: 8px 11px; font-size: 12px; }
-  .related-item img { width: 135px; flex-basis: 135px; }
-  .login-screen { padding: 16px; }
-  .login-box { padding: 28px 22px; }
-  .modal-overlay { padding: 12px; }
-  .modal-card { padding: 24px 18px; max-height: 90dvh; overflow-y: auto; }
 }
 
-/* HP kecil */
 @media (max-width: 480px) {
   header { padding: 0 7px; gap: 5px; }
-  .header-left { gap: 2px; }
-  .header-left .icon-btn { width: 32px; flex-basis: 32px; font-size: 16px; }
-  .brand { font-size: 14px; letter-spacing: -.3px; }
+  .brand { font-size: 14px; }
   .logo-icon { width: 23px; height: 19px; font-size: 10px; }
   .search { height: 34px; }
   .search input { padding: 0 8px; font-size: 12px; }
-  .search input::placeholder { font-size: 11px; }
   .search button { width: 34px; flex-basis: 34px; font-size: 14px; }
   .profile { width: 28px; height: 28px; }
   main, body.collapsed main { padding: 104px 10px 24px; }
-  .content-header { gap: 8px; }
-  .section-title { font-size: 16px; }
-  .sort-box label { display: none; }
-  .sort-select { max-width: 135px; font-size: 11px; }
   .video-grid { grid-template-columns: minmax(0, 1fr); gap: 22px; }
-  .video-info { gap: 10px; padding-top: 10px; }
-  .avatar { width: 34px; height: 34px; }
-  .video-title { font-size: 14px; }
-  .meta { font-size: 12px; }
-  .player-modal { padding: 10px; }
-  .player-top .brand { font-size: 16px; }
-  .player-title { font-size: 16px; }
-  .player-actions { gap: 12px; }
-  .channel-info { width: 100%; }
-  .action-btns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .action-btn { justify-content: center; min-height: 38px; }
-  .player-description { font-size: 12px; padding: 10px; }
-  .comment-input-box { gap: 8px; }
-  .related-item img { width: 125px; flex-basis: 125px; }
-  .login-box { padding: 26px 18px; }
-  .login-box h1 { font-size: 20px; }
-  .login-box p { font-size: 12px; }
-  .wa-btn { line-height: 1.6; }
-}
-
-/* Layar sangat pendek: login tetap dapat digulir */
-@media (max-height: 560px) {
-  .login-screen { align-items: flex-start; }
-  .login-box { margin: auto; }
 }
 </style>
 </head>
@@ -443,6 +373,20 @@ main, .player-modal, .modal-card, .login-box { min-width: 0; }
   <a href="https://wa.me/62895401061300?text=Halo%20Admin,%20saya%20ingin%20mendapatkan%20kode%20aktivasi%20akun%20Movio%20Music%20Premium." target="_blank" class="wa-btn">💬 Belum punya kode? Hubungi WhatsApp (+62 895-4010-61300)</a>
   <br>
   <button class="close-modal" onclick="closePremiumModal()">Tutup</button>
+ </div>
+</div>
+
+<!-- MODAL PROFIL & KELUAR AKUN -->
+<div class="modal-overlay" id="profileModal">
+ <div class="modal-card">
+  <div class="brand" style="justify-content:center;margin-bottom:8px"><span class="logo-icon">🎵</span><span>Profil Pengguna</span></div>
+  <div id="profileAvatarBig" class="avatar" style="width:64px;height:64px;margin:0 auto 12px;font-size:24px;background:var(--red);border-radius:50%;display:grid;place-items:center;font-weight:bold;color:white">G</div>
+  <h2 id="profileName" style="font-size:18px;margin:4px 0;color:white">Guest User</h2>
+  <p id="profileEmail" style="font-size:13px;color:var(--muted);margin-bottom:16px">Mode Tamu (Guest)</p>
+  <p id="profileStatus" style="font-size:13px;color:var(--gold);margin-bottom:20px;font-weight:600">Status: Free Account</p>
+  
+  <button class="modal-btn logout-btn" onclick="logoutAccount()">🚪 Keluar & Ganti Akun</button>
+  <button class="close-modal" onclick="closeProfileModal()">Tutup</button>
  </div>
 </div>
 
@@ -522,7 +466,6 @@ main, .player-modal, .modal-card, .login-box { min-width: 0; }
      allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
    </div>
    
-   <!-- VISUALIZER SPEKTRUM AUDIO -->
    <div class="visualizer">
     <div class="bar" style="height:12px"></div>
     <div class="bar" style="height:20px"></div>
@@ -558,7 +501,6 @@ main, .player-modal, .modal-card, .login-box { min-width: 0; }
 
    <div class="player-description" id="playerDescription"></div>
 
-   <!-- KOMENTAR -->
    <div class="comments-section">
     <div class="comments-header"><span id="commentCount">2</span> Komentar Pendengar</div>
     <div class="comment-input-box">
@@ -891,7 +833,7 @@ let isSubscribed = false;
 let isLiked = false;
 let isDisliked = false;
 
-/* INIT APP */
+/* INIT APP & AUTH STATE */
 auth.onAuthStateChanged(user => {
  const userLabel = document.getElementById('userLabel');
  const profileBtn = document.getElementById('profileBtn');
@@ -907,7 +849,14 @@ auth.onAuthStateChanged(user => {
    profileBtn.textContent = (user.displayName || 'U')[0].toUpperCase();
   }
  } else {
-  loginScreen.classList.remove('hidden');
+  // Cek apakah user sedang login sebagai Guest di session lokal
+  const guestMode = localStorage.getItem('movio_guest');
+  if (guestMode === 'true') {
+   setGuestUserSession();
+  } else {
+   currentUser = null;
+   loginScreen.classList.remove('hidden');
+  }
  }
  renderVideos();
 });
@@ -921,10 +870,16 @@ function googleLogin() {
 }
 
 function guestLogin() {
+ localStorage.setItem('movio_guest', 'true');
+ setGuestUserSession();
+}
+
+function setGuestUserSession() {
  document.getElementById('loginScreen').classList.add('hidden');
- currentUser = { displayName: 'Guest', isGuest: true };
+ currentUser = { displayName: 'Guest', email: 'Pengguna Tamu (Tanpa Akun)', isGuest: true };
  document.getElementById('userLabel').textContent = 'Guest';
  document.getElementById('profileBtn').textContent = 'G';
+ renderVideos();
 }
 
 function toggleSidebar() {
@@ -1237,7 +1192,7 @@ function closePremiumModal() {
 function verifyPremiumCode() {
  const code = document.getElementById('premiumCodeInput').value.trim();
  if (code === '7777' || code === '8888' || code === '2026') {
-  alert(' Selamat! Akun Anda berhasil di-upgrade ke MOVIO PREMIUM.');
+  alert('🎉 Selamat! Akun Anda berhasil di-upgrade ke MOVIO PREMIUM.');
   document.getElementById('profileBtn').className = 'profile pro';
   document.getElementById('premiumMenuLabel').textContent = 'Status: Premium ⭐';
   closePremiumModal();
@@ -1246,8 +1201,46 @@ function verifyPremiumCode() {
  }
 }
 
+/* PROFIL & LOGOUT / GANTI AKUN */
 function showProfile() {
- alert(`Informasi Akun:\nNama: ${currentUser ? currentUser.displayName : 'Guest'}\nStatus: ${document.getElementById('profileBtn').classList.contains('pro') ? 'Premium Member ⭐' : 'Free Account'}\n\nHubungi admin di WhatsApp untuk upgrade premium.`);
+ const modal = document.getElementById('profileModal');
+ const nameEl = document.getElementById('profileName');
+ const emailEl = document.getElementById('profileEmail');
+ const avatarBig = document.getElementById('profileAvatarBig');
+ const statusEl = document.getElementById('profileStatus');
+ const isPro = document.getElementById('profileBtn').classList.contains('pro');
+
+ if (currentUser) {
+  nameEl.textContent = currentUser.displayName || (currentUser.isGuest ? 'Guest User' : 'Pengguna Movio');
+  emailEl.textContent = currentUser.email || 'Masuk melalui Google Account';
+  if (currentUser.photoURL) {
+   avatarBig.innerHTML = `<img src="${currentUser.photoURL}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" alt="Avatar">`;
+  } else {
+   avatarBig.textContent = (currentUser.displayName || 'U')[0].toUpperCase();
+  }
+ }
+ statusEl.textContent = isPro ? 'Status: Premium Member ⭐' : 'Status: Free Account';
+ modal.classList.add('open');
+}
+
+function closeProfileModal() {
+ document.getElementById('profileModal').classList.remove('open');
+}
+
+function logoutAccount() {
+ if (confirm('Apakah Anda yakin ingin keluar dan mengganti akun?')) {
+  localStorage.removeItem('movio_guest');
+  auth.signOut().then(() => {
+   currentUser = null;
+   closeProfileModal();
+   document.getElementById('loginScreen').classList.remove('hidden');
+  }).catch((error) => {
+   // Jika error dari firebase auth, tetap bersihkan session lokal guest
+   currentUser = null;
+   closeProfileModal();
+   document.getElementById('loginScreen').classList.remove('hidden');
+  });
+ }
 }
 </script>
 </body>
