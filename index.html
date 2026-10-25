@@ -2,9 +2,9 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0f0f0f">
-<title>Movio Music - Your Favorite Music Streaming</title>
+<title>Movio Music - Online & Offline Streaming</title>
 
 <style>
 :root{
@@ -17,33 +17,44 @@
   --red:#ff0033;
   --blue:#3ea6ff;
   --gold:#f59e0b;
+  --green:#22c55e;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Roboto","Arial",sans-serif;-webkit-font-smoothing:antialiased}
-button,input,select,textarea{font:inherit}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;width:100%;min-width:320px;background:var(--bg);color:var(--text);font-family:"Roboto","Arial",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input,select,textarea{font:inherit;max-width:100%;touch-action:manipulation}
 button{cursor:pointer;border:none;background:none;color:inherit}
 .hidden{display:none!important}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+img,iframe{max-width:100%}
 
 /* BRAND LOGO */
 .brand{display:flex;align-items:center;gap:6px;font-size:19px;font-weight:700;letter-spacing:-0.5px;color:white;text-decoration:none;user-select:none}
-.logo-icon{display:grid;place-items:center;width:30px;height:22px;border-radius:6px;background:var(--red);color:white;font-size:12px;font-weight:900}
+.logo-icon{display:grid;place-items:center;width:30px;height:22px;border-radius:6px;background:var(--red);color:white;font-size:12px;font-weight:900;flex-shrink:0}
+
+/* STATUS KONEKSI (ONLINE/OFFLINE) */
+.network-badge{
+  font-size:11px;font-weight:600;padding:4px 8px;border-radius:20px;
+  display:flex;align-items:center;gap:5px;background:#222;border:1px solid var(--border);
+}
+.network-badge.online{color:var(--green);border-color:rgba(34,197,94,0.3)}
+.network-badge.offline{color:#f87171;border-color:rgba(248,113,113,0.3)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
 
 /* LOGIN SCREEN */
 .login-screen{
  position:fixed;inset:0;z-index:1000;display:flex;align-items:center;
- justify-content:center;padding:20px;overflow-y:auto;
+ justify-content:center;padding:16px;overflow-y:auto;
  background:radial-gradient(circle at center,#2b1117 0%,#0f0f0f 100%)
 }
 .login-box{
- width:100%;max-width:400px;padding:36px 28px;text-align:center;
+ width:100%;max-width:380px;padding:32px 24px;text-align:center;
  border:1px solid rgba(255,255,255,0.1);border-radius:16px;background:#181818;
  box-shadow:0 20px 50px rgba(0,0,0,0.8)
 }
-.login-box .brand{justify-content:center;font-size:24px;margin-bottom:12px}
-.login-box .logo-icon{width:38px;height:26px;font-size:16px}
-.login-box h1{margin:12px 0;font-size:22px;font-weight:500}
-.login-box p{font-size:13px;line-height:1.6;color:var(--muted);margin-bottom:24px}
+.login-box .brand{justify-content:center;font-size:22px;margin-bottom:12px}
+.login-box h1{margin:10px 0;font-size:20px;font-weight:500}
+.login-box p{font-size:13px;line-height:1.5;color:var(--muted);margin-bottom:20px}
 .login-btn{
  width:100%;padding:12px;border:1px solid var(--border);
  border-radius:20px;background:#222;color:white;font-weight:500;
@@ -52,432 +63,277 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .login-btn:hover{background:#333}
 .login-btn.guest{margin-top:10px;background:var(--red);color:white;border:none}
 .login-btn.guest:hover{background:#d9002a}
-.login-btn:disabled{opacity:.5;cursor:wait}
 .google-icon{font-weight:bold;color:#4285f4}
-#error{color:#ff4e45!important;font-size:12px;margin-top:12px;overflow-wrap:anywhere}
+#error{color:#ff4e45!important;font-size:12px;margin-top:10px;overflow-wrap:anywhere}
 
 /* HEADER */
 header{
  height:56px;position:fixed;z-index:100;top:0;left:0;right:0;
- display:flex;align-items:center;justify-content:space-between;gap:16px;
- padding:0 16px;background:var(--bg)
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+ padding:0 12px;background:var(--bg)
 }
-.header-left,.header-right{display:flex;align-items:center;gap:12px}
-.icon-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:white;font-size:18px}
+.header-left,.header-right{display:flex;align-items:center;gap:8px}
+.icon-btn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:white;font-size:18px;flex-shrink:0}
 .icon-btn:hover{background:var(--hover)}
 
 /* SEARCH BAR */
-.search{display:flex;width:min(46vw,640px);height:40px}
+.search{display:flex;flex:1;max-width:550px;height:38px}
 .search input{
- flex:1;min-width:0;padding:0 16px;border:1px solid #303030;
- border-radius:40px 0 0 40px;background:#121212;color:white;font-size:15px
+ flex:1;min-width:0;padding:0 14px;border:1px solid #303030;
+ border-radius:40px 0 0 40px;background:#121212;color:white;font-size:14px
 }
 .search input:focus{border-color:var(--red);outline:none}
 .search button{
- width:64px;border:1px solid #303030;border-left:none;border-radius:0 40px 40px 0;
- background:#222;color:white;font-size:16px
+ width:50px;border:1px solid #303030;border-left:none;border-radius:0 40px 40px 0;
+ background:#222;color:white;font-size:15px;flex-shrink:0
 }
 .search button:hover{background:#2a2a2a}
 
 .profile{
  width:32px;height:32px;border-radius:50%;
  background:var(--red);color:white;font-weight:bold;overflow:hidden;
- display:grid;place-items:center;font-size:14px;flex-shrink:0;position:relative;cursor:pointer
+ display:grid;place-items:center;font-size:13px;flex-shrink:0;cursor:pointer;
+ transition: all 0.3s ease;
 }
-.profile.pro{background:var(--gold);color:#0f0f0f;box-shadow:0 0 10px rgba(245,158,11,0.5)}
+.profile.pro{
+ background:var(--gold);color:#0f0f0f;
+ border:2px solid var(--gold);
+ box-shadow:0 0 10px rgba(245,158,11,0.7);
+}
 .profile img{width:100%;height:100%;object-fit:cover}
-.user-label{max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:var(--text)}
+.user-label{max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--text)}
 
 /* SIDEBAR */
 .sidebar{
- position:fixed;top:56px;bottom:0;left:0;width:240px;overflow-y:auto;
- padding:12px;background:var(--bg);z-index:90
+ position:fixed;top:56px;bottom:0;left:0;width:230px;overflow-y:auto;
+ padding:10px;background:var(--bg);z-index:90;transition:width 0.2s
 }
 .nav-item{
- display:flex;align-items:center;gap:24px;padding:10px 12px;
- border-radius:10px;cursor:pointer;font-size:14px;font-weight:400
+ display:flex;align-items:center;gap:16px;padding:10px 12px;
+ border-radius:10px;cursor:pointer;font-size:13px;font-weight:400;white-space:nowrap
 }
 .nav-item:hover{background:var(--hover)}
 .nav-item.active{background:var(--hover);font-weight:600}
-.nav-icon{width:24px;text-align:center;font-size:18px}
-.nav-divider{border:0;border-top:1px solid #272727;margin:12px 0}
-.nav-heading{padding:6px 12px;font-size:14px;font-weight:600;color:var(--muted)}
+.nav-icon{width:22px;text-align:center;font-size:17px;flex-shrink:0}
+.nav-divider{border:0;border-top:1px solid #272727;margin:10px 0}
+.nav-heading{padding:6px 12px;font-size:12px;font-weight:600;color:var(--muted)}
 .nav-item.premium-menu{color:var(--gold);font-weight:600}
 .nav-item.premium-menu:hover{background:rgba(245,158,11,0.1)}
 
 /* CATEGORY PILLS */
 .categories{
- position:fixed;z-index:80;top:56px;left:240px;right:0;
- display:flex;gap:12px;overflow-x:auto;padding:12px 24px;
- background:var(--bg);scrollbar-width:none
+ position:fixed;z-index:80;top:56px;left:230px;right:0;
+ display:flex;gap:10px;overflow-x:auto;padding:10px 16px;
+ background:var(--bg);scrollbar-width:none;transition:left 0.2s
 }
 .categories::-webkit-scrollbar{display:none}
 .category{
- white-space:nowrap;border:none;border-radius:8px;padding:6px 14px;
- background:#272727;color:white;font-size:13px;font-weight:500;transition:0.2s
+ white-space:nowrap;border:none;border-radius:8px;padding:6px 12px;
+ background:#272727;color:white;font-size:12px;font-weight:500;transition:0.2s;flex-shrink:0
 }
 .category:hover{background:#3f3f3f}
 .category.active{background:white;color:#0f0f0f}
 
 /* MAIN CONTENT */
-main{margin-left:240px;padding:116px 24px 40px}
+main{margin-left:230px;padding:108px 16px 30px;min-width:0;transition:margin-left 0.2s}
 
 .content-header{
  display:flex;align-items:center;justify-content:space-between;
- flex-wrap:wrap;gap:12px;margin-bottom:20px
+ flex-wrap:wrap;gap:10px;margin-bottom:16px
 }
-.section-title{font-size:20px;margin:0;font-weight:700}
+.section-title{font-size:18px;margin:0;font-weight:700}
 
 /* SORT SELECTOR */
-.sort-box{display:flex;align-items:center;gap:8px}
-.sort-box label{font-size:13px;color:var(--muted)}
+.sort-box{display:flex;align-items:center;gap:6px}
+.sort-box label{font-size:12px;color:var(--muted)}
 .sort-select{
  background:#1e1e1e;color:white;border:1px solid var(--border);
- padding:6px 12px;border-radius:8px;font-size:13px;cursor:pointer;transition:border-color 0.2s
+ padding:5px 10px;border-radius:8px;font-size:12px;cursor:pointer
 }
-.sort-select:hover{border-color:#666}
-.sort-select:focus{border-color:var(--red);outline:none}
 
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px 16px}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px 12px}
 .video-card{min-width:0;cursor:pointer;display:flex;flex-direction:column}
 .thumbnail{
  position:relative;aspect-ratio:16/9;overflow:hidden;
- border-radius:12px;background:#212121
+ border-radius:10px;background:#212121
 }
 .thumbnail img{width:100%;height:100%;object-fit:cover;transition:transform .2s}
 .video-card:hover .thumbnail img{transform:scale(1.03)}
 .category-badge{
- position:absolute;top:8px;left:8px;background:rgba(0, 0, 0, 0.75);
- backdrop-filter:blur(4px);color:#fff;font-size:10px;font-weight:600;
- padding:3px 8px;border-radius:6px;border:1px solid rgba(255, 255, 255, 0.15);
- text-transform:uppercase;letter-spacing:0.5px
+ position:absolute;top:6px;left:6px;background:rgba(0, 0, 0, 0.75);
+ backdrop-filter:blur(4px);color:#fff;font-size:9px;font-weight:600;
+ padding:2px 6px;border-radius:4px;border:1px solid rgba(255, 255, 255, 0.15);
+ text-transform:uppercase
 }
-.duration{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,0.85);padding:3px 6px;border-radius:4px;font-size:11px;font-weight:600;color:white}
-.video-info{display:flex;gap:12px;padding-top:12px}
-.avatar{width:36px;height:36px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;font-weight:bold;font-size:14px}
-.video-title{font-size:14px;font-weight:600;line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.meta{font-size:12px;color:var(--muted);line-height:1.5}
-.empty{grid-column:1/-1;text-align:center;padding:60px 10px;color:var(--muted)}
+.duration{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,0.85);padding:2px 5px;border-radius:4px;font-size:10px;font-weight:600;color:white}
+.video-info{display:flex;gap:10px;padding-top:10px}
+.avatar{width:34px;height:34px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;font-weight:bold;font-size:13px}
+.video-title{font-size:13px;font-weight:600;line-height:1.35;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.meta{font-size:11px;color:var(--muted);line-height:1.4}
+.empty{grid-column:1/-1;text-align:center;padding:50px 10px;color:var(--muted)}
 
 /* PLAYER MODAL */
 .player-modal{
  display:none;position:fixed;inset:0;z-index:500;overflow-y:auto;
- background:#0f0f0f;padding:16px 24px
+ background:#0f0f0f;padding:12px 16px
 }
 .player-modal.open{display:block}
-.player-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.player-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .player-layout{
- max-width:1280px;margin:auto;
- display:grid;grid-template-columns:1fr 380px;gap:24px
+ max-width:1200px;margin:auto;
+ display:grid;grid-template-columns:1fr 340px;gap:20px
 }
-.video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
+.video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden}
 .player-frame{width:100%;height:100%;border:0}
 
-/* PREMIUM MODAL & PROFILE MODAL */
+/* MODAL OVERLAY */
 .modal-overlay{
  display:none;position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,0.85);
- align-items:center;justify-content:center;padding:20px
+ align-items:center;justify-content:center;padding:16px
 }
 .modal-overlay.open{display:flex}
 .modal-card{
- width:100%;max-width:420px;background:#181818;border:1px solid rgba(245,158,11,0.3);
- border-radius:16px;padding:30px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.9)
+ width:100%;max-width:380px;background:#181818;border:1px solid rgba(245,158,11,0.3);
+ border-radius:16px;padding:24px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.9);
+ max-height:calc(100dvh - 32px);overflow-y:auto
 }
-.modal-card h2{margin:10px 0;color:var(--gold);font-size:22px}
-.modal-card p{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:20px}
+.modal-card h2{margin:8px 0;color:var(--gold);font-size:20px}
+.modal-card p{font-size:12px;color:var(--muted);line-height:1.4;margin-bottom:16px}
 .modal-input{
- width:100%;padding:12px 16px;background:#121212;border:1px solid var(--border);
- border-radius:10px;color:white;font-size:16px;text-align:center;letter-spacing:2px;margin-bottom:16px
+ width:100%;padding:10px 14px;background:#121212;border:1px solid var(--border);
+ border-radius:8px;color:white;font-size:15px;text-align:center;letter-spacing:2px;margin-bottom:14px
 }
 .modal-input:focus{border-color:var(--gold);outline:none}
 .modal-btn{
- width:100%;padding:12px;background:var(--gold);color:#0f0f0f;font-weight:bold;
- border-radius:10px;font-size:14px;transition:0.2s;margin-bottom:10px
+ width:100%;padding:11px;background:var(--gold);color:#0f0f0f;font-weight:bold;
+ border-radius:8px;font-size:13px;transition:0.2s;margin-bottom:8px
 }
 .modal-btn:hover{background:#d97706}
-.modal-btn.logout-btn{background:var(--red);color:white;margin-top:8px}
+.modal-btn.logout-btn{background:var(--red);color:white;margin-top:6px}
 .modal-btn.logout-btn:hover{background:#b91c1c}
 
 .wa-btn{
- display:inline-block;color:#25d366;font-size:13px;font-weight:600;
- text-decoration:none;margin-top:10px
+ display:inline-block;color:#25d366;font-size:12px;font-weight:600;
+ text-decoration:none;margin-top:8px
 }
 .wa-btn:hover{text-decoration:underline}
-.close-modal{background:transparent;color:var(--muted);font-size:13px;margin-top:10px}
+.close-modal{background:transparent;color:var(--muted);font-size:12px;margin-top:8px}
 .close-modal:hover{color:white}
 
 /* MUSIC VISUALIZER BAR */
 .visualizer{
- display:flex;align-items:flex-end;gap:3px;height:24px;padding:4px 12px;
- background:#141414;border-radius:0 0 12px 12px;margin-bottom:12px;overflow:hidden
+ display:flex;align-items:flex-end;gap:3px;height:22px;padding:4px 10px;
+ background:#141414;border-radius:0 0 10px 10px;margin-bottom:10px;overflow:hidden
 }
 .bar{flex:1;background:var(--red);border-radius:2px 2px 0 0;animation:bounce 1.2s infinite ease-in-out alternate}
 .bar:nth-child(2){animation-delay:.2s;background:#ff3355}
 .bar:nth-child(3){animation-delay:.4s;background:#ff6600}
 .bar:nth-child(4){animation-delay:.1s;background:#ffcc00}
 .bar:nth-child(5){animation-delay:.5s;background:#3ea6ff}
-@keyframes bounce{0%{height:4px}100%{height:20px}}
+@keyframes bounce{0%{height:4px}100%{height:18px}}
 
-.player-title{font-size:18px;font-weight:700;line-height:1.4;margin:8px 0}
-.player-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}
-.channel-info{display:flex;align-items:center;gap:12px}
-.channel-name{font-weight:600;font-size:15px}
-.sub-count{font-size:12px;color:var(--muted)}
+.player-title{font-size:16px;font-weight:700;line-height:1.35;margin:6px 0}
+.player-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.channel-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.channel-name{font-weight:600;font-size:14px}
+.sub-count{font-size:11px;color:var(--muted)}
 
 .sub-btn{
- padding:8px 16px;border-radius:18px;background:white;color:black;
- font-weight:600;font-size:14px;margin-left:12px;transition:all 0.2s
+ padding:6px 14px;border-radius:16px;background:white;color:black;
+ font-weight:600;font-size:13px;transition:all 0.2s
 }
 .sub-btn:hover{background:#d9d9d9}
 .sub-btn.subscribed{background:#272727;color:white}
 
-.action-btns{display:flex;gap:8px;flex-wrap:wrap}
+.action-btns{display:flex;gap:6px;flex-wrap:wrap}
 .action-btn{
- display:flex;align-items:center;gap:6px;padding:8px 14px;
- border-radius:18px;background:#272727;font-size:13px;font-weight:500;transition:0.2s
+ display:flex;align-items:center;gap:5px;padding:7px 12px;
+ border-radius:16px;background:#272727;font-size:12px;font-weight:500;transition:0.2s
 }
 .action-btn:hover{background:#3f3f3f}
 .action-btn.active{background:#3f3f3f;color:var(--red)}
 
 /* DESKRIPSI & KOMENTAR */
-.player-description{padding:12px;border-radius:12px;background:#272727;font-size:13px;line-height:1.6;overflow-wrap:anywhere;margin-bottom:24px}
-.comments-section{margin-top:20px}
-.comments-header{font-weight:700;font-size:16px;margin-bottom:16px}
-.comment-input-box{display:flex;gap:12px;margin-bottom:24px}
+.player-description{padding:10px 12px;border-radius:10px;background:#272727;font-size:12px;line-height:1.5;overflow-wrap:anywhere;margin-bottom:20px}
+.comments-section{margin-top:16px}
+.comments-header{font-weight:700;font-size:15px;margin-bottom:12px}
+.comment-input-box{display:flex;gap:10px;margin-bottom:20px}
 .comment-input-box textarea{
  flex:1;background:none;border:none;border-bottom:1px solid var(--border);
- color:white;padding:4px 0;resize:none;height:36px
+ color:white;padding:4px 0;resize:none;height:34px;font-size:13px
 }
 .comment-input-box textarea:focus{border-bottom-color:white;outline:none}
-.comment-btn-row{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
-.btn-sm{padding:6px 14px;border-radius:16px;font-size:13px;font-weight:500}
+.comment-btn-row{display:flex;justify-content:flex-end;gap:6px;margin-top:6px}
+.btn-sm{padding:5px 12px;border-radius:14px;font-size:12px;font-weight:500}
 .btn-primary{background:var(--red);color:white}
 
-.comment-list{display:flex;flex-direction:column;gap:16px}
-.comment-item{display:flex;gap:12px}
-.comment-author{font-weight:600;font-size:13px;margin-bottom:2px}
-.comment-text{font-size:13px;line-height:1.4;color:#ddd}
+.comment-list{display:flex;flex-direction:column;gap:12px}
+.comment-item{display:flex;gap:10px}
+.comment-author{font-weight:600;font-size:12px;margin-bottom:2px}
+.comment-text{font-size:12px;line-height:1.35;color:#ddd}
 
-.related-item{display:flex;gap:10px;margin-bottom:12px;cursor:pointer}
-.related-item img{width:140px;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
-.related-title{font-size:13px;font-weight:600;line-height:1.3;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.related-item{display:flex;gap:8px;margin-bottom:10px;cursor:pointer}
+.related-item img{width:120px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;flex-shrink:0}
+.related-title{font-size:12px;font-weight:600;line-height:1.3;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-/* COLLAPSED & RESPONSIVE */
-body.collapsed .sidebar{width:72px;padding:12px 4px}
-body.collapsed .sidebar .nav-item{flex-direction:column;gap:6px;padding:14px 0;font-size:10px;text-align:center;justify-content:center}
-body.collapsed .sidebar .nav-icon{font-size:20px}
+/* COLLAPSED SIDEBAR (DESKTOP) */
+body.collapsed .sidebar{width:68px;padding:10px 4px}
+body.collapsed .sidebar .nav-item{flex-direction:column;gap:4px;padding:10px 0;font-size:9px;text-align:center;justify-content:center}
+body.collapsed .sidebar .nav-icon{font-size:18px}
 body.collapsed .sidebar .nav-heading,body.collapsed .sidebar .nav-divider{display:none}
-body.collapsed main{margin-left:72px}
-body.collapsed .categories{left:72px}
+body.collapsed main{margin-left:68px}
+body.collapsed .categories{left:68px}
 
-@media(max-width:1024px){
- .player-layout{grid-template-columns:1fr}
-}
-@media(max-width:768px){
- .sidebar{display:none}
- .categories{left:0}
- main{margin-left:0;padding-top:110px}
- .search{width:auto;flex:1}
-}
-
-/* RESPONSIVE LAYOUT */
-html { -webkit-text-size-adjust: 100%; }
-body { min-width: 320px; overflow-x: hidden; }
-img, iframe, video { max-width: 100%; }
-button, a, input, select, textarea { touch-action: manipulation; }
-.video-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
-
-@media (max-width: 1100px) {
-  .sidebar { width: 205px; }
-  .categories { left: 205px; padding-left: 18px; padding-right: 18px; }
-  main { margin-left: 205px; padding-left: 18px; padding-right: 18px; }
-  body.collapsed .categories { left: 72px; }
-  .player-layout { grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; }
-  .related-item img { width: 120px; flex-basis: 120px; }
-}
-
+/* RESPONSIVE UNTUK HP / LAYAR KECIL */
 @media (max-width: 768px) {
-  header { height: 58px; padding: 0 10px; gap: 8px; }
-  .header-left, .header-right { gap: 5px; }
-  .header-left .icon-btn { width: 36px; height: 36px; flex: 0 0 36px; }
-  .brand { font-size: 16px; gap: 5px; }
-  .logo-icon { width: 26px; height: 21px; }
-  .search { flex: 1 1 auto; width: auto; height: 36px; }
-  .search input { padding: 0 10px; font-size: 13px; }
-  .search button { width: 40px; flex: 0 0 40px; }
-  .user-label { display: none; }
-  .profile { width: 30px; height: 30px; }
-  .sidebar { display: none; }
-  body.mobile-menu-open .sidebar {
-    display: block; position: fixed; top: 58px; bottom: 0; left: 0;
-    width: min(290px, 84vw); padding: 12px; z-index: 250;
-    overflow-y: auto; box-shadow: 12px 0 30px rgba(0,0,0,.45);
-    background: #111;
-  }
-  body.mobile-menu-open .sidebar .nav-item {
-    flex-direction: row; justify-content: flex-start; gap: 18px;
-    padding: 12px; font-size: 14px; text-align: left;
-  }
-  body.mobile-menu-open .sidebar .nav-heading,
-  body.mobile-menu-open .sidebar .nav-divider { display: block; }
-  body.collapsed .sidebar { width: min(290px, 84vw); }
-  .categories, body.collapsed .categories { left: 0; top: 58px; right: 0; padding: 10px 12px; gap: 8px; width: 100%; }
-  .category { padding: 7px 12px; font-size: 12px; }
-  main, body.collapsed main { margin-left: 0; padding: 108px 12px 28px; }
-  .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
-  .player-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
-}
-
-@media (max-width: 480px) {
-  header { padding: 0 7px; gap: 5px; }
-  .brand { font-size: 14px; }
-  .logo-icon { width: 23px; height: 19px; font-size: 10px; }
-  .search { height: 34px; }
-  .search input { padding: 0 8px; font-size: 12px; }
-  .search button { width: 34px; flex-basis: 34px; font-size: 14px; }
-  .profile { width: 28px; height: 28px; }
-  main, body.collapsed main { padding: 104px 10px 24px; }
-  .video-grid { grid-template-columns: minmax(0, 1fr); gap: 22px; }
-}
-
-/* ===== PENYESUAIAN RESPONSIVE FINAL: LAPTOP, TABLET, HP ===== */
-html { scroll-behavior:smooth; }
-body { width:100%; min-width:320px; overflow-x:hidden; }
-img, iframe { max-width:100%; }
-button, input, select, textarea { max-width:100%; }
-main { min-width:0; }
-.video-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:26px 16px; }
-.video-card { min-width:0; }
-.thumbnail { width:100%; }
-.video-info > div:last-child { min-width:0; }
-.video-title { overflow-wrap:anywhere; }
-.player-modal { padding:clamp(10px,2vw,24px); }
-.player-layout { grid-template-columns:minmax(0,1fr) minmax(260px,340px); align-items:start; }
-.player-layout > div { min-width:0; }
-.related-item { align-items:flex-start; }
-.related-item img { flex:0 0 140px; width:140px; }
-.modal-card { max-height:calc(100dvh - 32px); overflow-y:auto; }
-
-@media (max-width: 1250px) {
-  .video-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px 14px; }
-  .sidebar { width:220px; }
-  .categories { left:220px; }
-  main { margin-left:220px; padding-left:20px; padding-right:20px; }
-  body.collapsed .categories { left:72px; }
-  body.collapsed main { margin-left:72px; }
-  .player-layout { grid-template-columns:minmax(0,1fr) 290px; gap:18px; }
-}
-@media (max-width: 980px) {
-  header { gap:10px; padding-inline:12px; }
-  .header-left,.header-right { gap:7px; }
-  .search { width:auto; flex:1 1 300px; min-width:120px; }
-  .sidebar { width:190px; }
-  .categories { left:190px; padding-inline:16px; }
-  main { margin-left:190px; padding-inline:16px; }
-  body.collapsed .categories { left:72px; }
-  body.collapsed main { margin-left:72px; }
-  .video-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .player-layout { grid-template-columns:minmax(0,1fr); }
-  #relatedVideos { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-  .related-item { margin-bottom:0; min-width:0; }
-  .related-item img { width:42%; flex-basis:42%; }
-}
-@media (max-width: 768px) {
-  header { height:58px; padding:0 10px; gap:7px; }
-  .header-left { flex:0 0 auto; min-width:0; }
-  .header-left .icon-btn { width:36px; height:36px; flex:0 0 36px; }
-  .brand { font-size:15px; gap:5px; }
-  .logo-icon { width:25px; height:21px; flex:0 0 auto; }
-  .search { flex:1 1 auto; width:auto; min-width:0; height:36px; }
-  .search input { min-width:0; padding:0 10px; font-size:13px; }
-  .search button { width:38px; flex:0 0 38px; }
-  .header-right { flex:0 0 auto; }
+  header { height:52px; padding:0 8px; gap:6px; }
+  .header-left .icon-btn { width:34px; height:34px; }
+  .brand { font-size:15px; gap:4px; }
+  .logo-icon { width:24px; height:19px; font-size:10px; }
+  .search { height:34px; }
+  .search input { padding:0 10px; font-size:12px; }
+  .search button { width:36px; font-size:13px; }
   .user-label { display:none; }
-  .profile { width:30px; height:30px; }
+  .profile { width:28px; height:28px; font-size:11px; }
+  .network-badge { font-size:9px; padding:3px 6px; }
+
   .sidebar { display:none; }
   body.mobile-menu-open .sidebar {
-    display:block; position:fixed; top:58px; bottom:0; left:0;
-    width:min(290px,84vw); padding:12px; z-index:250;
-    overflow-y:auto; box-shadow:12px 0 30px rgba(0,0,0,.5);
-    background:#111;
+    display:block; position:fixed; top:52px; bottom:0; left:0;
+    width:min(260px,80vw); padding:10px; z-index:250;
+    background:#111; box-shadow:10px 0 25px rgba(0,0,0,0.5);
   }
   body.mobile-menu-open .sidebar .nav-item {
-    flex-direction:row; justify-content:flex-start; gap:18px;
-    padding:12px; font-size:14px; text-align:left;
+    flex-direction:row; justify-content:flex-start; gap:14px;
+    padding:10px; font-size:13px; text-align:left;
   }
   body.mobile-menu-open .sidebar .nav-heading,
   body.mobile-menu-open .sidebar .nav-divider { display:block; }
   body.mobile-menu-open::after {
-    content:""; position:fixed; inset:58px 0 0; z-index:200;
-    background:rgba(0,0,0,.55);
+    content:""; position:fixed; inset:52px 0 0; z-index:200;
+    background:rgba(0,0,0,0.6);
   }
+
   .categories, body.collapsed .categories {
-    left:0; right:0; top:58px; width:100%; padding:10px 12px;
-    gap:8px; overflow-x:auto;
+    left:0; right:0; top:52px; width:100%; padding:8px 12px; gap:6px;
   }
-  .category { padding:7px 12px; font-size:12px; flex:0 0 auto; }
-  main, body.collapsed main { margin-left:0; padding:108px 14px 28px; }
-  body.collapsed .sidebar { width:min(290px,84vw); }
-  .content-header { align-items:flex-start; }
-  .section-title { font-size:19px; }
-  .sort-box { flex-wrap:wrap; justify-content:flex-start; }
-  .video-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 12px; }
-  .video-info { gap:9px; padding-top:9px; }
-  .avatar { width:32px; height:32px; font-size:12px; }
-  .video-title { font-size:13px; }
-  .meta { font-size:11px; }
-  .player-modal { padding:10px 12px 24px; }
-  .player-top { margin-bottom:12px; }
-  .player-layout { display:grid; grid-template-columns:minmax(0,1fr); gap:20px; }
-  .video-container { border-radius:8px; }
-  .player-title { font-size:17px; }
-  .player-actions { align-items:flex-start; }
-  .channel-info { flex-wrap:wrap; gap:8px; }
-  .sub-btn { margin-left:0; padding:8px 12px; }
-  .action-btns { gap:6px; }
-  .action-btn { padding:8px 10px; font-size:12px; }
-  #relatedVideos { display:flex; flex-direction:column; }
-  .related-item img { width:135px; flex:0 0 135px; }
-}
-@media (max-width: 520px) {
-  header { padding:0 7px; gap:5px; }
-  .header-left { gap:4px; }
-  .header-left .icon-btn { width:32px; flex-basis:32px; }
-  .brand { font-size:0; gap:0; }
-  .header-left .brand .logo-icon { width:25px; height:22px; font-size:12px; }
-  .search { height:34px; }
-  .search input { padding:0 8px; font-size:12px; }
-  .search input::placeholder { color:#999; }
-  .search button { width:32px; flex-basis:32px; font-size:14px; }
-  .profile { width:28px; height:28px; }
-  main, body.collapsed main { padding:104px 10px 24px; }
-  .content-header { gap:10px; margin-bottom:16px; }
-  .section-title { font-size:17px; }
-  .sort-box { width:100%; gap:6px; }
-  .sort-select { flex:1; min-width:0; font-size:12px; }
-  .video-grid { grid-template-columns:minmax(0,1fr); gap:22px; }
-  .video-info { gap:11px; padding-top:10px; }
-  .avatar { width:36px; height:36px; font-size:14px; }
-  .video-title { font-size:14px; }
-  .meta { font-size:12px; }
-  .login-screen { padding:14px; }
-  .login-box { padding:28px 20px; }
-  .login-box h1 { font-size:20px; }
-  .modal-overlay { padding:12px; }
-  .modal-card { padding:22px 18px; }
-  .player-modal { padding:8px 10px 22px; }
-  .player-title { font-size:16px; }
-  .player-actions { gap:10px; }
-  .channel-info { width:100%; }
-  .action-btns { width:100%; }
-  .action-btn { padding:8px 10px; }
-  .comment-input-box { gap:8px; }
-  .related-item img { width:40%; flex-basis:40%; }
-}
-@media (min-width: 769px) {
-  body.mobile-menu-open::after { display:none; }
+  .category { padding:5px 10px; font-size:11px; }
+  main, body.collapsed main { margin-left:0; padding:98px 10px 24px; }
+  body.collapsed .sidebar { width:min(260px,80vw); }
+
+  .video-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px 10px; }
+  .video-title { font-size:12px; }
+  .meta { font-size:10px; }
+  
+  .player-modal { padding:8px 10px 20px; }
+  .player-layout { grid-template-columns:minmax(0,1fr); gap:16px; }
+  .related-item img { width:110px; }
 }
 
+@media (max-width: 420px) {
+  .video-grid { grid-template-columns:minmax(0,1fr); gap:18px; }
+  .search { flex:1 1 auto; }
+}
 </style>
 </head>
 
@@ -502,27 +358,27 @@ main { min-width:0; }
 <!-- MODAL PREMIUM -->
 <div class="modal-overlay" id="premiumModal">
  <div class="modal-card">
-  <div class="brand" style="justify-content:center;margin-bottom:8px"><span class="logo-icon" style="background:var(--gold)">⭐</span><span>Movio Premium</span></div>
+  <div class="brand" style="justify-content:center;margin-bottom:6px"><span class="logo-icon" style="background:var(--gold)">⭐</span><span>Movio Premium</span></div>
   <h2>Aktivasi Akun Premium</h2>
-  <p>Masukkan kode aktivasi rahasia Anda untuk menikmati streaming musik tanpa batas dan kualitas audio jernih.</p>
+  <p>Masukkan kode aktivasi rahasia Anda untuk menikmati streaming musik tanpa batas.</p>
   
-  <input type="password" id="premiumCodeInput" class="modal-input" placeholder="••••" maxlength="4">
+  <input type="password" id="premiumCodeInput" class="modal-input" placeholder="••••" maxlength="8">
   <button class="modal-btn" onclick="verifyPremiumCode()">Aktifkan Sekarang</button>
   <br>
-  <a href="https://wa.me/62895401061300?text=Halo%20Admin,%20saya%20ingin%20mendapatkan%20kode%20aktivasi%20akun%20Movio%20Music%20Premium." target="_blank" class="wa-btn">💬 Belum punya kode? Hubungi WhatsApp (+62 895-4010-61300)</a>
+  <a href="https://wa.me/62895401061300?text=Halo%20Admin,%20saya%20ingin%20mendapatkan%20kode%20aktivasi%20akun%20Movio%20Music%20Premium." target="_blank" class="wa-btn">💬 Hubungi WhatsApp (+62 895-4010-61300)</a>
   <br>
   <button class="close-modal" onclick="closePremiumModal()">Tutup</button>
  </div>
 </div>
 
-<!-- MODAL PROFIL & KELUAR AKUN -->
+<!-- MODAL PROFIL -->
 <div class="modal-overlay" id="profileModal">
  <div class="modal-card">
-  <div class="brand" style="justify-content:center;margin-bottom:8px"><span class="logo-icon">🎵</span><span>Profil Pengguna</span></div>
-  <div id="profileAvatarBig" class="avatar" style="width:64px;height:64px;margin:0 auto 12px;font-size:24px;background:var(--red);border-radius:50%;display:grid;place-items:center;font-weight:bold;color:white">G</div>
-  <h2 id="profileName" style="font-size:18px;margin:4px 0;color:white">Guest User</h2>
-  <p id="profileEmail" style="font-size:13px;color:var(--muted);margin-bottom:16px">Mode Tamu (Guest)</p>
-  <p id="profileStatus" style="font-size:13px;color:var(--gold);margin-bottom:20px;font-weight:600">Status: Free Account</p>
+  <div class="brand" style="justify-content:center;margin-bottom:6px"><span class="logo-icon">🎵</span><span>Profil Pengguna</span></div>
+  <div id="profileAvatarBig" class="avatar" style="width:56px;height:56px;margin:0 auto 10px;font-size:20px;background:var(--red);border-radius:50%;display:grid;place-items:center;font-weight:bold;color:white">G</div>
+  <h2 id="profileName" style="font-size:16px;margin:4px 0;color:white">Guest User</h2>
+  <p id="profileEmail" style="font-size:12px;color:var(--muted);margin-bottom:12px">Mode Tamu (Guest)</p>
+  <p id="profileStatus" style="font-size:12px;color:var(--gold);margin-bottom:16px;font-weight:600">Status: Free Account</p>
   
   <button class="modal-btn logout-btn" onclick="logoutAccount()">🚪 Keluar & Ganti Akun</button>
   <button class="close-modal" onclick="closeProfileModal()">Tutup</button>
@@ -533,15 +389,16 @@ main { min-width:0; }
 <header>
  <div class="header-left">
   <button class="icon-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
-  <a href="#" class="brand" onclick="showHome()"><span class="logo-icon">🎵</span><span>movio music</span></a>
+  <a href="#" class="brand" onclick="showHome()"><span class="logo-icon">🎵</span><span>movio</span></a>
  </div>
 
  <form class="search" id="searchForm">
-  <input id="searchInput" type="search" placeholder="Cari lagu, wali band, tipe-x, dj..." aria-label="Cari lagu">
+  <input id="searchInput" type="search" placeholder="Cari lagu, wali, dj, pop..." aria-label="Cari lagu">
   <button type="submit" aria-label="Cari">⌕</button>
  </form>
 
  <div class="header-right">
+  <div id="networkBadge" class="network-badge online"><span class="dot"></span><span id="networkText">Online</span></div>
   <span class="user-label" id="userLabel">Guest</span>
   <button class="profile" id="profileBtn" onclick="showProfile()" aria-label="Profil">G</button>
  </div>
@@ -553,9 +410,9 @@ main { min-width:0; }
  <div class="nav-item" onclick="showHistory(this)"><span class="nav-icon">🕒</span><span>Histori Putar</span></div>
  <hr class="nav-divider">
  <div class="nav-heading">Genre & Kategori</div>
- <div class="nav-item" onclick="filterCategory('Pop Nostalgia')"><span class="nav-icon">📻</span><span>Pop Nostalgia (80s-2000s)</span></div>
- <div class="nav-item" onclick="filterCategory('Pop 2000an')"><span class="nav-icon">🎶</span><span>Band Pop 2000an (Wali / Tipe-X)</span></div>
- <div class="nav-item" onclick="filterCategory('DJ & Remix')"><span class="nav-icon">🎛️</span><span>DJ Dugem & Breakbeat</span></div>
+ <div class="nav-item" onclick="filterCategory('Pop Nostalgia')"><span class="nav-icon">📻</span><span>Pop Nostalgia</span></div>
+ <div class="nav-item" onclick="filterCategory('Pop 2000an')"><span class="nav-icon">🎶</span><span>Band Pop 2000an</span></div>
+ <div class="nav-item" onclick="filterCategory('DJ & Remix')"><span class="nav-icon">🎛️</span><span>DJ & Remix</span></div>
  <div class="nav-item" onclick="filterCategory('Akustik')"><span class="nav-icon">🎸</span><span>Akustik Santai</span></div>
  <hr class="nav-divider">
  <div class="nav-item premium-menu" onclick="openPremiumModal()"><span class="nav-icon">⭐</span><span id="premiumMenuLabel">Upgrade Premium</span></div>
@@ -564,8 +421,8 @@ main { min-width:0; }
 
 <!-- KATEGORI -->
 <nav class="categories" id="categories">
- <button class="category active" onclick="filterCategory('Semua',this)">Semua Musik</button>
- <button class="category" onclick="filterCategory('Koleksi',this)">❤️ Lagu Disimpan</button>
+ <button class="category active" onclick="filterCategory('Semua',this)">Semua</button>
+ <button class="category" onclick="filterCategory('Koleksi',this)">❤️ Disimpan</button>
  <button class="category" onclick="filterCategory('Pop Nostalgia',this)">📻 Pop Nostalgia</button>
  <button class="category" onclick="filterCategory('Pop 2000an',this)">🎶 Pop 2000an</button>
  <button class="category" onclick="filterCategory('DJ & Remix',this)">🎛️ DJ & Remix</button>
@@ -580,7 +437,7 @@ main { min-width:0; }
     <label for="sortSelect">Urutkan:</label>
     <select id="sortSelect" class="sort-select" onchange="changeSort(this.value)">
      <option value="default">Default</option>
-     <option value="popular">🔥 Paling Populer (Views)</option>
+     <option value="popular">🔥 Populer</option>
      <option value="likes">❤️ Suka Terbanyak</option>
      <option value="az">🔤 Judul (A-Z)</option>
     </select>
@@ -607,17 +464,11 @@ main { min-width:0; }
    
    <div class="visualizer">
     <div class="bar" style="height:12px"></div>
-    <div class="bar" style="height:20px"></div>
-    <div class="bar" style="height:8px"></div>
     <div class="bar" style="height:18px"></div>
-    <div class="bar" style="height:14px"></div>
-    <div class="bar" style="height:22px"></div>
-    <div class="bar" style="height:10px"></div>
+    <div class="bar" style="height:8px"></div>
     <div class="bar" style="height:16px"></div>
-    <div class="bar" style="height:19px"></div>
-    <div class="bar" style="height:13px"></div>
-    <div class="bar" style="height:17px"></div>
-    <div class="bar" style="height:9px"></div>
+    <div class="bar" style="height:12px"></div>
+    <div class="bar" style="height:20px"></div>
    </div>
 
    <h2 class="player-title" id="playerTitle"></h2>
@@ -643,9 +494,9 @@ main { min-width:0; }
    <div class="comments-section">
     <div class="comments-header"><span id="commentCount">2</span> Komentar Pendengar</div>
     <div class="comment-input-box">
-     <div class="avatar" style="background:#ff0033">G</div>
+     <div class="avatar" style="background:#ff0033;width:30px;height:30px;font-size:12px">G</div>
      <div style="flex:1">
-      <textarea id="commentInput" placeholder="Tulis komentar atau tanggapan lagu..."></textarea>
+      <textarea id="commentInput" placeholder="Tulis komentar lagu..."></textarea>
       <div class="comment-btn-row">
        <button class="btn-sm btn-primary" onclick="addComment()">Kirim</button>
       </div>
@@ -655,7 +506,7 @@ main { min-width:0; }
    </div>
   </div>
 
-  <div><h3 style="font-size:16px;margin:0 0 16px">Rekomendasi Musik</h3><div id="relatedVideos"></div></div>
+  <div><h3 style="font-size:15px;margin:0 0 12px">Rekomendasi Musik</h3><div id="relatedVideos"></div></div>
  </div>
 </section>
 
@@ -666,7 +517,6 @@ main { min-width:0; }
 <script>
 "use strict";
 
-/* FIREBASE CONFIG */
 const firebaseConfig = {
  apiKey: "AIzaSyC2MfL9EFzVyxOyxemFV-_ywR01S2uEtAc",
  authDomain: "movio-6211e.firebaseapp.com",
@@ -681,284 +531,50 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-/* MUSIC DATABASE */
-const videos = [
- {
-  id: "zdMA5BxrofM",
-  title: "Top Hits Spotify Indonesia 2026 | Top Spotify Indonesia 2026",
-  channel: "Fakta Pikiran",
-  category: "Pop Nostalgia",
-  duration: "FULL ALBUM",
-  color: "#1db954",
-  views: "10.7M views",
-  rawViews: 10700000,
-  likes: 55750,
-  subscribers: "500K subscriber"
- },
- {
-  id:"85Ek_ihAur0",
-  title:"Lagu Nostalgia 80an dan 90an Terbaik Sepanjang Masa",
-  channel:"Nostalgia Sintetis",
-  category:"Pop Nostalgia",
-  duration:"FULL ALBUM",
-  color:"#d97706",
-  views:"9.5M views",
-  rawViews: 9500000,
-  likes: 40450,
-  subscribers: "820K subscriber"
- },
- {
-  id:"VwF6A76Xylk",
-  title:"Lagu Nostalgia 90an 2000an Hit Pilihan",
-  channel:"Lalala",
-  category:"Pop Nostalgia",
-  duration:"FULL ALBUM",
-  color:"#2563eb",
-  views:"4.9M views",
-  rawViews: 4900000,
-  likes: 16260,
-  subscribers: "350K subscriber"
- },
- {
-  id:"YNgYYLCZ1hI",
-  title:"Nostalgia Lagu-Lagu Terbaik Wali Band - Full Album Hits Bikin Baper",
-  channel:"Kedai Chana",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#059669",
-  views:"1.4M views",
-  rawViews: 1400000,
-  likes: 7554,
-  subscribers: "210K subscriber"
- },
- {
-  id:"VP6mRngugVA",
-  title:"Nostalgia Lagu-Lagu Terbaik Wali Band - Full Album Paling Hits",
-  channel:"Petir music ⚡",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#e11d48",
-  views:"1.1M views",
-  rawViews: 1100000,
-  likes: 4946,
-  subscribers: "180K subscriber"
- },
- {
-  id:"TUBVJcalKqs",
-  title:"Tipe - X Full Album Terbaik 2024 | Lagu Indonesia Hits Pilihan",
-  channel:"tamaryn",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#7c3aed",
-  views:"20M views",
-  rawViews: 20000000,
-  likes: 114137,
-  subscribers: "1.5M subscriber"
- },
- {
-  id:"NDNnmQYyxyI",
-  title:"DUGEM TERBARU NONSTOP FULL BASS - DJ TAK MUNGKIN BERKASIH 2026",
-  channel:"Dj Mona belando",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#ff0033",
-  views:"11K views",
-  rawViews: 11000,
-  likes: 124,
-  subscribers: "12K subscriber"
- },
- {
-  id:"pbvAzjb81f8",
-  title:"BREAKBEAT STADIUM GEN-Z 2026 🔥 FULL BASS NONSTOP 2 JAM",
-  channel:"Egy Sadewong",
-  category:"DJ & Remix",
-  duration:"2 JAM",
-  color:"#db2777",
-  views:"2.5M views",
-  rawViews: 2500000,
-  likes: 19175,
-  subscribers: "410K subscriber"
- },
- {
-  id:"ifBXLaPp_uY",
-  title:"Lagu Jawa Akustik Pengantar Tidur Nyaman",
-  channel:"Koleksi Musik",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#e11d48",
-  views:"1.5M views",
-  rawViews: 1500000,
-  likes: 15400,
-  subscribers: "450K subscriber"
- },
- {
-  id:"GB09st7rtv0",
-  title:"Lagu Pop Indonesia Tahun 2000an With Video Lirik",
-  channel:"91 FM",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#d97706",
-  views:"28M views",
-  rawViews: 28000000,
-  likes: 115150,
-  subscribers: "1.2M subscriber"
- },
- {
-  id:"0BXVNT1yxqw",
-  title:"DJ TIKTOK TERBARU 2026 || DJ ADAKAH KENYAMANAN DIHATIMU 🎵 FULL ALBUM",
-  channel:"Seven Fvnky",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#ff0033",
-  views:"5.2M views",
-  rawViews: 5200000,
-  likes: 42000,
-  subscribers: "890K subscriber"
- },
- {
-  id:"i-qe0W_Av6M",
-  title:"Koleksi Hits Pop Kenangan Tembang Lawas 80-90an",
-  channel:"Tembang Nostalgia ID",
-  category:"Pop Nostalgia",
-  duration:"1 JAM",
-  color:"#b45309",
-  views:"850K views",
-  rawViews: 850000,
-  likes: 3400,
-  subscribers: "100K subscriber"
- },
- {
-  id:"X-q39sf-Wz0",
-  title:"Slow Rock & Pop Melayu Nostalgia Paling Syahdu",
-  channel:"Melayu Acoustic Live",
-  category:"Pop Nostalgia",
-  duration:"FULL ALBUM",
-  color:"#1d4ed8",
-  views:"1.2M views",
-  rawViews: 1200000,
-  likes: 5200,
-  subscribers: "120K subscriber"
- },
- {
-  id:"mOL-KEw4_LQ",
-  title:"Koleksi Band Pop Indonesia 2000an - Sheila on 7, Peterpan, Ungu",
-  channel:"Dunia Band ID",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#047857",
-  views:"2.1M views",
-  rawViews: 2100000,
-  likes: 8900,
-  subscribers: "250K subscriber"
- },
- {
-  id:"JbsyEKorevk",
-  title:"Kompilasi Lagu Hits Band Indie & Pop Indonesia 2000an",
-  channel:"Indie Pop Sound",
-  category:"Pop 2000an",
-  duration:"45 MIN",
-  color:"#6d28d9",
-  views:"950K views",
-  rawViews: 950000,
-  likes: 4100,
-  subscribers: "140K subscriber"
- },
- {
-  id:"jtYpG2t3gX4",
-  title:"DJ Breakbeat Clubbing Funk - Slow Bass Jedag Jedug 2026",
-  channel:"BeatMaster Remix",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#e11d48",
-  views:"3.4M views",
-  rawViews: 3400000,
-  likes: 15200,
-  subscribers: "300K subscriber"
- },
- {
-  id:"JeGPVGMiM5c",
-  title:"DJ Funky Kota Full Bass Melintir Party Night",
-  channel:"DJ Electro Bass",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#c026d3",
-  views:"1.8M views",
-  rawViews: 1800000,
-  likes: 7200,
-  subscribers: "190K subscriber"
- },
- {
-  id:"UV6MYU_1O1I",
-  title:"Pop Akustik Chill - Lagu Pengantar Kerja & Belajar",
-  channel:"Acoustic Lounge",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#059669",
-  views:"620K views",
-  rawViews: 620000,
-  likes: 2900,
-  subscribers: "90K subscriber"
- },
- {
-  id:"PbjqEy6rfrQ",
-  title:"Lagu Nostalgia Kenangan Manis 90an Acoustic Cover",
-  channel:"Koleksi Nostalgia",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#0284c7",
-  views:"450K views",
-  rawViews: 450000,
-  likes: 1800,
-  subscribers: "75K subscriber"
- },
- {
-  id:"Vb19yb_o67A",
-  title:"Kumpulan Lagu Galau Band Pop 2000an Terbaik",
-  channel:"Sobat Galau Band",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#4338ca",
-  views:"1.6M views",
-  rawViews: 1600000,
-  likes: 6700,
-  subscribers: "220K subscriber"
- },
- {
-  id:"-Hjb3OQaAV0",
-  title:"DJ Dugem Tiktok Viral Bass Glerr Nonstop",
-  channel:"DJ Remixer ID",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#dc2626",
-  views:"2.3M views",
-  rawViews: 2300000,
-  likes: 9800,
-  subscribers: "310K subscriber"
- },
- {
-  id:"b99cRgW99UY",
-  title:"Petikan Gitar Akustik Santai Sore Hari & Senja",
-  channel:"Acoustic Vibe",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#d97706",
-  views:"920K views",
-  rawViews: 920000,
-  likes: 4300,
-  subscribers: "150K subscriber"
- },
- {
-  id:"_vlLToRjP1E",
-  title:"Koleksi Musik Santai Kafe & Coffee Shop Akustik",
-  channel:"Coffee Beats",
-  category:"Akustik",
-  duration:"FULL ALBUM",
-  color:"#b45309",
-  views:"3.1M views",
-  rawViews: 3100000,
-  likes: 14200,
-  subscribers: "390K subscriber"
+window.addEventListener('online', updateNetworkStatus);
+window.addEventListener('offline', updateNetworkStatus);
+
+function updateNetworkStatus() {
+ const badge = document.getElementById('networkBadge');
+ const text = document.getElementById('networkText');
+ if (navigator.onLine) {
+  badge.className = "network-badge online";
+  text.textContent = "Online";
+ } else {
+  badge.className = "network-badge offline";
+  text.textContent = "Offline";
  }
+}
+updateNetworkStatus();
+
+const videos = [
+ { id: "zdMA5BxrofM", title: "Top Hits Spotify Indonesia 2026 | Top Spotify Indonesia 2026", channel: "Fakta Pikiran", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#1db954", views: "10.7M views", rawViews: 10700000, likes: 55750, subscribers: "500K subscriber" },
+ { id: "85Ek_ihAur0", title: "Lagu Nostalgia 80an dan 90an Terbaik Sepanjang Masa", channel: "Nostalgia Sintetis", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#d97706", views: "9.5M views", rawViews: 9500000, likes: 40450, subscribers: "820K subscriber" },
+ { id: "VwF6A76Xylk", title: "Lagu Nostalgia 90an 2000an Hit Pilihan", channel: "Lalala", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#2563eb", views: "4.9M views", rawViews: 4900000, likes: 16260, subscribers: "350K subscriber" },
+ { id: "YNgYYLCZ1hI", title: "Nostalgia Lagu-Lagu Terbaik Wali Band - Full Album Hits Bikin Baper", channel: "Kedai Chana", category: "Pop 2000an", duration: "FULL ALBUM", color: "#059669", views: "1.4M views", rawViews: 1400000, likes: 7554, subscribers: "210K subscriber" },
+ { id: "VP6mRngugVA", title: "Nostalgia Lagu-Lagu Terbaik Wali Band - Full Album Paling Hits", channel: "Petir music ⚡", category: "Pop 2000an", duration: "FULL ALBUM", color: "#e11d48", views: "1.1M views", rawViews: 1100000, likes: 4946, subscribers: "180K subscriber" },
+ { id: "TUBVJcalKqs", title: "Tipe - X Full Album Terbaik 2024 | Lagu Indonesia Hits Pilihan", channel: "tamaryn", category: "Pop 2000an", duration: "FULL ALBUM", color: "#7c3aed", views: "20M views", rawViews: 20000000, likes: 114137, subscribers: "1.5K subscriber" },
+ { id: "NDNnmQYyxyI", title: "DUGEM TERBARU NONSTOP FULL BASS - DJ TAK MUNGKIN BERKASIH 2026", channel: "Dj Mona belando", category: "DJ & Remix", duration: "FULL BASS", color: "#ff0033", views: "11K views", rawViews: 11000, likes: 124, subscribers: "12K subscriber" },
+ { id: "pbvAzjb81f8", title: "BREAKBEAT STADIUM GEN-Z 2026 🔥 FULL BASS NONSTOP 2 JAM", channel: "Egy Sadewong", category: "DJ & Remix", duration: "2 JAM", color: "#db2777", views: "2.5M views", rawViews: 2500000, likes: 19175, subscribers: "410K subscriber" },
+ { id: "ifBXLaPp_uY", title: "Lagu Jawa Akustik Pengantar Tidur Nyaman", channel: "Koleksi Musik", category: "Akustik", duration: "AUDIO", color: "#e11d48", views: "1.5M views", rawViews: 1500000, likes: 15400, subscribers: "450K subscriber" },
+ { id: "GB09st7rtv0", title: "Lagu Pop Indonesia Tahun 2000an With Video Lirik", channel: "91 FM", category: "Pop Nostalgia", duration: "FULL", color: "#d97706", views: "28M views", rawViews: 28000000, likes: 115150, subscribers: "1.2M subscriber" },
+ { id: "0BXVNT1yxqw", title: "DJ TIKTOK TERBARU 2026 || DJ ADAKAH KENYAMANAN DIHATIMU 🎵 FULL ALBUM", channel: "Seven Fvnky", category: "DJ & Remix", duration: "REMIX", color: "#ff0033", views: "5.2M views", rawViews: 5200000, likes: 42000, subscribers: "890K subscriber" },
+ { id: "i-qe0W_Av6M", title: "Koleksi Hits Pop Kenangan Tembang Lawas 80-90an", channel: "Tembang Nostalgia ID", category: "Pop Nostalgia", duration: "1 JAM", color: "#b45309", views: "850K views", rawViews: 850000, likes: 3400, subscribers: "100K subscriber" },
+ { id: "X-q39sf-Wz0", title: "Slow Rock & Pop Melayu Nostalgia Paling Syahdu", channel: "Melayu Acoustic Live", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#1d4ed8", views: "1.2M views", rawViews: 1200000, likes: 5200, subscribers: "120K subscriber" },
+ { id: "mOL-KEw4_LQ", title: "Koleksi Band Pop Indonesia 2000an - Sheila on 7, Peterpan, Ungu", channel: "Dunia Band ID", category: "Pop 2000an", duration: "FULL ALBUM", color: "#047857", views: "2.1M views", rawViews: 2100000, likes: 8900, subscribers: "250K subscriber" },
+ { id: "JbsyEKorevk", title: "Kompilasi Lagu Hits Band Indie & Pop Indonesia 2000an", channel: "Indie Pop Sound", category: "Pop 2000an", duration: "45 MIN", color: "#6d28d9", views: "950K views", rawViews: 950000, likes: 4100, subscribers: "140K subscriber" },
+ { id: "jtYpG2t3gX4", title: "DJ Breakbeat Clubbing Funk - Slow Bass Jedag Jedug 2026", channel: "BeatMaster Remix", category: "DJ & Remix", duration: "REMIX", color: "#e11d48", views: "3.4M views", rawViews: 3400000, likes: 15200, subscribers: "300K subscriber" },
+ { id: "JeGPVGMiM5c", title: "DJ Funky Kota Full Bass Melintir Party Night", channel: "DJ Electro Bass", category: "DJ & Remix", duration: "FULL BASS", color: "#c026d3", views: "1.8M views", rawViews: 1800000, likes: 7200, subscribers: "190K subscriber" },
+ { id: "UV6MYU_1O1I", title: "Pop Akustik Chill - Lagu Pengantar Kerja & Belajar", channel: "Acoustic Lounge", category: "Akustik", duration: "AUDIO", color: "#059669", views: "620K views", rawViews: 620000, likes: 2900, subscribers: "90K subscriber" },
+ { id: "PbjqEy6rfrQ", title: "Lagu Nostalgia Kenangan Manis 90an Acoustic Cover", channel: "Koleksi Nostalgia", category: "Pop Nostalgia", duration: "FULL", color: "#0284c7", views: "450K views", rawViews: 450000, likes: 1800, subscribers: "75K subscriber" },
+ { id: "Vb19yb_o67A", title: "Kumpulan Lagu Galau Band Pop 2000an Terbaik", channel: "Sobat Galau Band", category: "Pop 2000an", duration: "FULL ALBUM", color: "#4338ca", views: "1.6M views", rawViews: 1600000, likes: 6700, subscribers: "220K subscriber" },
+ { id: "-Hjb3OQaAV0", title: "DJ Dugem Tiktok Viral Bass Glerr Nonstop", channel: "DJ Remixer ID", category: "DJ & Remix", duration: "REMIX", color: "#dc2626", views: "2.3M views", rawViews: 2300000, likes: 9800, subscribers: "310K subscriber" },
+ { id: "b99cRgW99UY", title: "Petikan Gitar Akustik Santai Sore Hari & Senja", channel: "Acoustic Vibe", category: "Akustik", duration: "AUDIO", color: "#d97706", views: "920K views", rawViews: 920000, likes: 4300, subscribers: "150K subscriber" },
+ { id: "_vlLToRjP1E", title: "Koleksi Musik Santai Kafe & Coffee Shop Akustik", channel: "Coffee Beats", category: "Akustik", duration: "FULL ALBUM", color: "#b45309", views: "3.1M views", rawViews: 3100000, likes: 14200, subscribers: "390K subscriber" },
+ { id: "chVGUSL7Ofk", title: "LAGU KENANGAN 2000-AN BAND POP INDONESIA HITS NOSTALGIA", channel: "Paradise Loves", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#d97706", views: "6.3M views", rawViews: 6319491, likes: 17497, subscribers: "250K subscriber" },
+ { id: "KeZ363PkHOI", title: "Top Hits Spotify Indonesia 2026 TANPA IKLAN | Lagu Hits Spotify 2026", channel: "METRONIC", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#1db954", views: "976K views", rawViews: 976668, likes: 2676, subscribers: "180K subscriber" },
+ { id: "LC0oqA-vqvU", title: "Top Hits Spotify Indonesia 2026 | Top Spotify Indonesia 2026", channel: "METRONIC", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#1db954", views: "976K views", rawViews: 976668, likes: 2676, subscribers: "180K subscriber" },
+ { id: "XzWl7K4uxXw", title: "DJ JAWA FULL ALBUM 2026 SOUND TIKTOK TERBARU 🎵 DJ LOS DOL", channel: "Jatim Fvnky", category: "DJ & Remix", duration: "FULL BASS", color: "#ff0033", views: "340K views", rawViews: 340429, likes: 1672, subscribers: "120K subscriber" }
 ];
 
 let currentVideo = null;
@@ -972,40 +588,31 @@ let isSubscribed = false;
 let isLiked = false;
 let isDisliked = false;
 
-/* INIT APP & AUTH STATE */
 auth.onAuthStateChanged(user => {
  const userLabel = document.getElementById('userLabel');
- const profileBtn = document.getElementById('profileBtn');
  const loginScreen = document.getElementById('loginScreen');
 
  if (user) {
   currentUser = user;
   loginScreen.classList.add('hidden');
   userLabel.textContent = user.displayName || user.email || 'User';
-  if (user.photoURL) {
-   profileBtn.innerHTML = `<img src="${user.photoURL}" alt="Profile">`;
-  } else {
-   profileBtn.textContent = (user.displayName || 'U')[0].toUpperCase();
-  }
+  updateProfileAvatarUI(user.photoURL, user.displayName);
  } else {
-  // Cek apakah user sedang login sebagai Guest di session lokal
-  const guestMode = localStorage.getItem('movio_guest');
-  if (guestMode === 'true') {
+  if (localStorage.getItem('movio_guest') === 'true') {
    setGuestUserSession();
   } else {
    currentUser = null;
    loginScreen.classList.remove('hidden');
   }
  }
+ checkSavedPremiumStatus();
  renderVideos();
 });
 
 function googleLogin() {
  const err = document.getElementById('error');
  err.textContent = '';
- auth.signInWithPopup(googleProvider).catch(error => {
-  err.textContent = error.message;
- });
+ auth.signInWithPopup(googleProvider).catch(error => { err.textContent = error.message; });
 }
 
 function guestLogin() {
@@ -1015,34 +622,30 @@ function guestLogin() {
 
 function setGuestUserSession() {
  document.getElementById('loginScreen').classList.add('hidden');
- currentUser = { displayName: 'Guest', email: 'Pengguna Tamu (Tanpa Akun)', isGuest: true };
+ currentUser = { displayName: 'Guest', email: 'Pengguna Tamu', isGuest: true };
  document.getElementById('userLabel').textContent = 'Guest';
- document.getElementById('profileBtn').textContent = 'G';
+ updateProfileAvatarUI(null, 'Guest');
+ checkSavedPremiumStatus();
  renderVideos();
 }
 
+function updateProfileAvatarUI(photoUrl, name) {
+ const profileBtn = document.getElementById('profileBtn');
+ if (photoUrl) {
+  profileBtn.innerHTML = `<img src="${photoUrl}" alt="Profile">`;
+ } else {
+  profileBtn.textContent = (name || 'U')[0].toUpperCase();
+ }
+}
+
 function toggleSidebar() {
- if (window.matchMedia('(max-width: 768px)').matches) {
+ if (window.innerWidth <= 768) {
   document.body.classList.toggle('mobile-menu-open');
  } else {
   document.body.classList.toggle('collapsed');
  }
 }
 
-// Tutup menu HP ketika pengguna mengetuk area di luar sidebar.
-document.addEventListener('click', function(event) {
- if (!document.body.classList.contains('mobile-menu-open')) return;
- const sidebar = document.querySelector('.sidebar');
- const menuButton = document.querySelector('.header-left .icon-btn');
- if (sidebar && !sidebar.contains(event.target) && menuButton && !menuButton.contains(event.target)) {
-  document.body.classList.remove('mobile-menu-open');
- }
-});
-window.addEventListener('resize', function() {
- if (window.innerWidth > 768) document.body.classList.remove('mobile-menu-open');
-});
-
-/* RENDER VIDEO GRID */
 function renderVideos() {
  const grid = document.getElementById('videoGrid');
  const pageTitle = document.getElementById('pageTitle');
@@ -1056,26 +659,17 @@ function renderVideos() {
 
  if (currentSearchQuery) {
   const q = currentSearchQuery.toLowerCase();
-  filtered = filtered.filter(v => 
-   v.title.toLowerCase().includes(q) || 
-   v.channel.toLowerCase().includes(q) ||
-   v.category.toLowerCase().includes(q)
-  );
-  pageTitle.textContent = `Hasil Pencarian: "${currentSearchQuery}"`;
+  filtered = filtered.filter(v => v.title.toLowerCase().includes(q) || v.channel.toLowerCase().includes(q) || v.category.toLowerCase().includes(q));
+  pageTitle.textContent = `Pencarian: "${currentSearchQuery}"`;
  } else if (currentFilter === 'Koleksi') {
-  pageTitle.textContent = '❤️ Lagu Disimpan (Koleksi Anda)';
+  pageTitle.textContent = '❤️ Lagu Disimpan (Koleksi)';
  } else {
   pageTitle.textContent = currentFilter === 'Semua' ? 'Daftar Musik Pilihan' : `Kategori: ${currentFilter}`;
  }
 
- /* SORTING */
- if (currentSort === 'popular') {
-  filtered.sort((a, b) => b.rawViews - a.rawViews);
- } else if (currentSort === 'likes') {
-  filtered.sort((a, b) => b.likes - a.likes);
- } else if (currentSort === 'az') {
-  filtered.sort((a, b) => a.title.localeCompare(b.title));
- }
+ if (currentSort === 'popular') filtered.sort((a, b) => b.rawViews - a.rawViews);
+ else if (currentSort === 'likes') filtered.sort((a, b) => b.likes - a.likes);
+ else if (currentSort === 'az') filtered.sort((a, b) => a.title.localeCompare(b.title));
 
  if (filtered.length === 0) {
   grid.innerHTML = `<div class="empty"><h3>Tidak ada musik ditemukan</h3><p>Coba kata kunci atau kategori lain.</p></div>`;
@@ -1105,26 +699,19 @@ function renderVideos() {
  });
 }
 
-/* SEARCH & FILTER */
 document.getElementById('searchForm').onsubmit = (e) => {
  e.preventDefault();
- const q = document.getElementById('searchInput').value.trim();
- currentSearchQuery = q;
+ currentSearchQuery = document.getElementById('searchInput').value.trim();
  currentFilter = 'Semua';
- highlightCategoryButton(null);
  renderVideos();
 };
 
 function filterCategory(cat, btn) {
  currentFilter = cat;
  currentSearchQuery = document.getElementById('searchInput').value = '';
- highlightCategoryButton(btn);
- renderVideos();
-}
-
-function highlightCategoryButton(btn) {
  document.querySelectorAll('.category').forEach(b => b.classList.remove('active'));
  if (btn) btn.classList.add('active');
+ renderVideos();
 }
 
 function changeSort(val) {
@@ -1132,11 +719,9 @@ function changeSort(val) {
  renderVideos();
 }
 
-/* PLAYER MODAL */
 function openPlayer(v) {
  currentVideo = v;
- const modal = document.getElementById('playerModal');
- modal.classList.add('open');
+ document.getElementById('playerModal').classList.add('open');
  document.body.style.overflow = 'hidden';
 
  document.getElementById('videoFrame').src = `https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&enablejsapi=1`;
@@ -1146,13 +731,10 @@ function openPlayer(v) {
  document.getElementById('playerAvatar').style.background = v.color;
  document.getElementById('playerAvatar').textContent = v.channel[0].toUpperCase();
  document.getElementById('likeCount').textContent = (v.likes / 1000).toFixed(1) + 'K';
- document.getElementById('playerDescription').innerHTML = `<strong>Diputar di Movio Music Streaming.</strong> Genre: <em>${v.category}</em>. Nikmati kualitas audio jernih tanpa iklan dengan akun Premium.`;
+ document.getElementById('playerDescription').innerHTML = `<strong>Diputar di Movio Music.</strong> Genre: <em>${v.category}</em>. Nikmati kualitas audio jernih tanpa iklan.`;
 
- isSubscribed = false;
- isLiked = false;
- isDisliked = false;
+ isSubscribed = false; isLiked = false; isDisliked = false;
  updateActionButtons();
-
  addToHistory(v.id);
  renderRelated(v.id);
  loadComments(v.id);
@@ -1173,15 +755,14 @@ function addToHistory(id) {
 }
 
 function showHistory() {
- currentFilter = 'Semua';
- currentSearchQuery = '';
+ currentFilter = 'Semua'; currentSearchQuery = '';
  const historyItems = videos.filter(v => historyVideos.includes(v.id));
  const grid = document.getElementById('videoGrid');
- document.getElementById('pageTitle').textContent = '🕒 Histori Putar Terakhir';
+ document.getElementById('pageTitle').textContent = '🕒 Histori Putar';
  grid.innerHTML = '';
 
  if (historyItems.length === 0) {
-  grid.innerHTML = `<div class="empty"><h3>Belum ada histori putar</h3><p>Putar beberapa lagu untuk melihat histori di sini.</p></div>`;
+  grid.innerHTML = `<div class="empty"><h3>Belum ada histori putar</h3><p>Putar beberapa lagu untuk melihat histori.</p></div>`;
   return;
  }
 
@@ -1209,17 +790,14 @@ function showHistory() {
 }
 
 function showHome() {
- currentFilter = 'Semua';
- currentSearchQuery = '';
+ currentFilter = 'Semua'; currentSearchQuery = '';
  renderVideos();
 }
 
 function renderRelated(currentId) {
  const relContainer = document.getElementById('relatedVideos');
  relContainer.innerHTML = '';
- const list = videos.filter(v => v.id !== currentId).slice(0, 8);
- 
- list.forEach(v => {
+ videos.filter(v => v.id !== currentId).slice(0, 7).forEach(v => {
   const item = document.createElement('div');
   item.className = 'related-item';
   item.onclick = () => openPlayer(v);
@@ -1228,37 +806,21 @@ function renderRelated(currentId) {
    <div>
     <div class="related-title">${v.title}</div>
     <div class="meta">${v.channel}</div>
-    <div class="meta">${v.views}</div>
    </div>
   `;
   relContainer.appendChild(item);
  });
 }
 
-/* ACTIONS */
 function toggleSubscribe() {
  isSubscribed = !isSubscribed;
  const btn = document.getElementById('subBtn');
- if (isSubscribed) {
-  btn.textContent = 'Subscribed ✓';
-  btn.classList.add('subscribed');
- } else {
-  btn.textContent = 'Subscribe';
-  btn.classList.remove('subscribed');
- }
+ btn.textContent = isSubscribed ? 'Subscribed ✓' : 'Subscribe';
+ btn.className = isSubscribed ? 'sub-btn subscribed' : 'sub-btn';
 }
 
-function toggleLike() {
- isLiked = !isLiked;
- isDisliked = false;
- updateActionButtons();
-}
-
-function toggleDislike() {
- isDisliked = !isDisliked;
- isLiked = false;
- updateActionButtons();
-}
+function toggleLike() { isLiked = !isLiked; isDisliked = false; updateActionButtons(); }
+function toggleDislike() { isDisliked = !isDisliked; isLiked = false; updateActionButtons(); }
 
 function updateActionButtons() {
  const likeBtn = document.getElementById('likeBtn');
@@ -1269,22 +831,17 @@ function updateActionButtons() {
  if (isDisliked) dislikeBtn.classList.add('active'); else dislikeBtn.classList.remove('active');
 
  if (currentVideo && savedVideos.includes(currentVideo.id)) {
-  saveBtn.classList.add('active');
-  saveBtn.innerHTML = '❤️ Tersimpan';
+  saveBtn.classList.add('active'); saveBtn.innerHTML = '❤️ Tersimpan';
  } else {
-  saveBtn.classList.remove('active');
-  saveBtn.innerHTML = '❤️ Simpan';
+  saveBtn.classList.remove('active'); saveBtn.innerHTML = '❤️ Simpan';
  }
 }
 
 function toggleSave() {
  if (!currentVideo) return;
  const index = savedVideos.indexOf(currentVideo.id);
- if (index > -1) {
-  savedVideos.splice(index, 1);
- } else {
-  savedVideos.push(currentVideo.id);
- }
+ if (index > -1) savedVideos.splice(index, 1);
+ else savedVideos.push(currentVideo.id);
  localStorage.setItem('movio_saved', JSON.stringify(savedVideos));
  updateActionButtons();
 }
@@ -1292,18 +849,13 @@ function toggleSave() {
 function shareVideo() {
  if (!currentVideo) return;
  const url = `https://youtu.be/${currentVideo.id}`;
- if (navigator.share) {
-  navigator.share({ title: currentVideo.title, url: url }).catch(() => {});
- } else {
-  navigator.clipboard.writeText(url);
-  alert('Tautan lagu berhasil disalin ke clipboard!');
- }
+ if (navigator.share) { navigator.share({ title: currentVideo.title, url: url }).catch(() => {}); }
+ else { navigator.clipboard.writeText(url); alert('Tautan lagu disalin ke clipboard!'); }
 }
 
-/* KOMENTAR */
 const sampleComments = [
- { name: "Rian Pratama", text: "Lagu ini bikin nostalgia jaman sekolah dulu, mantap banget aplikasinya!" },
- { name: "Dewi Lestari", text: "Kualitas suaranya jernih pol, cocok buat teman kerja seharian." }
+ { name: "Rian Pratama", text: "Lagu ini bikin nostalgia jaman sekolah, mantap!" },
+ { name: "Dewi Lestari", text: "Suaranya jernih banget, cocok buat teman kerja." }
 ];
 
 function loadComments(videoId) {
@@ -1313,7 +865,7 @@ function loadComments(videoId) {
   const div = document.createElement('div');
   div.className = 'comment-item';
   div.innerHTML = `
-   <div class="avatar" style="background:#555">${c.name[0]}</div>
+   <div class="avatar" style="background:#555;width:28px;height:28px;font-size:11px">${c.name[0]}</div>
    <div>
     <div class="comment-author">${c.name}</div>
     <div class="comment-text">${c.text}</div>
@@ -1328,35 +880,35 @@ function addComment() {
  const input = document.getElementById('commentInput');
  const val = input.value.trim();
  if (!val) return;
- 
- const name = currentUser ? (currentUser.displayName || 'Pengguna') : 'Guest';
- sampleComments.unshift({ name: name, text: val });
+ sampleComments.unshift({ name: currentUser ? (currentUser.displayName || 'Pengguna') : 'Guest', text: val });
  input.value = '';
  loadComments(currentVideo.id);
 }
 
-/* PREMIUM MODAL */
-function openPremiumModal() {
- document.getElementById('premiumModal').classList.add('open');
-}
-
-function closePremiumModal() {
- document.getElementById('premiumModal').classList.remove('open');
-}
+function openPremiumModal() { document.getElementById('premiumModal').classList.add('open'); }
+function closePremiumModal() { document.getElementById('premiumModal').classList.remove('open'); }
 
 function verifyPremiumCode() {
  const code = document.getElementById('premiumCodeInput').value.trim();
- if (code === '7777' || code === '8888' || code === '2026') {
+ if (code === '0509' || code === '2008' || code === '05092008' || code === '7777' || code === '8888' || code === '2026') {
+  localStorage.setItem('movio_premium', 'true');
+  applyPremiumUI();
   alert('🎉 Selamat! Akun Anda berhasil di-upgrade ke MOVIO PREMIUM.');
-  document.getElementById('profileBtn').className = 'profile pro';
-  document.getElementById('premiumMenuLabel').textContent = 'Status: Premium ⭐';
   closePremiumModal();
  } else {
-  alert('❌ Kode aktivasi salah! Silakan hubungi admin via WhatsApp untuk mendapatkan kode resmi.');
+  alert('❌ Kode aktivasi salah! Gunakan kode Anda (0509 / 2008).');
  }
 }
 
-/* PROFIL & LOGOUT / GANTI AKUN */
+function applyPremiumUI() {
+ document.getElementById('profileBtn').classList.add('pro');
+ document.getElementById('premiumMenuLabel').textContent = 'Status: Premium ⭐';
+}
+
+function checkSavedPremiumStatus() {
+ if (localStorage.getItem('movio_premium') === 'true') applyPremiumUI();
+}
+
 function showProfile() {
  const modal = document.getElementById('profileModal');
  const nameEl = document.getElementById('profileName');
@@ -1374,23 +926,24 @@ function showProfile() {
    avatarBig.textContent = (currentUser.displayName || 'U')[0].toUpperCase();
   }
  }
- statusEl.textContent = isPro ? 'Status: Premium Member ⭐' : 'Status: Free Account';
+ statusEl.textContent = isPro ? 'Status: Premium Member ⭐ (VIP)' : 'Status: Free Account';
  modal.classList.add('open');
 }
 
-function closeProfileModal() {
- document.getElementById('profileModal').classList.remove('open');
-}
+function closeProfileModal() { document.getElementById('profileModal').classList.remove('open'); }
 
 function logoutAccount() {
- if (confirm('Apakah Anda yakin ingin keluar dan mengganti akun?')) {
+ if (confirm('Apakah Anda yakin ingin keluar?')) {
   localStorage.removeItem('movio_guest');
+  localStorage.removeItem('movio_premium');
+  document.getElementById('profileBtn').classList.remove('pro');
+  document.getElementById('premiumMenuLabel').textContent = 'Upgrade Premium';
+  
   auth.signOut().then(() => {
    currentUser = null;
    closeProfileModal();
    document.getElementById('loginScreen').classList.remove('hidden');
-  }).catch((error) => {
-   // Jika error dari firebase auth, tetap bersihkan session lokal guest
+  }).catch(() => {
    currentUser = null;
    closeProfileModal();
    document.getElementById('loginScreen').classList.remove('hidden');
