@@ -26,13 +26,13 @@ button,input,select,textarea{font:inherit;max-width:100%;touch-action:manipulati
 button{cursor:pointer;border:none;background:none;color:inherit}
 .hidden{display:none!important}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-img,iframe{max-width:100%}
+img,iframe,audio{max-width:100%}
 
 /* BRAND LOGO */
 .brand{display:flex;align-items:center;gap:6px;font-size:19px;font-weight:700;letter-spacing:-0.5px;color:white;text-decoration:none;user-select:none}
 .logo-icon{display:grid;place-items:center;width:30px;height:22px;border-radius:6px;background:var(--red);color:white;font-size:12px;font-weight:900;flex-shrink:0}
 
-/* STATUS KONEKSI (ONLINE/OFFLINE) */
+/* STATUS KONEKSI */
 .network-badge{
   font-size:11px;font-weight:600;padding:4px 8px;border-radius:20px;
   display:flex;align-items:center;gap:5px;background:#222;border:1px solid var(--border);
@@ -119,6 +119,7 @@ header{
 .nav-heading{padding:6px 12px;font-size:12px;font-weight:600;color:var(--muted)}
 .nav-item.premium-menu{color:var(--gold);font-weight:600}
 .nav-item.premium-menu:hover{background:rgba(245,158,11,0.1)}
+.nav-item.offline-add{color:var(--green);font-weight:600}
 
 /* CATEGORY PILLS */
 .categories{
@@ -183,8 +184,9 @@ main{margin-left:230px;padding:108px 16px 30px;min-width:0;transition:margin-lef
  max-width:1200px;margin:auto;
  display:grid;grid-template-columns:1fr 340px;gap:20px
 }
-.video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden}
+.video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden;display:grid;place-items:center}
 .player-frame{width:100%;height:100%;border:0}
+.local-audio-player{width:100%;height:50px;background:#181818;border-radius:8px;padding:0 15px}
 
 /* MODAL OVERLAY */
 .modal-overlay{
@@ -276,7 +278,7 @@ main{margin-left:230px;padding:108px 16px 30px;min-width:0;transition:margin-lef
 .related-item img{width:120px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;flex-shrink:0}
 .related-title{font-size:12px;font-weight:600;line-height:1.3;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-/* COLLAPSED SIDEBAR (DESKTOP) */
+/* COLLAPSED SIDEBAR */
 body.collapsed .sidebar{width:68px;padding:10px 4px}
 body.collapsed .sidebar .nav-item{flex-direction:column;gap:4px;padding:10px 0;font-size:9px;text-align:center;justify-content:center}
 body.collapsed .sidebar .nav-icon{font-size:18px}
@@ -284,7 +286,6 @@ body.collapsed .sidebar .nav-heading,body.collapsed .sidebar .nav-divider{displa
 body.collapsed main{margin-left:68px}
 body.collapsed .categories{left:68px}
 
-/* RESPONSIVE UNTUK HP / LAYAR KECIL */
 @media (max-width: 768px) {
   header { height:52px; padding:0 8px; gap:6px; }
   .header-left .icon-btn { width:34px; height:34px; }
@@ -339,12 +340,12 @@ body.collapsed .categories{left:68px}
 
 <body>
 
-<!-- HALAMAN LOGIN -->
+<!-- LOGIN SCREEN -->
 <section class="login-screen" id="loginScreen">
  <div class="login-box">
   <div class="brand"><span class="logo-icon">🎵</span><span>movio music</span></div>
   <h1>Movio Music Streaming</h1>
-  <p>Nikmati lagu-lagu hits, pop nostalgia, album Wali & Tipe-X, hingga dugem remix full bass.</p>
+  <p>Nikmati lagu online atau putar koleksi offline Anda tanpa internet.</p>
 
   <button class="login-btn" id="googleBtn" onclick="googleLogin()">
    <span class="google-icon">G</span> Masuk dengan Google
@@ -360,8 +361,7 @@ body.collapsed .categories{left:68px}
  <div class="modal-card">
   <div class="brand" style="justify-content:center;margin-bottom:6px"><span class="logo-icon" style="background:var(--gold)">⭐</span><span>Movio Premium</span></div>
   <h2>Aktivasi Akun Premium</h2>
-  <p>Masukkan kode aktivasi rahasia Anda untuk menikmati streaming musik tanpa batas.</p>
-  
+  <p>Masukkan kode aktivasi rahasia Anda.</p>
   <input type="password" id="premiumCodeInput" class="modal-input" placeholder="••••" maxlength="8">
   <button class="modal-btn" onclick="verifyPremiumCode()">Aktifkan Sekarang</button>
   <br>
@@ -377,9 +377,8 @@ body.collapsed .categories{left:68px}
   <div class="brand" style="justify-content:center;margin-bottom:6px"><span class="logo-icon">🎵</span><span>Profil Pengguna</span></div>
   <div id="profileAvatarBig" class="avatar" style="width:56px;height:56px;margin:0 auto 10px;font-size:20px;background:var(--red);border-radius:50%;display:grid;place-items:center;font-weight:bold;color:white">G</div>
   <h2 id="profileName" style="font-size:16px;margin:4px 0;color:white">Guest User</h2>
-  <p id="profileEmail" style="font-size:12px;color:var(--muted);margin-bottom:12px">Mode Tamu (Guest)</p>
+  <p id="profileEmail" style="font-size:12px;color:var(--muted);margin-bottom:12px">Mode Tamu</p>
   <p id="profileStatus" style="font-size:12px;color:var(--gold);margin-bottom:16px;font-weight:600">Status: Free Account</p>
-  
   <button class="modal-btn logout-btn" onclick="logoutAccount()">🚪 Keluar & Ganti Akun</button>
   <button class="close-modal" onclick="closeProfileModal()">Tutup</button>
  </div>
@@ -408,12 +407,15 @@ body.collapsed .categories{left:68px}
 <aside class="sidebar">
  <div class="nav-item active" onclick="showHome(this)"><span class="nav-icon">🎧</span><span>Jelajah Musik</span></div>
  <div class="nav-item" onclick="showHistory(this)"><span class="nav-icon">🕒</span><span>Histori Putar</span></div>
+ <div class="nav-item offline-add" onclick="triggerAddOfflineSong()"><span class="nav-icon">📂</span><span>+ Tambah Lagu Offline</span></div>
+ <input type="file" id="localAudioInput" accept="audio/*" class="hidden" onchange="handleLocalAudioUpload(event)">
  <hr class="nav-divider">
  <div class="nav-heading">Genre & Kategori</div>
  <div class="nav-item" onclick="filterCategory('Pop Nostalgia')"><span class="nav-icon">📻</span><span>Pop Nostalgia</span></div>
  <div class="nav-item" onclick="filterCategory('Pop 2000an')"><span class="nav-icon">🎶</span><span>Band Pop 2000an</span></div>
  <div class="nav-item" onclick="filterCategory('DJ & Remix')"><span class="nav-icon">🎛️</span><span>DJ & Remix</span></div>
  <div class="nav-item" onclick="filterCategory('Akustik')"><span class="nav-icon">🎸</span><span>Akustik Santai</span></div>
+ <div class="nav-item" onclick="filterCategory('Offline Lokal')"><span class="nav-icon">💾</span><span>Lagu Offline Saya</span></div>
  <hr class="nav-divider">
  <div class="nav-item premium-menu" onclick="openPremiumModal()"><span class="nav-icon">⭐</span><span id="premiumMenuLabel">Upgrade Premium</span></div>
  <div class="nav-item" onclick="showProfile()"><span class="nav-icon">⚙️</span><span>Akun & Setelan</span></div>
@@ -423,6 +425,7 @@ body.collapsed .categories{left:68px}
 <nav class="categories" id="categories">
  <button class="category active" onclick="filterCategory('Semua',this)">Semua</button>
  <button class="category" onclick="filterCategory('Koleksi',this)">❤️ Disimpan</button>
+ <button class="category" onclick="filterCategory('Offline Lokal',this)">💾 Lagu Offline Saya</button>
  <button class="category" onclick="filterCategory('Pop Nostalgia',this)">📻 Pop Nostalgia</button>
  <button class="category" onclick="filterCategory('Pop 2000an',this)">🎶 Pop 2000an</button>
  <button class="category" onclick="filterCategory('DJ & Remix',this)">🎛️ DJ & Remix</button>
@@ -456,10 +459,8 @@ body.collapsed .categories{left:68px}
  <div class="player-layout">
   <div>
    <div class="video-container" id="videoContainer">
-    <iframe class="player-frame" id="videoFrame" src=""
-     title="Pemutar Musik Movio"
-     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-     allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <iframe class="player-frame" id="videoFrame" src="" title="YouTube Player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <audio id="localAudioPlayer" class="local-audio-player hidden" controls></audio>
    </div>
    
    <div class="visualizer">
@@ -490,20 +491,6 @@ body.collapsed .categories{left:68px}
    </div>
 
    <div class="player-description" id="playerDescription"></div>
-
-   <div class="comments-section">
-    <div class="comments-header"><span id="commentCount">2</span> Komentar Pendengar</div>
-    <div class="comment-input-box">
-     <div class="avatar" style="background:#ff0033;width:30px;height:30px;font-size:12px">G</div>
-     <div style="flex:1">
-      <textarea id="commentInput" placeholder="Tulis komentar lagu..."></textarea>
-      <div class="comment-btn-row">
-       <button class="btn-sm btn-primary" onclick="addComment()">Kirim</button>
-      </div>
-     </div>
-    </div>
-    <div class="comment-list" id="commentList"></div>
-   </div>
   </div>
 
   <div><h3 style="font-size:15px;margin:0 0 12px">Rekomendasi Musik</h3><div id="relatedVideos"></div></div>
@@ -542,40 +529,26 @@ function updateNetworkStatus() {
   text.textContent = "Online";
  } else {
   badge.className = "network-badge offline";
-  text.textContent = "Offline";
+  text.textContent = "Offline (Mode Lokal Aktif)";
  }
 }
 updateNetworkStatus();
 
-const videos = [
- { id: "zdMA5BxrofM", title: "Top Hits Spotify Indonesia 2026 | Top Spotify Indonesia 2026", channel: "Fakta Pikiran", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#1db954", views: "10.7M views", rawViews: 10700000, likes: 55750, subscribers: "500K subscriber" },
- { id: "85Ek_ihAur0", title: "Lagu Nostalgia 80an dan 90an Terbaik Sepanjang Masa", channel: "Nostalgia Sintetis", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#d97706", views: "9.5M views", rawViews: 9500000, likes: 40450, subscribers: "820K subscriber" },
- { id: "VwF6A76Xylk", title: "Lagu Nostalgia 90an 2000an Hit Pilihan", channel: "Lalala", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#2563eb", views: "4.9M views", rawViews: 4900000, likes: 16260, subscribers: "350K subscriber" },
+/* DATABASE LAGU ONLINE & OFFLINE */
+let localOfflineVideos = JSON.parse(localStorage.getItem('movio_offline_songs') || '[]');
+
+const defaultVideos = [
+ { id: "zdMA5BxrofM", title: "Top Hits Spotify Indonesia 2026 | Top Spotify Indonesia 2026", channel: "Fakta Pikiran", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#1db954", views: "10.7M views", rawViews: 10700000, likes: 55750, subscribers: "500K subscriber", isLocal: false },
+ { id: "85Ek_ihAur0", title: "Lagu Nostalgia 80an dan 90an Terbaik Sepanjang Masa", channel: "Nostalgia Sintetis", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#d97706", views: "9.5M views", rawViews: 9500000, likes: 40450, subscribers: "820K subscriber", isLocal: false },
  { id: "YNgYYLCZ1hI", title: "Nostalgia Lagu-Lagu Terbaik Wali Band - Full Album Hits Bikin Baper", channel: "Kedai Chana", category: "Pop 2000an", duration: "FULL ALBUM", color: "#059669", views: "1.4M views", rawViews: 1400000, likes: 7554, subscribers: "210K subscriber" },
- { id: "VP6mRngugVA", title: "Nostalgia Lagu-Lagu Terbaik Wali Band - Full Album Paling Hits", channel: "Petir music ⚡", category: "Pop 2000an", duration: "FULL ALBUM", color: "#e11d48", views: "1.1M views", rawViews: 1100000, likes: 4946, subscribers: "180K subscriber" },
  { id: "TUBVJcalKqs", title: "Tipe - X Full Album Terbaik 2024 | Lagu Indonesia Hits Pilihan", channel: "tamaryn", category: "Pop 2000an", duration: "FULL ALBUM", color: "#7c3aed", views: "20M views", rawViews: 20000000, likes: 114137, subscribers: "1.5K subscriber" },
  { id: "NDNnmQYyxyI", title: "DUGEM TERBARU NONSTOP FULL BASS - DJ TAK MUNGKIN BERKASIH 2026", channel: "Dj Mona belando", category: "DJ & Remix", duration: "FULL BASS", color: "#ff0033", views: "11K views", rawViews: 11000, likes: 124, subscribers: "12K subscriber" },
- { id: "pbvAzjb81f8", title: "BREAKBEAT STADIUM GEN-Z 2026 🔥 FULL BASS NONSTOP 2 JAM", channel: "Egy Sadewong", category: "DJ & Remix", duration: "2 JAM", color: "#db2777", views: "2.5M views", rawViews: 2500000, likes: 19175, subscribers: "410K subscriber" },
  { id: "ifBXLaPp_uY", title: "Lagu Jawa Akustik Pengantar Tidur Nyaman", channel: "Koleksi Musik", category: "Akustik", duration: "AUDIO", color: "#e11d48", views: "1.5M views", rawViews: 1500000, likes: 15400, subscribers: "450K subscriber" },
- { id: "GB09st7rtv0", title: "Lagu Pop Indonesia Tahun 2000an With Video Lirik", channel: "91 FM", category: "Pop Nostalgia", duration: "FULL", color: "#d97706", views: "28M views", rawViews: 28000000, likes: 115150, subscribers: "1.2M subscriber" },
- { id: "0BXVNT1yxqw", title: "DJ TIKTOK TERBARU 2026 || DJ ADAKAH KENYAMANAN DIHATIMU 🎵 FULL ALBUM", channel: "Seven Fvnky", category: "DJ & Remix", duration: "REMIX", color: "#ff0033", views: "5.2M views", rawViews: 5200000, likes: 42000, subscribers: "890K subscriber" },
- { id: "i-qe0W_Av6M", title: "Koleksi Hits Pop Kenangan Tembang Lawas 80-90an", channel: "Tembang Nostalgia ID", category: "Pop Nostalgia", duration: "1 JAM", color: "#b45309", views: "850K views", rawViews: 850000, likes: 3400, subscribers: "100K subscriber" },
- { id: "X-q39sf-Wz0", title: "Slow Rock & Pop Melayu Nostalgia Paling Syahdu", channel: "Melayu Acoustic Live", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#1d4ed8", views: "1.2M views", rawViews: 1200000, likes: 5200, subscribers: "120K subscriber" },
- { id: "mOL-KEw4_LQ", title: "Koleksi Band Pop Indonesia 2000an - Sheila on 7, Peterpan, Ungu", channel: "Dunia Band ID", category: "Pop 2000an", duration: "FULL ALBUM", color: "#047857", views: "2.1M views", rawViews: 2100000, likes: 8900, subscribers: "250K subscriber" },
- { id: "JbsyEKorevk", title: "Kompilasi Lagu Hits Band Indie & Pop Indonesia 2000an", channel: "Indie Pop Sound", category: "Pop 2000an", duration: "45 MIN", color: "#6d28d9", views: "950K views", rawViews: 950000, likes: 4100, subscribers: "140K subscriber" },
- { id: "jtYpG2t3gX4", title: "DJ Breakbeat Clubbing Funk - Slow Bass Jedag Jedug 2026", channel: "BeatMaster Remix", category: "DJ & Remix", duration: "REMIX", color: "#e11d48", views: "3.4M views", rawViews: 3400000, likes: 15200, subscribers: "300K subscriber" },
- { id: "JeGPVGMiM5c", title: "DJ Funky Kota Full Bass Melintir Party Night", channel: "DJ Electro Bass", category: "DJ & Remix", duration: "FULL BASS", color: "#c026d3", views: "1.8M views", rawViews: 1800000, likes: 7200, subscribers: "190K subscriber" },
- { id: "UV6MYU_1O1I", title: "Pop Akustik Chill - Lagu Pengantar Kerja & Belajar", channel: "Acoustic Lounge", category: "Akustik", duration: "AUDIO", color: "#059669", views: "620K views", rawViews: 620000, likes: 2900, subscribers: "90K subscriber" },
- { id: "PbjqEy6rfrQ", title: "Lagu Nostalgia Kenangan Manis 90an Acoustic Cover", channel: "Koleksi Nostalgia", category: "Pop Nostalgia", duration: "FULL", color: "#0284c7", views: "450K views", rawViews: 450000, likes: 1800, subscribers: "75K subscriber" },
- { id: "Vb19yb_o67A", title: "Kumpulan Lagu Galau Band Pop 2000an Terbaik", channel: "Sobat Galau Band", category: "Pop 2000an", duration: "FULL ALBUM", color: "#4338ca", views: "1.6M views", rawViews: 1600000, likes: 6700, subscribers: "220K subscriber" },
- { id: "-Hjb3OQaAV0", title: "DJ Dugem Tiktok Viral Bass Glerr Nonstop", channel: "DJ Remixer ID", category: "DJ & Remix", duration: "REMIX", color: "#dc2626", views: "2.3M views", rawViews: 2300000, likes: 9800, subscribers: "310K subscriber" },
- { id: "b99cRgW99UY", title: "Petikan Gitar Akustik Santai Sore Hari & Senja", channel: "Acoustic Vibe", category: "Akustik", duration: "AUDIO", color: "#d97706", views: "920K views", rawViews: 920000, likes: 4300, subscribers: "150K subscriber" },
- { id: "_vlLToRjP1E", title: "Koleksi Musik Santai Kafe & Coffee Shop Akustik", channel: "Coffee Beats", category: "Akustik", duration: "FULL ALBUM", color: "#b45309", views: "3.1M views", rawViews: 3100000, likes: 14200, subscribers: "390K subscriber" },
  { id: "chVGUSL7Ofk", title: "LAGU KENANGAN 2000-AN BAND POP INDONESIA HITS NOSTALGIA", channel: "Paradise Loves", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#d97706", views: "6.3M views", rawViews: 6319491, likes: 17497, subscribers: "250K subscriber" },
- { id: "KeZ363PkHOI", title: "Top Hits Spotify Indonesia 2026 TANPA IKLAN | Lagu Hits Spotify 2026", channel: "METRONIC", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#1db954", views: "976K views", rawViews: 976668, likes: 2676, subscribers: "180K subscriber" },
- { id: "LC0oqA-vqvU", title: "Top Hits Spotify Indonesia 2026 | Top Spotify Indonesia 2026", channel: "METRONIC", category: "Pop Nostalgia", duration: "FULL ALBUM", color: "#1db954", views: "976K views", rawViews: 976668, likes: 2676, subscribers: "180K subscriber" },
  { id: "XzWl7K4uxXw", title: "DJ JAWA FULL ALBUM 2026 SOUND TIKTOK TERBARU 🎵 DJ LOS DOL", channel: "Jatim Fvnky", category: "DJ & Remix", duration: "FULL BASS", color: "#ff0033", views: "340K views", rawViews: 340429, likes: 1672, subscribers: "120K subscriber" }
 ];
+
+let videos = [...localOfflineVideos, ...defaultVideos];
 
 let currentVideo = null;
 let savedVideos = JSON.parse(localStorage.getItem('movio_saved') || '[]');
@@ -646,6 +619,42 @@ function toggleSidebar() {
  }
 }
 
+/* TAMBAH LAGU OFFLINE LOKAL */
+function triggerAddOfflineSong() {
+ document.getElementById('localAudioInput').click();
+}
+
+function handleLocalAudioUpload(event) {
+ const file = event.target.files[0];
+ if (!file) return;
+
+ const reader = new FileReader();
+ reader.onload = function(e) {
+  const audioUrl = e.target.result;
+  const newSong = {
+   id: 'local_' + Date.now(),
+   title: file.name.replace(/\.[^/.]+$/, ""),
+   channel: 'Penyimpanan Lokal (Offline)',
+   category: 'Offline Lokal',
+   duration: 'AUDIO',
+   color: '#22c55e',
+   views: 'Lokal',
+   rawViews: 0,
+   likes: 999,
+   subscribers: 'Offline Device',
+   isLocal: true,
+   audioUrl: audioUrl
+  };
+
+  localOfflineVideos.unshift(newSong);
+  localStorage.setItem('movio_offline_songs', JSON.stringify(localOfflineVideos));
+  videos = [...localOfflineVideos, ...defaultVideos];
+  renderVideos();
+  alert('✅ Lagu offline berhasil ditambahkan ke kategori "Lagu Offline Saya"!');
+ };
+ reader.readAsDataURL(file);
+}
+
 function renderVideos() {
  const grid = document.getElementById('videoGrid');
  const pageTitle = document.getElementById('pageTitle');
@@ -654,6 +663,7 @@ function renderVideos() {
  let filtered = videos.filter(v => {
   if (currentFilter === 'Semua') return true;
   if (currentFilter === 'Koleksi') return savedVideos.includes(v.id);
+  if (currentFilter === 'Offline Lokal') return v.isLocal === true;
   return v.category === currentFilter;
  });
 
@@ -663,6 +673,8 @@ function renderVideos() {
   pageTitle.textContent = `Pencarian: "${currentSearchQuery}"`;
  } else if (currentFilter === 'Koleksi') {
   pageTitle.textContent = '❤️ Lagu Disimpan (Koleksi)';
+ } else if (currentFilter === 'Offline Lokal') {
+  pageTitle.textContent = '💾 Lagu Offline Tersimpan di Perangkat';
  } else {
   pageTitle.textContent = currentFilter === 'Semua' ? 'Daftar Musik Pilihan' : `Kategori: ${currentFilter}`;
  }
@@ -672,7 +684,7 @@ function renderVideos() {
  else if (currentSort === 'az') filtered.sort((a, b) => a.title.localeCompare(b.title));
 
  if (filtered.length === 0) {
-  grid.innerHTML = `<div class="empty"><h3>Tidak ada musik ditemukan</h3><p>Coba kata kunci atau kategori lain.</p></div>`;
+  grid.innerHTML = `<div class="empty"><h3>Tidak ada musik ditemukan</h3><p>Gunakan menu "+ Tambah Lagu Offline" untuk memutar lagu Anda sendiri.</p></div>`;
   return;
  }
 
@@ -680,10 +692,13 @@ function renderVideos() {
   const card = document.createElement('div');
   card.className = 'video-card';
   card.onclick = () => openPlayer(v);
+  
+  let thumbImg = v.isLocal ? `<div style="width:100%;height:100%;background:#1b4d3e;display:grid;place-items:center;font-size:32px;">💾</div>` : `<img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy">`;
+
   card.innerHTML = `
    <div class="thumbnail">
     <span class="category-badge">${v.category}</span>
-    <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy">
+    ${thumbImg}
     <div class="duration">${v.duration}</div>
    </div>
    <div class="video-info">
@@ -724,25 +739,39 @@ function openPlayer(v) {
  document.getElementById('playerModal').classList.add('open');
  document.body.style.overflow = 'hidden';
 
- document.getElementById('videoFrame').src = `https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&enablejsapi=1`;
+ const ytFrame = document.getElementById('videoFrame');
+ const localAudio = document.getElementById('localAudioPlayer');
+
+ if (v.isLocal) {
+  ytFrame.classList.add('hidden');
+  localAudio.classList.remove('hidden');
+  localAudio.src = v.audioUrl;
+  localAudio.play().catch(()=>{});
+ } else {
+  localAudio.classList.add('hidden');
+  localAudio.pause();
+  ytFrame.classList.remove('hidden');
+  ytFrame.src = `https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&enablejsapi=1`;
+ }
+
  document.getElementById('playerTitle').textContent = v.title;
  document.getElementById('playerChannel').textContent = v.channel;
  document.getElementById('playerSubCount').textContent = v.subscribers;
  document.getElementById('playerAvatar').style.background = v.color;
  document.getElementById('playerAvatar').textContent = v.channel[0].toUpperCase();
  document.getElementById('likeCount').textContent = (v.likes / 1000).toFixed(1) + 'K';
- document.getElementById('playerDescription').innerHTML = `<strong>Diputar di Movio Music.</strong> Genre: <em>${v.category}</em>. Nikmati kualitas audio jernih tanpa iklan.`;
+ document.getElementById('playerDescription').innerHTML = `<strong>Pemutar Movio Music.</strong> Sumber: <em>${v.isLocal ? 'Offline Perangkat' : 'Online YouTube'}</em>`;
 
  isSubscribed = false; isLiked = false; isDisliked = false;
  updateActionButtons();
  addToHistory(v.id);
  renderRelated(v.id);
- loadComments(v.id);
 }
 
 function closePlayer() {
  document.getElementById('playerModal').classList.remove('open');
  document.getElementById('videoFrame').src = '';
+ document.getElementById('localAudioPlayer').pause();
  document.body.style.overflow = '';
 }
 
@@ -770,20 +799,10 @@ function showHistory() {
   const card = document.createElement('div');
   card.className = 'video-card';
   card.onclick = () => openPlayer(v);
+  let thumbImg = v.isLocal ? `<div style="width:100%;height:100%;background:#1b4d3e;display:grid;place-items:center;font-size:32px;">💾</div>` : `<img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy">`;
   card.innerHTML = `
-   <div class="thumbnail">
-    <span class="category-badge">${v.category}</span>
-    <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy">
-    <div class="duration">${v.duration}</div>
-   </div>
-   <div class="video-info">
-    <div class="avatar" style="background:${v.color}">${v.channel[0].toUpperCase()}</div>
-    <div>
-     <div class="video-title">${v.title}</div>
-     <div class="meta">${v.channel}</div>
-     <div class="meta">${v.views}</div>
-    </div>
-   </div>
+   <div class="thumbnail"><span class="category-badge">${v.category}</span>${thumbImg}<div class="duration">${v.duration}</div></div>
+   <div class="video-info"><div class="avatar" style="background:${v.color}">${v.channel[0].toUpperCase()}</div><div><div class="video-title">${v.title}</div><div class="meta">${v.channel}</div></div></div>
   `;
   grid.appendChild(card);
  });
@@ -797,12 +816,13 @@ function showHome() {
 function renderRelated(currentId) {
  const relContainer = document.getElementById('relatedVideos');
  relContainer.innerHTML = '';
- videos.filter(v => v.id !== currentId).slice(0, 7).forEach(v => {
+ videos.filter(v => v.id !== currentId).slice(0, 6).forEach(v => {
   const item = document.createElement('div');
   item.className = 'related-item';
   item.onclick = () => openPlayer(v);
+  let thumbImg = v.isLocal ? `<div style="width:120px;height:67px;background:#1b4d3e;display:grid;place-items:center;font-size:20px;border-radius:6px;">💾</div>` : `<img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.title}" loading="lazy">`;
   item.innerHTML = `
-   <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.title}" loading="lazy">
+   ${thumbImg}
    <div>
     <div class="related-title">${v.title}</div>
     <div class="meta">${v.channel}</div>
@@ -848,41 +868,7 @@ function toggleSave() {
 
 function shareVideo() {
  if (!currentVideo) return;
- const url = `https://youtu.be/${currentVideo.id}`;
- if (navigator.share) { navigator.share({ title: currentVideo.title, url: url }).catch(() => {}); }
- else { navigator.clipboard.writeText(url); alert('Tautan lagu disalin ke clipboard!'); }
-}
-
-const sampleComments = [
- { name: "Rian Pratama", text: "Lagu ini bikin nostalgia jaman sekolah, mantap!" },
- { name: "Dewi Lestari", text: "Suaranya jernih banget, cocok buat teman kerja." }
-];
-
-function loadComments(videoId) {
- const list = document.getElementById('commentList');
- list.innerHTML = '';
- sampleComments.forEach(c => {
-  const div = document.createElement('div');
-  div.className = 'comment-item';
-  div.innerHTML = `
-   <div class="avatar" style="background:#555;width:28px;height:28px;font-size:11px">${c.name[0]}</div>
-   <div>
-    <div class="comment-author">${c.name}</div>
-    <div class="comment-text">${c.text}</div>
-   </div>
-  `;
-  list.appendChild(div);
- });
- document.getElementById('commentCount').textContent = sampleComments.length;
-}
-
-function addComment() {
- const input = document.getElementById('commentInput');
- const val = input.value.trim();
- if (!val) return;
- sampleComments.unshift({ name: currentUser ? (currentUser.displayName || 'Pengguna') : 'Guest', text: val });
- input.value = '';
- loadComments(currentVideo.id);
+ alert('Membagikan lagu: ' + currentVideo.title);
 }
 
 function openPremiumModal() { document.getElementById('premiumModal').classList.add('open'); }
