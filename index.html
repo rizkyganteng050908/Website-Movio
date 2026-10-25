@@ -409,7 +409,6 @@ main, .player-modal, .modal-card, .login-box { min-width: 0; }
   .login-screen { align-items: flex-start; }
   .login-box { margin: auto; }
 }
-
 </style>
 </head>
 
@@ -603,6 +602,18 @@ const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 /* MUSIC DATABASE */
 const videos = [
+ {
+  id: "zdMA5BxrofM",
+  title: "Top Hits Spotify Indonesia 2026 | Top Spotify Indonesia 2026",
+  channel: "Fakta Pikiran",
+  category: "Pop Nostalgia",
+  duration: "FULL ALBUM",
+  color: "#1db954",
+  views: "10.7M views",
+  rawViews: 10700000,
+  likes: 55750,
+  subscribers: "500K subscriber"
+ },
  {
   id:"85Ek_ihAur0",
   title:"Lagu Nostalgia 80an dan 90an Terbaik Sepanjang Masa",
@@ -857,974 +868,387 @@ const videos = [
  },
  {
   id:"_vlLToRjP1E",
-  title:"Koleksi Musik Pilihan Terbaru 1",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"780K views",
-  rawViews: 780000,
-  likes: 3100,
-  subscribers: "95K subscriber"
- },
- {
-  id:"p4_IrKk8ueg",
-  title:"Koleksi Musik Pilihan Terbaru 2",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#10b981",
-  views:"1.3M views",
-  rawViews: 1300000,
-  likes: 5400,
-  subscribers: "160K subscriber"
- },
- {
-  id:"3anKQbvVS90",
-  title:"DJ Breakbeat Funk Remix Nonstop - Single Edit",
-  channel:"BeatMaster Remix",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#ef4444",
-  views:"2.9M views",
-  rawViews: 2900000,
-  likes: 12500,
-  subscribers: "280K subscriber"
- },
- {
-  id:"WfVU18gRLU0",
-  title:"Koleksi Musik Pilihan Terbaru 4",
-  channel:"Movio Selection",
+  title:"Koleksi Musik Santai Kafe & Coffee Shop Akustik",
+  channel:"Coffee Beats",
   category:"Akustik",
-  duration:"AUDIO",
-  color:"#f59e0b",
-  views:"540K views",
-  rawViews: 540000,
-  likes: 2100,
-  subscribers: "80K subscriber"
- },
- {
-  id:"iLQkSdITpUE",
-  title:"Koleksi Musik Spesial Pilihan 5",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#0284c7",
-  views:"690K views",
-  rawViews: 690000,
-  likes: 2800,
-  subscribers: "85K subscriber"
- },
- {
-  id:"RKpGcHUHz-Y",
-  title:"Koleksi Musik Spesial Pilihan 6",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#16a34a",
-  views:"1.5M views",
-  rawViews: 1500000,
-  likes: 6100,
-  subscribers: "175K subscriber"
- },
- {
-  id:"VeOO4W82d7E",
-  title:"Koleksi Musik Spesial Pilihan 7",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#ca8a04",
-  views:"810K views",
-  rawViews: 810000,
-  likes: 3500,
-  subscribers: "110K subscriber"
- },
- {
-  id:"AbTLKqcTESY",
-  title:"Koleksi Musik Hits Pilihan 8",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#8b5cf6",
-  views:"930K views",
-  rawViews: 930000,
-  likes: 4100,
-  subscribers: "115K subscriber"
- },
- {
-  id:"USTrJbMMCn8",
-  title:"Koleksi Musik Hits Pilihan 9",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#ec4899",
-  views:"1.2M views",
-  rawViews: 1200000,
-  likes: 5200,
-  subscribers: "145K subscriber"
- },
- {
-  id:"oS6FZ0YKev4",
-  title:"Koleksi Musik Hits Pilihan 10",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#f43f5e",
-  views:"2.4M views",
-  rawViews: 2400000,
-  likes: 10400,
-  subscribers: "260K subscriber"
- },
- {
-  id:"-mgHa-w1upc",
-  title:"Koleksi Musik Hits Pilihan 11",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#10b981",
-  views:"480K views",
-  rawViews: 480000,
-  likes: 1950,
-  subscribers: "70K subscriber"
- },
- {
-  id:"ZMxTrqKcWmE",
-  title:"Koleksi Musik Hits Pilihan 12",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#06b6d4",
-  views:"880K views",
-  rawViews: 880000,
-  likes: 3700,
-  subscribers: "98K subscriber"
- },
- {
-  id:"UHNZXnQVxIg",
-  title:"Koleksi Musik Hits Pilihan 13",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#6366f1",
-  views:"1.7M views",
-  rawViews: 1700000,
-  likes: 7400,
-  subscribers: "195K subscriber"
- },
- {
-  id:"i6pMrdsUZGM",
-  title:"Koleksi Musik Hits Pilihan 14",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#eab308",
+  duration:"FULL ALBUM",
+  color:"#b45309",
   views:"3.1M views",
   rawViews: 3100000,
-  likes: 13800,
-  subscribers: "320K subscriber"
- },
- {
-  id:"eSmfNibLAAU",
-  title:"Koleksi Musik Pilihan Terbaru Eksklusif 1",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"650K views",
-  rawViews: 650000,
-  likes: 2700,
-  subscribers: "90K subscriber"
- },
- {
-  id:"VgwEC2dS6GI",
-  title:"Koleksi Musik Pilihan Terbaru Eksklusif 2",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#14b8a6",
-  views:"1.4M views",
-  rawViews: 1400000,
-  likes: 5900,
-  subscribers: "165K subscriber"
- },
- {
-  id:"kPZ9YXS5Log",
-  title:"Koleksi Musik Pilihan Terbaru Eksklusif 3",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#f43f5e",
-  views:"2.8M views",
-  rawViews: 2800000,
-  likes: 11900,
-  subscribers: "290K subscriber"
- },
- {
-  id:"gSlgOqz8Bto",
-  title:"Koleksi Musik Pilihan Terbaru Eksklusif 4",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#84cc16",
-  views:"510K views",
-  rawViews: 510000,
-  likes: 2250,
-  subscribers: "75K subscriber"
- },
- {
-  id:"H38hX-vu50Y",
-  title:"Koleksi Musik Pilihan Terbaru Eksklusif 5",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#a855f7",
-  views:"990K views",
-  rawViews: 990000,
-  likes: 4400,
-  subscribers: "130K subscriber"
- },
- {
-  id:"v-ddxeRzpV0",
-  title:"Koleksi Musik Terbaru Tambahan 1",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"720K views",
-  rawViews: 720000,
-  likes: 3100,
-  subscribers: "92K subscriber"
- },
- {
-  id:"HjPKIUTiAjQ",
-  title:"Koleksi Musik Terbaru Tambahan 2",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#10b981",
-  views:"1.1M views",
-  rawViews: 1100000,
-  likes: 4800,
-  subscribers: "140K subscriber"
- },
- {
-  id:"yfMkhVWdQEg",
-  title:"Koleksi Musik Terbaru Tambahan 3",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#ef4444",
-  views:"2.2M views",
-  rawViews: 2200000,
-  likes: 9500,
-  subscribers: "250K subscriber"
- },
- {
-  id:"A5WRUloyRPo",
-  title:"Koleksi Musik Terbaru Tambahan 4",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#eab308",
-  views:"490K views",
-  rawViews: 490000,
-  likes: 2050,
-  subscribers: "68K subscriber"
- },
- {
-  id:"DZVDriQKxP8",
-  title:"Koleksi Musik Spesial Batch II - 1",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"830K views",
-  rawViews: 830000,
-  likes: 3600,
-  subscribers: "99K subscriber"
- },
- {
-  id:"Jv0jPUkyM64",
-  title:"Koleksi Musik Spesial Batch II - 2",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#06b6d4",
-  views:"1.3M views",
-  rawViews: 1300000,
-  likes: 5500,
-  subscribers: "155K subscriber"
- },
- {
-  id:"Ionk9-PUzB8",
-  title:"Koleksi Musik Spesial Batch II - 3",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#f43f5e",
-  views:"2.7M views",
-  rawViews: 2700000,
-  likes: 11200,
-  subscribers: "275K subscriber"
- },
- {
-  id:"GcAaIwJW-yU",
-  title:"Koleksi Musik Spesial Batch II - 4",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#10b981",
-  views:"560K views",
-  rawViews: 560000,
-  likes: 2400,
-  subscribers: "82K subscriber"
- },
- {
-  id:"TBXDAAcfVew",
-  title:"Koleksi Musik Spesial Batch II - 5",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#8b5cf6",
-  views:"910K views",
-  rawViews: 910000,
-  likes: 3900,
-  subscribers: "120K subscriber"
- },
- {
-  id:"f72-Qq8y5_c",
-  title:"Koleksi Musik Spesial Batch II - 6",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#ec4899",
-  views:"1.6M views",
-  rawViews: 1600000,
-  likes: 6800,
-  subscribers: "185K subscriber"
- },
- {
-  id:"7PlCZcJhAGQ",
-  title:"Koleksi Musik Spesial Batch II - 7",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#eab308",
-  views:"3.5M views",
-  rawViews: 3500000,
-  likes: 15100,
-  subscribers: "340K subscriber"
- },
- {
-  id:"az9awjU7CSI",
-  title:"Koleksi Musik Spesial Batch II - 8",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#14b8a6",
-  views:"470K views",
-  rawViews: 470000,
-  likes: 1980,
-  subscribers: "65K subscriber"
- },
- {
-  id:"SB_ANaKJEok",
-  title:"Koleksi Musik Spesial Batch II - 9",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#6366f1",
-  views:"750K views",
-  rawViews: 750000,
-  likes: 3200,
-  subscribers: "95K subscriber"
- },
- {
-  id:"S9A_j6cnA_Y",
-  title:"Koleksi Musik Spesial Batch II - 10",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#ef4444",
-  views:"2.1M views",
-  rawViews: 2100000,
-  likes: 8900,
-  subscribers: "240K subscriber"
- },
- {
-  id:"UbC--wpYohY",
-  title:"Koleksi Musik Terbaru Batch III - 1",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"610K views",
-  rawViews: 610000,
-  likes: 2600,
-  subscribers: "88K subscriber"
- },
- {
-  id:"6M7EmCZI0pI",
-  title:"Koleksi Musik Terbaru Batch III - 2",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#10b981",
-  views:"1.2M views",
-  rawViews: 1200000,
-  likes: 5100,
-  subscribers: "145K subscriber"
- },
- {
-  id:"qY1IFnjM8-Y",
-  title:"Koleksi Musik Terbaru Batch III - 3",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#f43f5e",
-  views:"2.6M views",
-  rawViews: 2600000,
-  likes: 11000,
-  subscribers: "270K subscriber"
- },
- {
-  id:"PqoWpkxbTNc",
-  title:"Koleksi Musik Terbaru Batch III - 4",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#eab308",
-  views:"530K views",
-  rawViews: 530000,
-  likes: 2200,
-  subscribers: "72K subscriber"
- },
- {
-  id:"-VMFVHsYl98",
-  title:"Koleksi Musik Terbaru Batch III - 5",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#8b5cf6",
-  views:"890K views",
-  rawViews: 890000,
-  likes: 3850,
-  subscribers: "115K subscriber"
- },
- {
-  id:"IxcFS9_mUaQ",
-  title:"Koleksi Musik Terbaru Batch III - 6",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#06b6d4",
-  views:"1.5M views",
-  rawViews: 1500000,
-  likes: 6400,
-  subscribers: "175K subscriber"
- },
- {
-  id:"DxaBY5BwgLc",
-  title:"Koleksi Musik Terbaru Batch III - 7",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#ef4444",
-  views:"3.2M views",
-  rawViews: 3200000,
   likes: 14200,
-  subscribers: "310K subscriber"
- },
- {
-  id:"YdhZW55CZpM",
-  title:"Koleksi Musik Terbaru Batch III - 8",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#14b8a6",
-  views:"490K views",
-  rawViews: 490000,
-  likes: 2050,
-  subscribers: "69K subscriber"
- },
- {
-  id:"z6U8C8cPJj4",
-  title:"Koleksi Musik Terbaru Batch IV - 1",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#a855f7",
-  views:"740K views",
-  rawViews: 740000,
-  likes: 3300,
-  subscribers: "96K subscriber"
- },
- {
-  id:"2mCYT092il0",
-  title:"Koleksi Musik Terbaru Batch IV - 2",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#10b981",
-  views:"1.1M views",
-  rawViews: 1100000,
-  likes: 4900,
-  subscribers: "135K subscriber"
- },
- {
-  id:"j08eb-95qIE",
-  title:"Koleksi Musik Terbaru Batch IV - 3",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#f43f5e",
-  views:"2.3M views",
-  rawViews: 2300000,
-  likes: 9800,
-  subscribers: "255K subscriber"
- },
- {
-  id:"xef0Box9vUQ",
-  title:"Koleksi Musik Terbaru Batch IV - 5",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#84cc16",
-  views:"580K views",
-  rawViews: 580000,
-  likes: 2450,
-  subscribers: "80K subscriber"
- },
- {
-  id:"EHWHhUqfTvA",
-  title:"Koleksi Musik Terbaru Batch IV - 6",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"920K views",
-  rawViews: 920000,
-  likes: 4100,
-  subscribers: "122K subscriber"
- },
- /* 8 LAGU TERBARU BATCH V */
- {
-  id:"8E_cun6E7WM",
-  title:"Koleksi Musik Terbaru Batch V - 1",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#ec4899",
-  views:"680K views",
-  rawViews: 680000,
-  likes: 2950,
-  subscribers: "91K subscriber"
- },
- {
-  id:"4oKM_spWRNo",
-  title:"Koleksi Musik Terbaru Batch V - 2",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#06b6d4",
-  views:"1.3M views",
-  rawViews: 1300000,
-  likes: 5600,
-  subscribers: "150K subscriber"
- },
- {
-  id:"_v1FGsQ_I58",
-  title:"Koleksi Musik Terbaru Batch V - 3",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#ef4444",
-  views:"2.9M views",
-  rawViews: 2900000,
-  likes: 12400,
-  subscribers: "285K subscriber"
- },
- {
-  id:"mcrtODDW-30",
-  title:"Koleksi Musik Terbaru Batch V - 4",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#84cc16",
-  views:"520K views",
-  rawViews: 520000,
-  likes: 2150,
-  subscribers: "71K subscriber"
- },
- {
-  id:"7S1eP8GMetk",
-  title:"Koleksi Musik Terbaru Batch V - 5",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#8b5cf6",
-  views:"840K views",
-  rawViews: 840000,
-  likes: 3650,
-  subscribers: "105K subscriber"
- },
- {
-  id:"PWMrT2PZZBI",
-  title:"Koleksi Musik Terbaru Batch V - 6",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#10b981",
-  views:"1.6M views",
-  rawViews: 1600000,
-  likes: 6900,
-  subscribers: "190K subscriber"
- },
- {
-  id:"_qa7KoOT8-A",
-  title:"Koleksi Musik Terbaru Batch V - 7",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#eab308",
-  views:"3.8M views",
-  rawViews: 3800000,
-  likes: 16500,
-  subscribers: "360K subscriber"
- },
- {
-  id:"6dPz0DMPEGI",
-  title:"Koleksi Musik Terbaru Batch V - 8",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#14b8a6",
-  views:"460K views",
-  rawViews: 460000,
-  likes: 1920,
-  subscribers: "64K subscriber"
+  subscribers: "390K subscriber"
  }
 ];
 
+let currentVideo = null;
+let savedVideos = JSON.parse(localStorage.getItem('movio_saved') || '[]');
+let historyVideos = JSON.parse(localStorage.getItem('movio_history') || '[]');
+let currentFilter = 'Semua';
+let currentSearchQuery = '';
+let currentSort = 'default';
 let currentUser = null;
-let isGuest = false;
-let isPremium = false;
-let currentCategory = "Semua";
-let currentQuery = "";
-let currentSort = "default";
-let watchHistory = [];
-let savedVideos = [];
-let activeVideoIndex = null;
 let isSubscribed = false;
 let isLiked = false;
 let isDisliked = false;
-let currentComments = [
- { author: "Kiki R", text: "Komplit banget lagu-lagunya dari Wali, Tipe-X, sampai DJ Breakbeat!" },
- { author: "Rizky", text: "Mantap Movio Music, nostalgia lagu 80an & 90an nemenin pas santai." }
-];
 
-/* AUTHENTICATION */
-async function googleLogin(){
- const button=document.getElementById("googleBtn");
- const error=document.getElementById("error");
- button.disabled=true;
- button.textContent="Menghubungkan...";
- error.textContent="";
+/* INIT APP */
+auth.onAuthStateChanged(user => {
+ const userLabel = document.getElementById('userLabel');
+ const profileBtn = document.getElementById('profileBtn');
+ const loginScreen = document.getElementById('loginScreen');
 
- try{
-  const result=await auth.signInWithPopup(googleProvider);
-  enterGoogleUser(result.user);
- }catch(e){
-  error.textContent="Gagal login Google. Silakan coba lagi.";
- }finally{
-  button.disabled=false;
-  button.innerHTML='<span class="google-icon">G</span> Masuk dengan Google';
- }
-}
-
-function enterGoogleUser(user){
- isGuest=false;
- currentUser={name:user.displayName||"Pengguna Movio",email:user.email||"",photo:user.photoURL||""};
- document.getElementById("loginScreen").classList.add("hidden");
- document.getElementById("userLabel").textContent=currentUser.name;
- renderVideos();
-}
-
-function guestLogin(){
- isGuest=true;
- currentUser={name:"Guest",email:"",photo:""};
- document.getElementById("loginScreen").classList.add("hidden");
- document.getElementById("userLabel").textContent="Guest";
- renderVideos();
-}
-
-auth.onAuthStateChanged(user=>{
- if(user) enterGoogleUser(user);
- else if(!isGuest) document.getElementById("loginScreen").classList.remove("hidden");
-});
-
-function showProfile(){
- if(confirm("Keluar dari Movio Music?")){
-  if(!isGuest) auth.signOut();
-  currentUser=null;
-  isGuest=false;
-  document.getElementById("loginScreen").classList.remove("hidden");
- }
-}
-
-/* PREMIUM FEATURE LOGIC */
-function openPremiumModal(){
- document.getElementById("premiumModal").classList.add("open");
-}
-
-function closePremiumModal(){
- document.getElementById("premiumModal").classList.remove("open");
- document.getElementById("premiumCodeInput").value = "";
-}
-
-function verifyPremiumCode(){
- const code = document.getElementById("premiumCodeInput").value.trim();
- if(code === "0509" || code === "2008"){
-  isPremium = true;
-  document.getElementById("profileBtn").classList.add("pro");
-  document.getElementById("profileBtn").textContent = "⭐";
-  document.getElementById("premiumMenuLabel").textContent = "Akun PRO Aktif";
-  alert("🎉 Selamat! Akun Anda berhasil di-upgrade ke Movio Music PRO (Premium).");
-  closePremiumModal();
- } else {
-  alert("❌ Kode aktivasi salah! Silakan hubungi admin WhatsApp untuk mendapatkan kode.");
- }
-}
-
-/* NAVIGATION */
-function toggleSidebar(){
- if (window.matchMedia("(max-width: 768px)").matches) {
-  document.body.classList.toggle("mobile-menu-open");
- } else {
-  document.body.classList.toggle("collapsed");
- }
-}
-
-function showHome(el){
- currentCategory="Semua";
- currentQuery="";
- document.getElementById("searchInput").value="";
- document.getElementById("categories").classList.remove("hidden");
- document.getElementById("pageTitle").textContent="Daftar Musik Pilihan";
- renderVideos();
-}
-
-function filterCategory(category,el=null){
- currentCategory=category;
- currentQuery="";
- document.getElementById("searchInput").value="";
- document.getElementById("categories").classList.remove("hidden");
- document.getElementById("pageTitle").textContent=category==="Koleksi"?"Lagu Disimpan":"Kategori: "+category;
- renderVideos();
-}
-
-function changeSort(sortVal){
- currentSort = sortVal;
- renderVideos();
-}
-
-/* RENDER MUSIC WITH SORTING */
-function renderVideos(list=null){
- const grid=document.getElementById("videoGrid");
- if(!grid)return;
-
- let filtered = list;
- if(!filtered) {
-  if(currentCategory === "Koleksi") {
-   filtered = [...savedVideos];
+ if (user) {
+  currentUser = user;
+  loginScreen.classList.add('hidden');
+  userLabel.textContent = user.displayName || user.email || 'User';
+  if (user.photoURL) {
+   profileBtn.innerHTML = `<img src="${user.photoURL}" alt="Profile">`;
   } else {
-   filtered = videos.filter(v=>{
-    const categoryMatches=currentCategory==="Semua"||v.category===currentCategory;
-    const searchable=(v.title+" "+v.channel).toLowerCase();
-    return categoryMatches&&searchable.includes(currentQuery.toLowerCase());
-   });
+   profileBtn.textContent = (user.displayName || 'U')[0].toUpperCase();
   }
  } else {
-  filtered = [...filtered];
+  loginScreen.classList.remove('hidden');
+ }
+ renderVideos();
+});
+
+function googleLogin() {
+ const err = document.getElementById('error');
+ err.textContent = '';
+ auth.signInWithPopup(googleProvider).catch(error => {
+  err.textContent = error.message;
+ });
+}
+
+function guestLogin() {
+ document.getElementById('loginScreen').classList.add('hidden');
+ currentUser = { displayName: 'Guest', isGuest: true };
+ document.getElementById('userLabel').textContent = 'Guest';
+ document.getElementById('profileBtn').textContent = 'G';
+}
+
+function toggleSidebar() {
+ document.body.classList.toggle('collapsed');
+ document.body.classList.toggle('mobile-menu-open');
+}
+
+/* RENDER VIDEO GRID */
+function renderVideos() {
+ const grid = document.getElementById('videoGrid');
+ const pageTitle = document.getElementById('pageTitle');
+ grid.innerHTML = '';
+
+ let filtered = videos.filter(v => {
+  if (currentFilter === 'Semua') return true;
+  if (currentFilter === 'Koleksi') return savedVideos.includes(v.id);
+  return v.category === currentFilter;
+ });
+
+ if (currentSearchQuery) {
+  const q = currentSearchQuery.toLowerCase();
+  filtered = filtered.filter(v => 
+   v.title.toLowerCase().includes(q) || 
+   v.channel.toLowerCase().includes(q) ||
+   v.category.toLowerCase().includes(q)
+  );
+  pageTitle.textContent = `Hasil Pencarian: "${currentSearchQuery}"`;
+ } else if (currentFilter === 'Koleksi') {
+  pageTitle.textContent = '❤️ Lagu Disimpan (Koleksi Anda)';
+ } else {
+  pageTitle.textContent = currentFilter === 'Semua' ? 'Daftar Musik Pilihan' : `Kategori: ${currentFilter}`;
  }
 
- // Sorting Logic
- if(currentSort === "popular") {
+ /* SORTING */
+ if (currentSort === 'popular') {
   filtered.sort((a, b) => b.rawViews - a.rawViews);
- } else if(currentSort === "likes") {
+ } else if (currentSort === 'likes') {
   filtered.sort((a, b) => b.likes - a.likes);
- } else if(currentSort === "az") {
+ } else if (currentSort === 'az') {
   filtered.sort((a, b) => a.title.localeCompare(b.title));
  }
 
- if(!filtered || !filtered.length){
-  grid.innerHTML='<div class="empty"><h3>Tidak ada musik ditemukan</h3><p>Coba pilih kategori atau kata kunci lain.</p></div>';
+ if (filtered.length === 0) {
+  grid.innerHTML = `<div class="empty"><h3>Tidak ada musik ditemukan</h3><p>Coba kata kunci atau kategori lain.</p></div>`;
   return;
  }
 
- grid.innerHTML=filtered.map(v=>{
-  const i=videos.indexOf(v);
-  const thumb="https://img.youtube.com/vi/"+encodeURIComponent(v.id)+"/hqdefault.jpg";
-  return `
-   <article class="video-card" onclick="playVideo(${i})">
-    <div class="thumbnail">
-     <img src="${thumb}" alt="" loading="lazy">
-     <span class="category-badge">${v.category}</span>
-     <span class="duration">${v.duration}</span>
+ filtered.forEach(v => {
+  const card = document.createElement('div');
+  card.className = 'video-card';
+  card.onclick = () => openPlayer(v);
+  card.innerHTML = `
+   <div class="thumbnail">
+    <span class="category-badge">${v.category}</span>
+    <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy">
+    <div class="duration">${v.duration}</div>
+   </div>
+   <div class="video-info">
+    <div class="avatar" style="background:${v.color}">${v.channel[0].toUpperCase()}</div>
+    <div>
+     <div class="video-title">${v.title}</div>
+     <div class="meta">${v.channel}</div>
+     <div class="meta">${v.views}</div>
     </div>
-    <div class="video-info">
-     <div class="avatar" style="background:${v.color}">${v.channel.charAt(0)}</div>
-     <div>
-      <div class="video-title">${v.title}</div>
-      <div class="meta">${v.channel} • ${v.views}</div>
-     </div>
-    </div>
-   </article>`;
- }).join("");
+   </div>
+  `;
+  grid.appendChild(card);
+ });
 }
 
-/* MUSIC PLAYER & INTERACTION */
-function playVideo(index){
- activeVideoIndex = index;
- const v=videos[index];
- if(!v)return;
+/* SEARCH & FILTER */
+document.getElementById('searchForm').onsubmit = (e) => {
+ e.preventDefault();
+ const q = document.getElementById('searchInput').value.trim();
+ currentSearchQuery = q;
+ currentFilter = 'Semua';
+ highlightCategoryButton(null);
+ renderVideos();
+};
 
- watchHistory=[v,...watchHistory.filter(x=>x.id!==v.id)];
+function filterCategory(cat, btn) {
+ currentFilter = cat;
+ currentSearchQuery = document.getElementById('searchInput').value = '';
+ highlightCategoryButton(btn);
+ renderVideos();
+}
 
- document.getElementById("videoFrame").src=
-  "https://www.youtube-nocookie.com/embed/"+encodeURIComponent(v.id)+"?autoplay=1&rel=0";
+function highlightCategoryButton(btn) {
+ document.querySelectorAll('.category').forEach(b => b.classList.remove('active'));
+ if (btn) btn.classList.add('active');
+}
 
- document.getElementById("playerTitle").textContent=v.title;
- document.getElementById("playerChannel").textContent=v.channel;
- document.getElementById("playerSubCount").textContent=v.subscribers;
- document.getElementById("playerAvatar").textContent=v.channel.charAt(0);
- document.getElementById("playerAvatar").style.background=v.color;
- document.getElementById("playerDescription").textContent="Kategori Musik: " + v.category + " • " + v.views;
+function changeSort(val) {
+ currentSort = val;
+ renderVideos();
+}
 
- document.getElementById("likeCount").textContent = v.likes.toLocaleString();
+/* PLAYER MODAL */
+function openPlayer(v) {
+ currentVideo = v;
+ const modal = document.getElementById('playerModal');
+ modal.classList.add('open');
+ document.body.style.overflow = 'hidden';
+
+ document.getElementById('videoFrame').src = `https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&enablejsapi=1`;
+ document.getElementById('playerTitle').textContent = v.title;
+ document.getElementById('playerChannel').textContent = v.channel;
+ document.getElementById('playerSubCount').textContent = v.subscribers;
+ document.getElementById('playerAvatar').style.background = v.color;
+ document.getElementById('playerAvatar').textContent = v.channel[0].toUpperCase();
+ document.getElementById('likeCount').textContent = (v.likes / 1000).toFixed(1) + 'K';
+ document.getElementById('playerDescription').innerHTML = `<strong>Diputar di Movio Music Streaming.</strong> Genre: <em>${v.category}</em>. Nikmati kualitas audio jernih tanpa iklan dengan akun Premium.`;
 
  isSubscribed = false;
  isLiked = false;
  isDisliked = false;
- updateInteractions();
+ updateActionButtons();
 
- renderComments();
+ addToHistory(v.id);
+ renderRelated(v.id);
+ loadComments(v.id);
+}
 
- document.getElementById("relatedVideos").innerHTML=
-  videos.filter(x=>x.id!==v.id).map(x=>`
-   <div class="related-item" onclick="playVideo(${videos.indexOf(x)})">
-    <img src="https://img.youtube.com/vi/${encodeURIComponent(x.id)}/mqdefault.jpg" alt="">
+function closePlayer() {
+ document.getElementById('playerModal').classList.remove('open');
+ document.getElementById('videoFrame').src = '';
+ document.body.style.overflow = '';
+}
+
+function addToHistory(id) {
+ if (!historyVideos.includes(id)) {
+  historyVideos.unshift(id);
+  if (historyVideos.length > 30) historyVideos.pop();
+  localStorage.setItem('movio_history', JSON.stringify(historyVideos));
+ }
+}
+
+function showHistory() {
+ currentFilter = 'Semua';
+ currentSearchQuery = '';
+ const historyItems = videos.filter(v => historyVideos.includes(v.id));
+ const grid = document.getElementById('videoGrid');
+ document.getElementById('pageTitle').textContent = '🕒 Histori Putar Terakhir';
+ grid.innerHTML = '';
+
+ if (historyItems.length === 0) {
+  grid.innerHTML = `<div class="empty"><h3>Belum ada histori putar</h3><p>Putar beberapa lagu untuk melihat histori di sini.</p></div>`;
+  return;
+ }
+
+ historyItems.forEach(v => {
+  const card = document.createElement('div');
+  card.className = 'video-card';
+  card.onclick = () => openPlayer(v);
+  card.innerHTML = `
+   <div class="thumbnail">
+    <span class="category-badge">${v.category}</span>
+    <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy">
+    <div class="duration">${v.duration}</div>
+   </div>
+   <div class="video-info">
+    <div class="avatar" style="background:${v.color}">${v.channel[0].toUpperCase()}</div>
     <div>
-     <div class="related-title">${x.title}</div>
-     <div class="meta">${x.channel}<br>${x.views}</div>
+     <div class="video-title">${v.title}</div>
+     <div class="meta">${v.channel}</div>
+     <div class="meta">${v.views}</div>
     </div>
    </div>
-  `).join("");
-
- document.getElementById("playerModal").classList.add("open");
- document.body.style.overflow="hidden";
+  `;
+  grid.appendChild(card);
+ });
 }
 
-function updateInteractions(){
- const subBtn = document.getElementById("subBtn");
- subBtn.textContent = isSubscribed ? "Subscribed" : "Subscribe";
- subBtn.className = "sub-btn" + (isSubscribed ? " subscribed" : "");
-
- const saveBtn = document.getElementById("saveBtn");
- const isSaved = savedVideos.includes(videos[activeVideoIndex]);
- saveBtn.className = "action-btn" + (isSaved ? " active" : "");
-
- document.getElementById("likeBtn").className = "action-btn" + (isLiked ? " active" : "");
- document.getElementById("dislikeBtn").className = "action-btn" + (isDisliked ? " active" : "");
+function showHome() {
+ currentFilter = 'Semua';
+ currentSearchQuery = '';
+ renderVideos();
 }
 
-function toggleSubscribe(){
- isSubscribed = !isSubscribed;
- updateInteractions();
-}
-
-function toggleLike(){
- if(isLiked) {
-  isLiked = false;
- } else {
-  isLiked = true;
-  isDisliked = false;
- }
- updateInteractions();
-}
-
-function toggleDislike(){
- if(isDisliked) {
-  isDisliked = false;
- } else {
-  isDisliked = true;
-  isLiked = false;
- }
- updateInteractions();
-}
-
-function toggleSave(){
- const v = videos[activeVideoIndex];
- if(savedVideos.includes(v)) {
-  savedVideos = savedVideos.filter(x => x.id !== v.id);
- } else {
-  savedVideos.push(v);
- }
- updateInteractions();
-}
-
-function shareVideo(){
- const v = videos[activeVideoIndex];
- navigator.clipboard.writeText("https://youtu.be/" + v.id);
- alert("Link lagu berhasil disalin ke clipboard!");
-}
-
-/* COMMENTS SYSTEM */
-function renderComments(){
- document.getElementById("commentCount").textContent = currentComments.length;
- document.getElementById("commentList").innerHTML = currentComments.map(c => `
-  <div class="comment-item">
-   <div class="avatar" style="background:#444;width:32px;height:32px;font-size:12px">${c.author.charAt(0)}</div>
+function renderRelated(currentId) {
+ const relContainer = document.getElementById('relatedVideos');
+ relContainer.innerHTML = '';
+ const list = videos.filter(v => v.id !== currentId).slice(0, 8);
+ 
+ list.forEach(v => {
+  const item = document.createElement('div');
+  item.className = 'related-item';
+  item.onclick = () => openPlayer(v);
+  item.innerHTML = `
+   <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.title}" loading="lazy">
    <div>
-    <div class="comment-author">${c.author}</div>
+    <div class="related-title">${v.title}</div>
+    <div class="meta">${v.channel}</div>
+    <div class="meta">${v.views}</div>
+   </div>
+  `;
+  relContainer.appendChild(item);
+ });
+}
+
+/* ACTIONS */
+function toggleSubscribe() {
+ isSubscribed = !isSubscribed;
+ const btn = document.getElementById('subBtn');
+ if (isSubscribed) {
+  btn.textContent = 'Subscribed ✓';
+  btn.classList.add('subscribed');
+ } else {
+  btn.textContent = 'Subscribe';
+  btn.classList.remove('subscribed');
+ }
+}
+
+function toggleLike() {
+ isLiked = !isLiked;
+ isDisliked = false;
+ updateActionButtons();
+}
+
+function toggleDislike() {
+ isDisliked = !isDisliked;
+ isLiked = false;
+ updateActionButtons();
+}
+
+function updateActionButtons() {
+ const likeBtn = document.getElementById('likeBtn');
+ const dislikeBtn = document.getElementById('dislikeBtn');
+ const saveBtn = document.getElementById('saveBtn');
+
+ if (isLiked) likeBtn.classList.add('active'); else likeBtn.classList.remove('active');
+ if (isDisliked) dislikeBtn.classList.add('active'); else dislikeBtn.classList.remove('active');
+
+ if (currentVideo && savedVideos.includes(currentVideo.id)) {
+  saveBtn.classList.add('active');
+  saveBtn.innerHTML = '❤️ Tersimpan';
+ } else {
+  saveBtn.classList.remove('active');
+  saveBtn.innerHTML = '❤️ Simpan';
+ }
+}
+
+function toggleSave() {
+ if (!currentVideo) return;
+ const index = savedVideos.indexOf(currentVideo.id);
+ if (index > -1) {
+  savedVideos.splice(index, 1);
+ } else {
+  savedVideos.push(currentVideo.id);
+ }
+ localStorage.setItem('movio_saved', JSON.stringify(savedVideos));
+ updateActionButtons();
+}
+
+function shareVideo() {
+ if (!currentVideo) return;
+ const url = `https://youtu.be/${currentVideo.id}`;
+ if (navigator.share) {
+  navigator.share({ title: currentVideo.title, url: url }).catch(() => {});
+ } else {
+  navigator.clipboard.writeText(url);
+  alert('Tautan lagu berhasil disalin ke clipboard!');
+ }
+}
+
+/* KOMENTAR */
+const sampleComments = [
+ { name: "Rian Pratama", text: "Lagu ini bikin nostalgia jaman sekolah dulu, mantap banget aplikasinya!" },
+ { name: "Dewi Lestari", text: "Kualitas suaranya jernih pol, cocok buat teman kerja seharian." }
+];
+
+function loadComments(videoId) {
+ const list = document.getElementById('commentList');
+ list.innerHTML = '';
+ sampleComments.forEach(c => {
+  const div = document.createElement('div');
+  div.className = 'comment-item';
+  div.innerHTML = `
+   <div class="avatar" style="background:#555">${c.name[0]}</div>
+   <div>
+    <div class="comment-author">${c.name}</div>
     <div class="comment-text">${c.text}</div>
    </div>
-  </div>
- `).join("");
+  `;
+  list.appendChild(div);
+ });
+ document.getElementById('commentCount').textContent = sampleComments.length;
 }
 
-function addComment(){
- const input = document.getElementById("commentInput");
+function addComment() {
+ const input = document.getElementById('commentInput');
  const val = input.value.trim();
- if(!val) return;
-
- const name = currentUser ? currentUser.name : "Guest";
- currentComments.unshift({ author: name, text: val });
- input.value = "";
- renderComments();
+ if (!val) return;
+ 
+ const name = currentUser ? (currentUser.displayName || 'Pengguna') : 'Guest';
+ sampleComments.unshift({ name: name, text: val });
+ input.value = '';
+ loadComments(currentVideo.id);
 }
 
-function closePlayer(){
- document.getElementById("playerModal").classList.remove("open");
- document.getElementById("videoFrame").src="";
- document.body.style.overflow="";
+/* PREMIUM MODAL */
+function openPremiumModal() {
+ document.getElementById('premiumModal').classList.add('open');
 }
 
-/* HISTORY */
-function showHistory(){
- document.getElementById("categories").classList.add("hidden");
- document.getElementById("pageTitle").textContent="Histori Putar Musik";
- renderVideos(watchHistory);
+function closePremiumModal() {
+ document.getElementById('premiumModal').classList.remove('open');
 }
 
-/* SEARCH */
-document.getElementById("searchForm").addEventListener("submit",e=>{
- e.preventDefault();
- currentQuery=document.getElementById("searchInput").value.trim();
- filterCategory("Semua");
-});
+function verifyPremiumCode() {
+ const code = document.getElementById('premiumCodeInput').value.trim();
+ if (code === '7777' || code === '8888' || code === '2026') {
+  alert(' Selamat! Akun Anda berhasil di-upgrade ke MOVIO PREMIUM.');
+  document.getElementById('profileBtn').className = 'profile pro';
+  document.getElementById('premiumMenuLabel').textContent = 'Status: Premium ⭐';
+  closePremiumModal();
+ } else {
+  alert('❌ Kode aktivasi salah! Silakan hubungi admin via WhatsApp untuk mendapatkan kode resmi.');
+ }
+}
 
-renderVideos();
+function showProfile() {
+ alert(`Informasi Akun:\nNama: ${currentUser ? currentUser.displayName : 'Guest'}\nStatus: ${document.getElementById('profileBtn').classList.contains('pro') ? 'Premium Member ⭐' : 'Free Account'}\n\nHubungi admin di WhatsApp untuk upgrade premium.`);
+}
 </script>
-</body> 
+</body>
 </html>
