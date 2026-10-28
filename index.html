@@ -582,6 +582,7 @@ main, .player-modal, .modal-card, .login-box { min-width: 0; }
 <!-- FIREBASE SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
 "use strict";
@@ -602,7 +603,7 @@ const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 /* MUSIC DATABASE WITH ADDED VIDEOS */
-const videos = [
+let videos = [
  {
   id:"85Ek_ihAur0",
   title:"Kisah Kasih di Sekolah - Chrisye (Tembang Nostalgia 80an 90an)",
@@ -1602,6 +1603,66 @@ const videos = [
  }
 ];
 
+
+/* ===== SINKRONISASI VIDEO OTOMATIS DARI FIRESTORE =====
+   Video pilihan yang sudah ada tetap ditampilkan.
+   Video dari YouTube Data API akan masuk otomatis melalui Firestore.
+*/
+const manualVideos = [...videos];
+
+function connectAutomaticVideos() {
+  if (typeof firebase.firestore !== "function") {
+    console.error("Firebase Firestore SDK belum dimuat.");
+    return;
+  }
+
+  const movioDb = firebase.firestore();
+
+  movioDb.collection("videos")
+    .orderBy("publishedAt", "desc")
+    .limit(100)
+    .onSnapshot((snapshot) => {
+      const automaticVideos = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: data.id || doc.id,
+          title: data.title || "Video YouTube",
+          channel: data.channel || "YouTube",
+          category: data.category || "Pop Nostalgia",
+          duration: data.duration || "VIDEO",
+          color: data.color || "#ff0033",
+          views: data.views || "YouTube",
+          rawViews: Number(data.rawViews || 0),
+          likes: Number(data.likes || 0),
+          subscribers: data.subscribers || "YouTube",
+          youtubeUrl: data.youtubeUrl || ("https://www.youtube.com/watch?v=" + (data.id || doc.id)),
+          publishedAt: data.publishedAt || ""
+        };
+      });
+
+      const manualIds = new Set(manualVideos.map((video) => video.id));
+      const seenIds = new Set(manualIds);
+      const uniqueAutomaticVideos = automaticVideos.filter((video) => {
+        if (!video.id || seenIds.has(video.id)) return false;
+        seenIds.add(video.id);
+        return true;
+      });
+
+      videos = [...manualVideos, ...uniqueAutomaticVideos];
+      renderVideos();
+
+      // Jika pengguna sedang melihat histori/koleksi, jangan paksa pindah halaman.
+      console.info("Movio: sinkronisasi video selesai.", uniqueAutomaticVideos.length, "video otomatis.");
+    }, (error) => {
+      console.error("Movio gagal membaca Firestore:", error);
+      const grid = document.getElementById("videoGrid");
+      if (grid && videos.length === 0) {
+        grid.innerHTML = '<div class="empty"><h3>Video belum tersedia</h3><p>Periksa konfigurasi Firestore dan aturan database.</p></div>';
+      }
+    });
+}
+
+
 let currentUser = null;
 let isGuest = false;
 let isPremium = false;
@@ -1921,6 +1982,7 @@ document.getElementById("searchForm").addEventListener("submit",e=>{
 });
 
 renderVideos();
+connectAutomaticVideos();
 </script>
 </body>
 </html>
