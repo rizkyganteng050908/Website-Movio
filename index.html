@@ -753,8 +753,8 @@ function connectAutomaticVideos() {
 
 /* ===== YOUTUBE DATA API v3 ===== */
 const YT_API_KEY = "AIzaSyC60BgD445Fc_KZCQWtaOXkGSr-XsHwXm8";
-const YT_CACHE_KEY = "movio_yt_cache_v1";
-const YT_CACHE_TTL = 6 * 60 * 60 * 1000; // 6 jam
+const YT_CACHE_KEY = "movio_yt_cache_v2";
+const YT_CACHE_TTL = 12 * 60 * 60 * 1000; // 12 jam
 const YT_QUERIES = {
   "Pop Nostalgia": "lagu pop nostalgia indonesia 80an 90an",
   "Pop 2000an":    "lagu pop indonesia 2000an hits",
@@ -780,7 +780,7 @@ function fmtDuration(iso){
 
 async function fetchYouTubeCategory(category, query){
   const searchUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video"
-    + "&videoEmbeddable=true&videoCategoryId=10&maxResults=12&regionCode=ID&relevanceLanguage=id"
+    + "&videoEmbeddable=true&videoCategoryId=10&maxResults=50&regionCode=ID&relevanceLanguage=id"
     + "&q=" + encodeURIComponent(query) + "&key=" + YT_API_KEY;
   const sRes = await fetch(searchUrl);
   if (!sRes.ok) throw new Error("search " + sRes.status);
