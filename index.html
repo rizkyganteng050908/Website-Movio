@@ -409,7 +409,6 @@ main, .player-modal, .modal-card, .login-box { min-width: 0; }
   .login-screen { align-items: flex-start; }
   .login-box { margin: auto; }
 }
-
 </style>
 </head>
 
@@ -437,7 +436,7 @@ main, .player-modal, .modal-card, .login-box { min-width: 0; }
   <div class="brand" style="justify-content:center;margin-bottom:8px"><span class="logo-icon" style="background:var(--gold)">⭐</span><span>Movio Premium</span></div>
   <h2>Aktivasi Akun Premium</h2>
   <p>Masukkan kode aktivasi rahasia Anda untuk menikmati streaming musik tanpa batas dan kualitas audio jernih.</p>
-  
+
   <input type="password" id="premiumCodeInput" class="modal-input" placeholder="••••" maxlength="4">
   <button class="modal-btn" onclick="verifyPremiumCode()">Aktifkan Sekarang</button>
   <br>
@@ -522,7 +521,7 @@ main, .player-modal, .modal-card, .login-box { min-width: 0; }
      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
      allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
    </div>
-   
+
    <!-- VISUALIZER SPEKTRUM AUDIO -->
    <div class="visualizer">
     <div class="bar" style="height:12px"></div>
@@ -602,1014 +601,120 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-/* MUSIC DATABASE WITH ADDED VIDEOS */
+/* ===== DATABASE MUSIK MANUAL =====
+   Format: V(id, judul, channel, kategori, durasi, warna, teks views, angka views, likes, subscriber) */
+const V = (id,title,channel,category,duration,color,views,rawViews,likes,subscribers) =>
+  ({id,title,channel,category,duration,color,views,rawViews,likes,subscribers});
+const PN="Pop Nostalgia", P2="Pop 2000an", DJ="DJ & Remix", AK="Akustik", MS="Movio Selection";
+
 let videos = [
- {
-  id:"85Ek_ihAur0",
-  title:"Kisah Kasih di Sekolah - Chrisye (Tembang Nostalgia 80an 90an)",
-  channel:"Nostalgia Sintetis",
-  category:"Pop Nostalgia",
-  duration:"FULL ALBUM",
-  color:"#d97706",
-  views:"9.5M views",
-  rawViews: 9500000,
-  likes: 40450,
-  subscribers: "820K subscriber"
- },
- {
-  id:"VwF6A76Xylk",
-  title:"Benci Bilang Cinta - Naif & Hit Pop Era 90an Pilihan",
-  channel:"Lalala",
-  category:"Pop Nostalgia",
-  duration:"FULL ALBUM",
-  color:"#2563eb",
-  views:"4.9M views",
-  rawViews: 4900000,
-  likes: 16260,
-  subscribers: "350K subscriber"
- },
- {
-  id:"YNgYYLCZ1hI",
-  title:"Cari Jodoh & Baik-Baik Sayang - Wali Band Full Album Hits",
-  channel:"Kedai Chana",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#059669",
-  views:"1.4M views",
-  rawViews: 1400000,
-  likes: 7554,
-  subscribers: "210K subscriber"
- },
- {
-  id:"VP6mRngugVA",
-  title:"Dik & Yank - Wali Band Full Album Paling Romantis",
-  channel:"Petir music ⚡",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#e11d48",
-  views:"1.1M views",
-  rawViews: 1100000,
-  likes: 4946,
-  subscribers: "180K subscriber"
- },
- {
-  id:"TUBVJcalKqs",
-  title:"X-Friend & So Bad - Tipe-X Full Album Ska Terpopuler",
-  channel:"tamaryn",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#7c3aed",
-  views:"20M views",
-  rawViews: 20000000,
-  likes: 114137,
-  subscribers: "1.5M subscriber"
- },
- {
-  id:"NDNnmQYyxyI",
-  title:"DJ Tak Mungkin Berkasih - Remix Dugem Terbaru Full Bass",
-  channel:"Dj Mona belando",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#ff0033",
-  views:"11K views",
-  rawViews: 11000,
-  likes: 124,
-  subscribers: "12K subscriber"
- },
- {
-  id:"pbvAzjb81f8",
-  title:"DJ Gen-Z Club Mix - Breakbeat Stadium 2 Jam Nonstop",
-  channel:"Egy Sadewong",
-  category:"DJ & Remix",
-  duration:"2 JAM",
-  color:"#db2777",
-  views:"2.5M views",
-  rawViews: 2500000,
-  likes: 19175,
-  subscribers: "410K subscriber"
- },
- {
-  id:"ifBXLaPp_uY",
-  title:"Gending Jawa Santai - Akustik Pengantar Tidur Nyaman",
-  channel:"Koleksi Musik",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#e11d48",
-  views:"1.5M views",
-  rawViews: 1500000,
-  likes: 15400,
-  subscribers: "450K subscriber"
- },
- {
-  id:"GB09st7rtv0",
-  title:"Menghitung Hari & Kulakukan Semua Untukmu - Pop Indonesia 2000an",
-  channel:"91 FM",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#d97706",
-  views:"28M views",
-  rawViews: 28000000,
-  likes: 115150,
-  subscribers: "1.2M subscriber"
- },
- {
-  id:"0BXVNT1yxqw",
-  title:"DJ Adakah Kenyamanan Dihatimu - Remix Viral TikTok 2026",
-  channel:"Seven Fvnky",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#ff0033",
-  views:"5.2M views",
-  rawViews: 5200000,
-  likes: 42000,
-  subscribers: "890K subscriber"
- },
- {
-  id:"i-qe0W_Av6M",
-  title:"Bunga Seroja & Surat Undangan - Tembang Kenangan 80-90an",
-  channel:"Tembang Nostalgia ID",
-  category:"Pop Nostalgia",
-  duration:"1 JAM",
-  color:"#b45309",
-  views:"850K views",
-  rawViews: 850000,
-  likes: 3400,
-  subscribers: "100K subscriber"
- },
- {
-  id:"X-q39sf-Wz0",
-  title:"Isabella & Suci Dalam Debu - Slow Rock Melayu Syahdu",
-  channel:"Melayu Acoustic Live",
-  category:"Pop Nostalgia",
-  duration:"FULL ALBUM",
-  color:"#1d4ed8",
-  views:"1.2M views",
-  rawViews: 1200000,
-  likes: 5200,
-  subscribers: "120K subscriber"
- },
- {
-  id:"mOL-KEw4_LQ",
-  title:"Kisah Sedih di Hari Minggu & Dan - Band Legendaris 2000an",
-  channel:"Dunia Band ID",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#047857",
-  views:"2.1M views",
-  rawViews: 2100000,
-  likes: 8900,
-  subscribers: "250K subscriber"
- },
- {
-  id:"JbsyEKorevk",
-  title:"Separuh Nafas & Hapus Aku - Kompilasi Band Indie & Pop 2000an",
-  channel:"Indie Pop Sound",
-  category:"Pop 2000an",
-  duration:"45 MIN",
-  color:"#6d28d9",
-  views:"950K views",
-  rawViews: 950000,
-  likes: 4100,
-  subscribers: "140K subscriber"
- },
- {
-  id:"jtYpG2t3gX4",
-  title:"DJ Slow Bass Jedag Jedug - Breakbeat Clubbing Funk 2026",
-  channel:"BeatMaster Remix",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#e11d48",
-  views:"3.4M views",
-  rawViews: 3400000,
-  likes: 15200,
-  subscribers: "300K subscriber"
- },
- {
-  id:"JeGPVGMiM5c",
-  title:"DJ Funky Kota - Full Bass Melintir Party Night Mix",
-  channel:"DJ Electro Bass",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#c026d3",
-  views:"1.8M views",
-  rawViews: 1800000,
-  likes: 7200,
-  subscribers: "190K subscriber"
- },
- {
-  id:"UV6MYU_1O1I",
-  title:"Akustik Santai Cafe - Musik Pengantar Kerja & Belajar",
-  channel:"Acoustic Lounge",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#059669",
-  views:"620K views",
-  rawViews: 620000,
-  likes: 2900,
-  subscribers: "90K subscriber"
- },
- {
-  id:"PbjqEy6rfrQ",
-  title:"Kenangan Manis - Acoustic Cover Lagu Lawas 90an",
-  channel:"Koleksi Nostalgia",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#0284c7",
-  views:"450K views",
-  rawViews: 450000,
-  likes: 1800,
-  subscribers: "75K subscriber"
- },
- {
-  id:"Vb19yb_o67A",
-  title:"Pupus & Yang Terlewatkan - Kumpulan Lagu Galau 2000an",
-  channel:"Sobat Galau Band",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#4338ca",
-  views:"1.6M views",
-  rawViews: 1600000,
-  likes: 6700,
-  subscribers: "220K subscriber"
- },
- {
-  id:"-Hjb3OQaAV0",
-  title:"DJ Pargoy Viral - Dugem Tiktok Bass Glerr Nonstop",
-  channel:"DJ Remixer ID",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#dc2626",
-  views:"2.3M views",
-  rawViews: 2300000,
-  likes: 9800,
-  subscribers: "310K subscriber"
- },
- {
-  id:"b99cRgW99UY",
-  title:"Senja Sore Hari - Petikan Gitar Akustik Santai",
-  channel:"Acoustic Vibe",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#d97706",
-  views:"920K views",
-  rawViews: 920000,
-  likes: 4300,
-  subscribers: "150K subscriber"
- },
- {
-  id:"_vlLToRjP1E",
-  title:"Kangen - Dewa 19 (Pop Nostalgia Spesial Pilihan)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"780K views",
-  rawViews: 780000,
-  likes: 3100,
-  subscribers: "95K subscriber"
- },
- {
-  id:"p4_IrKk8ueg",
-  title:"Ada Apa Dengan Cinta? - Melly Goeslaw (Pop 2000an Hits)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#10b981",
-  views:"1.3M views",
-  rawViews: 1300000,
-  likes: 5400,
-  subscribers: "160K subscriber"
- },
- {
-  id:"3anKQbvVS90",
-  title:"DJ Remix Funkot - Breakbeat Clubbing Single Edit",
-  channel:"BeatMaster Remix",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#ef4444",
-  views:"2.9M views",
-  rawViews: 2900000,
-  likes: 12500,
-  subscribers: "280K subscriber"
- },
- {
-  id:"WfVU18gRLU0",
-  title:"Akustik Senja Tenang - Melodi Gitar Pengantar Istirahat",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#f59e0b",
-  views:"540K views",
-  rawViews: 540000,
-  likes: 2100,
-  subscribers: "80K subscriber"
- },
- {
-  id:"iLQkSdITpUE",
-  title:"Antara Hatiku dan Hatimu - Eddy Silitonga (Tembang Kenangan)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#0284c7",
-  views:"690K views",
-  rawViews: 690000,
-  likes: 2800,
-  subscribers: "85K subscriber"
- },
- {
-  id:"RKpGcHUHz-Y",
-  title:"Sebatas Mimpi - Cokelat (Band Pop Alternatif 2000an)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#16a34a",
-  views:"1.5M views",
-  rawViews: 1500000,
-  likes: 6100,
-  subscribers: "175K subscriber"
- },
- {
-  id:"VeOO4W82d7E",
-  title:"Akustik Hujan Rintik - Musik Relaksasi Jiwa",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#ca8a04",
-  views:"810K views",
-  rawViews: 810000,
-  likes: 3500,
-  subscribers: "110K subscriber"
- },
- {
-  id:"AbTLKqcTESY",
-  title:"Nuansa Bening - Vidi Aldiano / Keenan Nasution (Classic Pop)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#8b5cf6",
-  views:"930K views",
-  rawViews: 930000,
-  likes: 4100,
-  subscribers: "115K subscriber"
- },
- {
-  id:"USTrJbMMCn8",
-  title:"Bila Tiba - Ungu (Pop Religi & Hits 2000an)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#ec4899",
-  views:"1.2M views",
-  rawViews: 1200000,
-  likes: 5200,
-  subscribers: "145K subscriber"
- },
- {
-  id:"oS6FZ0YKev4",
-  title:"DJ Remix Dangdut Koplo - Bass Glerr Asik Goyang",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#f43f5e",
-  views:"2.4M views",
-  rawViews: 2400000,
-  likes: 10400,
-  subscribers: "260K subscriber"
- },
- {
-  id:"-mgHa-w1upc",
-  title:"Akustik Romantis Malam - Petikan Gitar Syahdu",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#10b981",
-  views:"480K views",
-  rawViews: 480000,
-  likes: 1950,
-  subscribers: "70K subscriber"
- },
- {
-  id:"ZMxTrqKcWmE",
-  title:"Semusim - Marcell (Pop Romantis 2000an Awal)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#06b6d4",
-  views:"880K views",
-  rawViews: 880000,
-  likes: 3700,
-  subscribers: "98K subscriber"
- },
- {
-  id:"UHNZXnQVxIg",
-  title:"Topeng - Peterpan (Koleksi Rock Alternatif Era 2000an)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#6366f1",
-  views:"1.7M views",
-  rawViews: 1700000,
-  likes: 7400,
-  subscribers: "195K subscriber"
- },
- {
-  id:"i6pMrdsUZGM",
-  title:"DJ Thailand Style - Full Bass Horeg Nonstop Party",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#eab308",
-  views:"3.1M views",
-  rawViews: 3100000,
-  likes: 13800,
-  subscribers: "320K subscriber"
- },
- {
-  id:"eSmfNibLAAU",
-  title:"Yogyakarta - KLa Project (Pop Nostalgia Legendaris)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"650K views",
-  rawViews: 650000,
-  likes: 2700,
-  subscribers: "90K subscriber"
- },
- {
-  id:"VgwEC2dS6GI",
-  title:"Sephia - Sheila on 7 (Lagu Hits Sepanjang Masa)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#14b8a6",
-  views:"1.4M views",
-  rawViews: 1400000,
-  likes: 5900,
-  subscribers: "165K subscriber"
- },
- {
-  id:"kPZ9YXS5Log",
-  title:"DJ Remix Slow Bass - Musik Santai Pengantar Tidur",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#f43f5e",
-  views:"2.8M views",
-  rawViews: 2800000,
-  likes: 11900,
-  subscribers: "290K subscriber"
- },
- {
-  id:"gSlgOqz8Bto",
-  title:"Akustik Pagi Hari - Kesegaran Melodi Alam",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#84cc16",
-  views:"510K views",
-  rawViews: 510000,
-  likes: 2250,
-  subscribers: "75K subscriber"
- },
- {
-  id:"H38hX-vu50Y",
-  title:"Penyair Malam - Ebiet G. Ade (Balada Akustik Legendaris)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#a855f7",
-  views:"990K views",
-  rawViews: 990000,
-  likes: 4400,
-  subscribers: "130K subscriber"
- },
- {
-  id:"v-ddxeRzpV0",
-  title:"Hati Yang Kau Sakiti - Rossa (Pop Melankolis Hits)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"720K views",
-  rawViews: 720000,
-  likes: 3100,
-  subscribers: "92K subscriber"
- },
- {
-  id:"HjPKIUTiAjQ",
-  title:"Mimpi Yang Sempurna - Peterpan (Koleksi Nostalgia 2000an)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#10b981",
-  views:"1.1M views",
-  rawViews: 1100000,
-  likes: 4800,
-  subscribers: "140K subscriber"
- },
- {
-  id:"yfMkhVWdQEg",
-  title:"DJ Remix Jedag Jedug - Musik Paling Dicari",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#ef4444",
-  views:"2.2M views",
-  rawViews: 2200000,
-  likes: 9500,
-  subscribers: "250K subscriber"
- },
- {
-  id:"A5WRUloyRPo",
-  title:"Akustik Senandung Rindu - Petikan Gitar Klasik",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#eab308",
-  views:"490K views",
-  rawViews: 490000,
-  likes: 2050,
-  subscribers: "68K subscriber"
- },
- {
-  id:"DZVDriQKxP8",
-  title:"Bidadari Yang Kulewatkan - Padi (Masterpiece Rock Alternatif)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"830K views",
-  rawViews: 830000,
-  likes: 3600,
-  subscribers: "99K subscriber"
- },
- {
-  id:"Jv0jPUkyM64",
-  title:"Cinta Bersemi Bersama Bintang - Andra and The Backbone",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#06b6d4",
-  views:"1.3M views",
-  rawViews: 1300000,
-  likes: 5500,
-  subscribers: "155K subscriber"
- },
- {
-  id:"Ionk9-PUzB8",
-  title:"DJ Remix Club House - Musik Pesta Malam Minggu",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#f43f5e",
-  views:"2.7M views",
-  rawViews: 2700000,
-  likes: 11200,
-  subscribers: "275K subscriber"
- },
- {
-  id:"GcAaIwJW-yU",
-  title:"Akustik Kopi Hitam - Santai Sore Hari Bersama Gitar",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#10b981",
-  views:"560K views",
-  rawViews: 560000,
-  likes: 2400,
-  subscribers: "82K subscriber"
- },
- {
-  id:"TBXDAAcfVew",
-  title:"Satu Mimpiku - The Groove (Jazz Pop Nostalgia)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#8b5cf6",
-  views:"910K views",
-  rawViews: 910000,
-  likes: 3900,
-  subscribers: "120K subscriber"
- },
- {
-  id:"f72-Qq8y5_c",
-  title:"Teman Tapi Mesra - Ratu (Duo Pop Hits 2000an)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#ec4899",
-  views:"1.6M views",
-  rawViews: 1600000,
-  likes: 6800,
-  subscribers: "185K subscriber"
- },
- {
-  id:"7PlCZcJhAGQ",
-  title:"DJ Remix Full Bass Horeg - Paling Gacor 2026",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#eab308",
-  views:"3.5M views",
-  rawViews: 3500000,
-  likes: 15100,
-  subscribers: "340K subscriber"
- },
- {
-  id:"az9awjU7CSI",
-  title:"Akustik Melodi Hati - Musik Relaksasi Pikiran",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#14b8a6",
-  views:"470K views",
-  rawViews: 470000,
-  likes: 1980,
-  subscribers: "65K subscriber"
- },
- {
-  id:"SB_ANaKJEok",
-  title:"Kemesraan - Iwan Fals & All Stars (Lagu Legendaris Abadi)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#6366f1",
-  views:"750K views",
-  rawViews: 750000,
-  likes: 3200,
-  subscribers: "95K subscriber"
- },
- {
-  id:"S9A_j6cnA_Y",
-  title:"DJ Remix TikTok Viral - Bass Glerr Mantap Jiwa",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#ef4444",
-  views:"2.1M views",
-  rawViews: 2100000,
-  likes: 8900,
-  subscribers: "240K subscriber"
- },
- {
-  id:"UbC--wpYohY",
-  title:"Bento - Iwan Fals (Protes Sosial & Pop Klasik)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"610K views",
-  rawViews: 610000,
-  likes: 2600,
-  subscribers: "88K subscriber"
- },
- {
-  id:"6M7EmCZI0pI",
-  title:"Bukan Pujangga - Base Jam (Pop Band Era 2000an)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#10b981",
-  views:"1.2M views",
-  rawViews: 1200000,
-  likes: 5100,
-  subscribers: "145K subscriber"
- },
- {
-  id:"qY1IFnjM8-Y",
-  title:"DJ Breakbeat Remix - Musik Clubbing Malam Penuh Semangat",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#f43f5e",
-  views:"2.6M views",
-  rawViews: 2600000,
-  likes: 11000,
-  subscribers: "270K subscriber"
- },
- {
-  id:"PqoWpkxbTNc",
-  title:"Akustik Senja Di Batas Kota - Petikan Gitar Santai",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#eab308",
-  views:"530K views",
-  rawViews: 530000,
-  likes: 2200,
-  subscribers: "72K subscriber"
- },
- {
-  id:"-VMFVHsYl98",
-  title:"Ku Tak Bisa - Slank (Rock Balada Paling Populer)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#8b5cf6",
-  views:"890K views",
-  rawViews: 890000,
-  likes: 3850,
-  subscribers: "115K subscriber"
- },
- {
-  id:"IxcFS9_mUaQ",
-  title:"Bertepuk Sebelah Tangan - Sheila on 7 (Hits 2000an)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#06b6d4",
-  views:"1.5M views",
-  rawViews: 1500000,
-  likes: 6400,
-  subscribers: "175K subscriber"
- },
- {
-  id:"DxaBY5BwgLc",
-  title:"DJ Remix Horeg Jatim - Full Bass Mantap Menggelegar",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#ef4444",
-  views:"3.2M views",
-  rawViews: 3200000,
-  likes: 14200,
-  subscribers: "310K subscriber"
- },
- {
-  id:"YdhZW55CZpM",
-  title:"Akustik Lullaby - Musik Pengantar Tidur Nyenyak",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#14b8a6",
-  views:"490K views",
-  rawViews: 490000,
-  likes: 2050,
-  subscribers: "69K subscriber"
- },
- {
-  id:"z6U8C8cPJj4",
-  title:"Gandrung - Koes Plus (Legenda Musik Pop Nusantara)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#a855f7",
-  views:"740K views",
-  rawViews: 740000,
-  likes: 3300,
-  subscribers: "96K subscriber"
- },
- {
-  id:"2mCYT092il0",
-  title:"Cobalah Mengerti - Peterpan (Lagu Cinta Romantis 2000an)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#10b981",
-  views:"1.1M views",
-  rawViews: 1100000,
-  likes: 4900,
-  subscribers: "135K subscriber"
- },
- {
-  id:"j08eb-95qIE",
-  title:"DJ Remix Slow Bass Viral - Paling Dicari Netizen",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#f43f5e",
-  views:"2.3M views",
-  rawViews: 2300000,
-  likes: 9800,
-  subscribers: "255K subscriber"
- },
- {
-  id:"xef0Box9vUQ",
-  title:"Akustik Pagi Menenangkan - Melodi Harmoni Alam",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#84cc16",
-  views:"580K views",
-  rawViews: 580000,
-  likes: 2450,
-  subscribers: "80K subscriber"
- },
- {
-  id:"EHWHhUqfTvA",
-  title:"Surat Cinta - Vina Panduwinata (Pop Klasik Anggun)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#3b82f6",
-  views:"920K views",
-  rawViews: 920000,
-  likes: 4100,
-  subscribers: "122K subscriber"
- },
- {
-  id:"8E_cun6E7WM",
-  title:"Cintaku - Chrisye (Masterpiece Pop Romantis Indonesia)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#ec4899",
-  views:"680K views",
-  rawViews: 680000,
-  likes: 2950,
-  subscribers: "91K subscriber"
- },
- {
-  id:"4oKM_spWRNo",
-  title:"Ku Katakan Dengan Indah - Peterpan (Hits Abadi 2000an)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#06b6d4",
-  views:"1.3M views",
-  rawViews: 1300000,
-  likes: 5600,
-  subscribers: "150K subscriber"
- },
- {
-  id:"_v1FGsQ_I58",
-  title:"DJ Remix Party Mix - Musik Dugem Terpopuler 2026",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"REMIX",
-  color:"#ef4444",
-  views:"2.9M views",
-  rawViews: 2900000,
-  likes: 12400,
-  subscribers: "285K subscriber"
- },
- {
-  id:"mcrtODDW-30",
-  title:"Akustik Kafe Romantis - Melodi Gitar Pengantar Santai",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#84cc16",
-  views:"520K views",
-  rawViews: 520000,
-  likes: 2150,
-  subscribers: "71K subscriber"
- },
- {
-  id:"7S1eP8GMetk",
-  title:"Galih dan Ratna - Chrisye (Tembang Nostalgia Romantis)",
-  channel:"Movio Selection",
-  category:"Pop Nostalgia",
-  duration:"FULL",
-  color:"#8b5cf6",
-  views:"840K views",
-  rawViews: 840000,
-  likes: 3650,
-  subscribers: "105K subscriber"
- },
- {
-  id:"PWMrT2PZZBI",
-  title:"Dan - Sheila on 7 (Lagu Cinta Legendaris 2000an)",
-  channel:"Movio Selection",
-  category:"Pop 2000an",
-  duration:"FULL",
-  color:"#10b981",
-  views:"1.6M views",
-  rawViews: 1600000,
-  likes: 6900,
-  subscribers: "190K subscriber"
- },
- {
-  id:"_qa7KoOT8-A",
-  title:"DJ Remix Horeg Blarr - Full Bass Dugem Party Nonstop",
-  channel:"Movio Selection",
-  category:"DJ & Remix",
-  duration:"FULL BASS",
-  color:"#eab308",
-  views:"3.8M views",
-  rawViews: 3800000,
-  likes: 16500,
-  subscribers: "360K subscriber"
- },
- {
-  id:"6dPz0DMPEGI",
-  title:"Akustik Senja Damai - Melodi Petikan Gitar Klasik",
-  channel:"Movio Selection",
-  category:"Akustik",
-  duration:"AUDIO",
-  color:"#14b8a6",
-  views:"460K views",
-  rawViews: 460000,
-  likes: 1920,
-  subscribers: "64K subscriber"
- },
- {
-  id:"FwwwMyD1PC0",
-  title:"Dewa 19 - Kangen (Live Acoustic Cover Session)",
-  channel:"Koleksi Movio",
-  category:"Pop 2000an",
-  duration:"VIDEO",
-  color:"#7c3aed",
-  views:"Video YouTube",
-  rawViews:0,
-  likes:0,
-  subscribers:"Koleksi Movio"
- },
- {
-  id:"priqaGQSaZc",
-  title:"DJ Remix Breakbeat Terenak - Spesial Party Malam Ini",
-  channel:"Koleksi Movio",
-  category:"DJ & Remix",
-  duration:"VIDEO",
-  color:"#e11d48",
-  views:"Video YouTube",
-  rawViews:0,
-  likes:0,
-  subscribers:"Koleksi Movio"
- },
- {
-  id:"nIPePIxnwa8",
-  title:"Akustik Melodi Jiwa - Lagu Relaksasi Penenang Hati",
-  channel:"Koleksi Movio",
-  category:"Akustik",
-  duration:"VIDEO",
-  color:"#14b8a6",
-  views:"Video YouTube",
-  rawViews:0,
-  likes:0,
-  subscribers:"Koleksi Movio"
- },
- {
-  id:"7s9hKvW1Ak0",
-  title:"Koes Plus - Nusantara (Tembang Lawas Legendaris)",
-  channel:"Koleksi Movio",
-  category:"Pop Nostalgia",
-  duration:"VIDEO",
-  color:"#f59e0b",
-  views:"Video YouTube",
-  rawViews:0,
-  likes:0,
-  subscribers:"Koleksi Movio"
- },
+ V("85Ek_ihAur0","Kisah Kasih di Sekolah - Chrisye (Tembang Nostalgia 80an 90an)","Nostalgia Sintetis",PN,"FULL ALBUM","#d97706","9.5M views",9500000,40450,"820K subscriber"),
+ V("VwF6A76Xylk","Benci Bilang Cinta - Naif & Hit Pop Era 90an Pilihan","Lalala",PN,"FULL ALBUM","#2563eb","4.9M views",4900000,16260,"350K subscriber"),
+ V("YNgYYLCZ1hI","Cari Jodoh & Baik-Baik Sayang - Wali Band Full Album Hits","Kedai Chana",P2,"FULL ALBUM","#059669","1.4M views",1400000,7554,"210K subscriber"),
+ V("VP6mRngugVA","Dik & Yank - Wali Band Full Album Paling Romantis","Petir music ⚡",P2,"FULL ALBUM","#e11d48","1.1M views",1100000,4946,"180K subscriber"),
+ V("TUBVJcalKqs","X-Friend & So Bad - Tipe-X Full Album Ska Terpopuler","tamaryn",P2,"FULL ALBUM","#7c3aed","20M views",20000000,114137,"1.5M subscriber"),
+ V("NDNnmQYyxyI","DJ Tak Mungkin Berkasih - Remix Dugem Terbaru Full Bass","Dj Mona belando",DJ,"FULL BASS","#ff0033","11K views",11000,124,"12K subscriber"),
+ V("pbvAzjb81f8","DJ Gen-Z Club Mix - Breakbeat Stadium 2 Jam Nonstop","Egy Sadewong",DJ,"2 JAM","#db2777","2.5M views",2500000,19175,"410K subscriber"),
+ V("ifBXLaPp_uY","Gending Jawa Santai - Akustik Pengantar Tidur Nyaman","Koleksi Musik",AK,"AUDIO","#e11d48","1.5M views",1500000,15400,"450K subscriber"),
+ V("GB09st7rtv0","Menghitung Hari & Kulakukan Semua Untukmu - Pop Indonesia 2000an","91 FM",PN,"FULL","#d97706","28M views",28000000,115150,"1.2M subscriber"),
+ V("0BXVNT1yxqw","DJ Adakah Kenyamanan Dihatimu - Remix Viral TikTok 2026","Seven Fvnky",DJ,"REMIX","#ff0033","5.2M views",5200000,42000,"890K subscriber"),
+ V("i-qe0W_Av6M","Bunga Seroja & Surat Undangan - Tembang Kenangan 80-90an","Tembang Nostalgia ID",PN,"1 JAM","#b45309","850K views",850000,3400,"100K subscriber"),
+ V("X-q39sf-Wz0","Isabella & Suci Dalam Debu - Slow Rock Melayu Syahdu","Melayu Acoustic Live",PN,"FULL ALBUM","#1d4ed8","1.2M views",1200000,5200,"120K subscriber"),
+ V("mOL-KEw4_LQ","Kisah Sedih di Hari Minggu & Dan - Band Legendaris 2000an","Dunia Band ID",P2,"FULL ALBUM","#047857","2.1M views",2100000,8900,"250K subscriber"),
+ V("JbsyEKorevk","Separuh Nafas & Hapus Aku - Kompilasi Band Indie & Pop 2000an","Indie Pop Sound",P2,"45 MIN","#6d28d9","950K views",950000,4100,"140K subscriber"),
+ V("jtYpG2t3gX4","DJ Slow Bass Jedag Jedug - Breakbeat Clubbing Funk 2026","BeatMaster Remix",DJ,"REMIX","#e11d48","3.4M views",3400000,15200,"300K subscriber"),
+ V("JeGPVGMiM5c","DJ Funky Kota - Full Bass Melintir Party Night Mix","DJ Electro Bass",DJ,"FULL BASS","#c026d3","1.8M views",1800000,7200,"190K subscriber"),
+ V("UV6MYU_1O1I","Akustik Santai Cafe - Musik Pengantar Kerja & Belajar","Acoustic Lounge",AK,"AUDIO","#059669","620K views",620000,2900,"90K subscriber"),
+ V("PbjqEy6rfrQ","Kenangan Manis - Acoustic Cover Lagu Lawas 90an","Koleksi Nostalgia",PN,"FULL","#0284c7","450K views",450000,1800,"75K subscriber"),
+ V("Vb19yb_o67A","Pupus & Yang Terlewatkan - Kumpulan Lagu Galau 2000an","Sobat Galau Band",P2,"FULL ALBUM","#4338ca","1.6M views",1600000,6700,"220K subscriber"),
+ V("-Hjb3OQaAV0","DJ Pargoy Viral - Dugem Tiktok Bass Glerr Nonstop","DJ Remixer ID",DJ,"REMIX","#dc2626","2.3M views",2300000,9800,"310K subscriber"),
+ V("b99cRgW99UY","Senja Sore Hari - Petikan Gitar Akustik Santai","Acoustic Vibe",AK,"AUDIO","#d97706","920K views",920000,4300,"150K subscriber"),
+ V("_vlLToRjP1E","Kangen - Dewa 19 (Pop Nostalgia Spesial Pilihan)",MS,PN,"FULL","#3b82f6","780K views",780000,3100,"95K subscriber"),
+ V("p4_IrKk8ueg","Ada Apa Dengan Cinta? - Melly Goeslaw (Pop 2000an Hits)",MS,P2,"FULL","#10b981","1.3M views",1300000,5400,"160K subscriber"),
+ V("3anKQbvVS90","DJ Remix Funkot - Breakbeat Clubbing Single Edit","BeatMaster Remix",DJ,"REMIX","#ef4444","2.9M views",2900000,12500,"280K subscriber"),
+ V("WfVU18gRLU0","Akustik Senja Tenang - Melodi Gitar Pengantar Istirahat",MS,AK,"AUDIO","#f59e0b","540K views",540000,2100,"80K subscriber"),
+ V("iLQkSdITpUE","Antara Hatiku dan Hatimu - Eddy Silitonga (Tembang Kenangan)",MS,PN,"FULL","#0284c7","690K views",690000,2800,"85K subscriber"),
+ V("RKpGcHUHz-Y","Sebatas Mimpi - Cokelat (Band Pop Alternatif 2000an)",MS,P2,"FULL","#16a34a","1.5M views",1500000,6100,"175K subscriber"),
+ V("VeOO4W82d7E","Akustik Hujan Rintik - Musik Relaksasi Jiwa",MS,AK,"AUDIO","#ca8a04","810K views",810000,3500,"110K subscriber"),
+ V("AbTLKqcTESY","Nuansa Bening - Vidi Aldiano / Keenan Nasution (Classic Pop)",MS,PN,"FULL","#8b5cf6","930K views",930000,4100,"115K subscriber"),
+ V("USTrJbMMCn8","Bila Tiba - Ungu (Pop Religi & Hits 2000an)",MS,P2,"FULL","#ec4899","1.2M views",1200000,5200,"145K subscriber"),
+ V("oS6FZ0YKev4","DJ Remix Dangdut Koplo - Bass Glerr Asik Goyang",MS,DJ,"REMIX","#f43f5e","2.4M views",2400000,10400,"260K subscriber"),
+ V("-mgHa-w1upc","Akustik Romantis Malam - Petikan Gitar Syahdu",MS,AK,"AUDIO","#10b981","480K views",480000,1950,"70K subscriber"),
+ V("ZMxTrqKcWmE","Semusim - Marcell (Pop Romantis 2000an Awal)",MS,PN,"FULL","#06b6d4","880K views",880000,3700,"98K subscriber"),
+ V("UHNZXnQVxIg","Topeng - Peterpan (Koleksi Rock Alternatif Era 2000an)",MS,P2,"FULL","#6366f1","1.7M views",1700000,7400,"195K subscriber"),
+ V("i6pMrdsUZGM","DJ Thailand Style - Full Bass Horeg Nonstop Party",MS,DJ,"FULL BASS","#eab308","3.1M views",3100000,13800,"320K subscriber"),
+ V("eSmfNibLAAU","Yogyakarta - KLa Project (Pop Nostalgia Legendaris)",MS,PN,"FULL","#3b82f6","650K views",650000,2700,"90K subscriber"),
+ V("VgwEC2dS6GI","Sephia - Sheila on 7 (Lagu Hits Sepanjang Masa)",MS,P2,"FULL","#14b8a6","1.4M views",1400000,5900,"165K subscriber"),
+ V("kPZ9YXS5Log","DJ Remix Slow Bass - Musik Santai Pengantar Tidur",MS,DJ,"REMIX","#f43f5e","2.8M views",2800000,11900,"290K subscriber"),
+ V("gSlgOqz8Bto","Akustik Pagi Hari - Kesegaran Melodi Alam",MS,AK,"AUDIO","#84cc16","510K views",510000,2250,"75K subscriber"),
+ V("H38hX-vu50Y","Penyair Malam - Ebiet G. Ade (Balada Akustik Legendaris)",MS,PN,"FULL","#a855f7","990K views",990000,4400,"130K subscriber"),
+ V("v-ddxeRzpV0","Hati Yang Kau Sakiti - Rossa (Pop Melankolis Hits)",MS,PN,"FULL","#3b82f6","720K views",720000,3100,"92K subscriber"),
+ V("HjPKIUTiAjQ","Mimpi Yang Sempurna - Peterpan (Koleksi Nostalgia 2000an)",MS,P2,"FULL","#10b981","1.1M views",1100000,4800,"140K subscriber"),
+ V("yfMkhVWdQEg","DJ Remix Jedag Jedug - Musik Paling Dicari",MS,DJ,"REMIX","#ef4444","2.2M views",2200000,9500,"250K subscriber"),
+ V("A5WRUloyRPo","Akustik Senandung Rindu - Petikan Gitar Klasik",MS,AK,"AUDIO","#eab308","490K views",490000,2050,"68K subscriber"),
+ V("DZVDriQKxP8","Bidadari Yang Kulewatkan - Padi (Masterpiece Rock Alternatif)",MS,PN,"FULL","#3b82f6","830K views",830000,3600,"99K subscriber"),
+ V("Jv0jPUkyM64","Cinta Bersemi Bersama Bintang - Andra and The Backbone",MS,P2,"FULL","#06b6d4","1.3M views",1300000,5500,"155K subscriber"),
+ V("Ionk9-PUzB8","DJ Remix Club House - Musik Pesta Malam Minggu",MS,DJ,"REMIX","#f43f5e","2.7M views",2700000,11200,"275K subscriber"),
+ V("GcAaIwJW-yU","Akustik Kopi Hitam - Santai Sore Hari Bersama Gitar",MS,AK,"AUDIO","#10b981","560K views",560000,2400,"82K subscriber"),
+ V("TBXDAAcfVew","Satu Mimpiku - The Groove (Jazz Pop Nostalgia)",MS,PN,"FULL","#8b5cf6","910K views",910000,3900,"120K subscriber"),
+ V("f72-Qq8y5_c","Teman Tapi Mesra - Ratu (Duo Pop Hits 2000an)",MS,P2,"FULL","#ec4899","1.6M views",1600000,6800,"185K subscriber"),
+ V("7PlCZcJhAGQ","DJ Remix Full Bass Horeg - Paling Gacor 2026",MS,DJ,"FULL BASS","#eab308","3.5M views",3500000,15100,"340K subscriber"),
+ V("az9awjU7CSI","Akustik Melodi Hati - Musik Relaksasi Pikiran",MS,AK,"AUDIO","#14b8a6","470K views",470000,1980,"65K subscriber"),
+ V("SB_ANaKJEok","Kemesraan - Iwan Fals & All Stars (Lagu Legendaris Abadi)",MS,PN,"FULL","#6366f1","750K views",750000,3200,"95K subscriber"),
+ V("S9A_j6cnA_Y","DJ Remix TikTok Viral - Bass Glerr Mantap Jiwa",MS,DJ,"REMIX","#ef4444","2.1M views",2100000,8900,"240K subscriber"),
+ V("UbC--wpYohY","Bento - Iwan Fals (Protes Sosial & Pop Klasik)",MS,PN,"FULL","#3b82f6","610K views",610000,2600,"88K subscriber"),
+ V("6M7EmCZI0pI","Bukan Pujangga - Base Jam (Pop Band Era 2000an)",MS,P2,"FULL","#10b981","1.2M views",1200000,5100,"145K subscriber"),
+ V("qY1IFnjM8-Y","DJ Breakbeat Remix - Musik Clubbing Malam Penuh Semangat",MS,DJ,"REMIX","#f43f5e","2.6M views",2600000,11000,"270K subscriber"),
+ V("PqoWpkxbTNc","Akustik Senja Di Batas Kota - Petikan Gitar Santai",MS,AK,"AUDIO","#eab308","530K views",530000,2200,"72K subscriber"),
+ V("-VMFVHsYl98","Ku Tak Bisa - Slank (Rock Balada Paling Populer)",MS,PN,"FULL","#8b5cf6","890K views",890000,3850,"115K subscriber"),
+ V("IxcFS9_mUaQ","Bertepuk Sebelah Tangan - Sheila on 7 (Hits 2000an)",MS,P2,"FULL","#06b6d4","1.5M views",1500000,6400,"175K subscriber"),
+ V("DxaBY5BwgLc","DJ Remix Horeg Jatim - Full Bass Mantap Menggelegar",MS,DJ,"FULL BASS","#ef4444","3.2M views",3200000,14200,"310K subscriber"),
+ V("YdhZW55CZpM","Akustik Lullaby - Musik Pengantar Tidur Nyenyak",MS,AK,"AUDIO","#14b8a6","490K views",490000,2050,"69K subscriber"),
+ V("z6U8C8cPJj4","Gandrung - Koes Plus (Legenda Musik Pop Nusantara)",MS,PN,"FULL","#a855f7","740K views",740000,3300,"96K subscriber"),
+ V("2mCYT092il0","Cobalah Mengerti - Peterpan (Lagu Cinta Romantis 2000an)",MS,P2,"FULL","#10b981","1.1M views",1100000,4900,"135K subscriber"),
+ V("j08eb-95qIE","DJ Remix Slow Bass Viral - Paling Dicari Netizen",MS,DJ,"REMIX","#f43f5e","2.3M views",2300000,9800,"255K subscriber"),
+ V("xef0Box9vUQ","Akustik Pagi Menenangkan - Melodi Harmoni Alam",MS,AK,"AUDIO","#84cc16","580K views",580000,2450,"80K subscriber"),
+ V("EHWHhUqfTvA","Surat Cinta - Vina Panduwinata (Pop Klasik Anggun)",MS,PN,"FULL","#3b82f6","920K views",920000,4100,"122K subscriber"),
+ V("8E_cun6E7WM","Cintaku - Chrisye (Masterpiece Pop Romantis Indonesia)",MS,PN,"FULL","#ec4899","680K views",680000,2950,"91K subscriber"),
+ V("4oKM_spWRNo","Ku Katakan Dengan Indah - Peterpan (Hits Abadi 2000an)",MS,P2,"FULL","#06b6d4","1.3M views",1300000,5600,"150K subscriber"),
+ V("_v1FGsQ_I58","DJ Remix Party Mix - Musik Dugem Terpopuler 2026",MS,DJ,"REMIX","#ef4444","2.9M views",2900000,12400,"285K subscriber"),
+ V("mcrtODDW-30","Akustik Kafe Romantis - Melodi Gitar Pengantar Santai",MS,AK,"AUDIO","#84cc16","520K views",520000,2150,"71K subscriber"),
+ V("7S1eP8GMetk","Galih dan Ratna - Chrisye (Tembang Nostalgia Romantis)",MS,PN,"FULL","#8b5cf6","840K views",840000,3650,"105K subscriber"),
+ V("PWMrT2PZZBI","Dan - Sheila on 7 (Lagu Cinta Legendaris 2000an)",MS,P2,"FULL","#10b981","1.6M views",1600000,6900,"190K subscriber"),
+ V("_qa7KoOT8-A","DJ Remix Horeg Blarr - Full Bass Dugem Party Nonstop",MS,DJ,"FULL BASS","#eab308","3.8M views",3800000,16500,"360K subscriber"),
+ V("6dPz0DMPEGI","Akustik Senja Damai - Melodi Petikan Gitar Klasik",MS,AK,"AUDIO","#14b8a6","460K views",460000,1920,"64K subscriber"),
+ V("FwwwMyD1PC0","Dewa 19 - Kangen (Live Acoustic Cover Session)","Koleksi Movio",P2,"VIDEO","#7c3aed","Video YouTube",0,0,"Koleksi Movio"),
+ V("priqaGQSaZc","DJ Remix Breakbeat Terenak - Spesial Party Malam Ini","Koleksi Movio",DJ,"VIDEO","#e11d48","Video YouTube",0,0,"Koleksi Movio"),
+ V("nIPePIxnwa8","Akustik Melodi Jiwa - Lagu Relaksasi Penenang Hati","Koleksi Movio",AK,"VIDEO","#14b8a6","Video YouTube",0,0,"Koleksi Movio"),
+ V("7s9hKvW1Ak0","Koes Plus - Nusantara (Tembang Lawas Legendaris)","Koleksi Movio",PN,"VIDEO","#f59e0b","Video YouTube",0,0,"Koleksi Movio"),
  /* LAGU BARU DITAMBAHKAN */
- {
-  id:"9AVSEhKgJqs",
-  title:"Simpatik Music Full Album Terbaru 2026 - Dirantai Digelangi Rindu & Mutiara",
-  channel:"RANZZ REMIX",
-  category:"DJ & Remix",
-  duration:"FULL ALBUM",
-  color:"#ff0033",
-  views:"31K views",
-  rawViews: 31235,
-  likes: 62,
-  subscribers: "15K subscriber"
- },
- {
-  id:"cIqPjhtQzdg",
-  title:"DJ Jawa Full Album 2026 Sound TikTok Terbaru - Los Dol & Negoro Angin",
-  channel:"Jatim Fvnky",
-  category:"DJ & Remix",
-  duration:"FULL ALBUM",
-  color:"#db2777",
-  views:"3.1M views",
-  rawViews: 3068800,
-  likes: 17864,
-  subscribers: "450K subscriber"
- },
- {
-  id:"5v7IdvgMzoM",
-  title:"Gadis Manis Kalimantan & Cinta Dari Seberang - Ajeng Febria Full Album Terfavorit",
-  channel:"DANGDUT FEST PRO",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#059669",
-  views:"8.2M views",
-  rawViews: 8247865,
-  likes: 25149,
-  subscribers: "920K subscriber"
- },
- {
-  id:"JbsyEKorevk",
-  title:"Simpatik Music Terbaru 2026 - Salah Apa (Mutiara) Full Album Dangdut Koplo",
-  channel:"Sahabat Dangdut",
-  category:"Pop 2000an",
-  duration:"FULL ALBUM",
-  color:"#7c3aed",
-  views:"2.5M views",
-  rawViews: 2509188,
-  likes: 4902,
-  subscribers: "310K subscriber"
- }
+ V("9AVSEhKgJqs","Simpatik Music Full Album Terbaru 2026 - Dirantai Digelangi Rindu & Mutiara","RANZZ REMIX",DJ,"FULL ALBUM","#ff0033","31K views",31235,62,"15K subscriber"),
+ V("cIqPjhtQzdg","DJ Jawa Full Album 2026 Sound TikTok Terbaru - Los Dol & Negoro Angin","Jatim Fvnky",DJ,"FULL ALBUM","#db2777","3.1M views",3068800,17864,"450K subscriber"),
+ V("5v7IdvgMzoM","Gadis Manis Kalimantan & Cinta Dari Seberang - Ajeng Febria Full Album Terfavorit","DANGDUT FEST PRO",P2,"FULL ALBUM","#059669","8.2M views",8247865,25149,"920K subscriber"),
+ V("JbsyEKorevk","Simpatik Music Terbaru 2026 - Salah Apa (Mutiara) Full Album Dangdut Koplo","Sahabat Dangdut",P2,"FULL ALBUM","#7c3aed","2.5M views",2509188,4902,"310K subscriber")
 ];
 
+/* ===== HELPER ===== */
+function esc(s){
+  return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
 
-/* ===== SINKRONISASI VIDEO OTOMATIS DARI FIRESTORE =====
-   Video pilihan yang sudah ada tetap ditampilkan.
-   Video dari YouTube Data API akan masuk otomatis melalui Firestore.
-*/
+/* ===== SUMBER VIDEO: MANUAL + YOUTUBE API + FIRESTORE ===== */
 const manualVideos = [...videos];
+let youtubeVideos = [];
+let firestoreVideos = [];
 
+function rebuildVideos(){
+  const seen = new Set();
+  videos = [...manualVideos, ...youtubeVideos, ...firestoreVideos].filter(v => {
+    if (!v.id || seen.has(v.id)) return false;
+    seen.add(v.id);
+    return true;
+  });
+  renderVideos();
+}
+
+/* ===== SINKRONISASI VIDEO OTOMATIS DARI FIRESTORE ===== */
 function connectAutomaticVideos() {
   if (typeof firebase.firestore !== "function") {
     console.error("Firebase Firestore SDK belum dimuat.");
@@ -1622,7 +727,7 @@ function connectAutomaticVideos() {
     .orderBy("publishedAt", "desc")
     .limit(100)
     .onSnapshot((snapshot) => {
-      const automaticVideos = snapshot.docs.map((doc) => {
+      firestoreVideos = snapshot.docs.map((doc) => {
         const data = doc.data();
         return {
           id: data.id || doc.id,
@@ -1639,30 +744,94 @@ function connectAutomaticVideos() {
           publishedAt: data.publishedAt || ""
         };
       });
-
-      const manualIds = new Set(manualVideos.map((video) => video.id));
-      const seenIds = new Set(manualIds);
-      const uniqueAutomaticVideos = automaticVideos.filter((video) => {
-        if (!video.id || seenIds.has(video.id)) return false;
-        seenIds.add(video.id);
-        return true;
-      });
-
-      videos = [...manualVideos, ...uniqueAutomaticVideos];
-      renderVideos();
-
-      // Jika pengguna sedang melihat histori/koleksi, jangan paksa pindah halaman.
-      console.info("Movio: sinkronisasi video selesai.", uniqueAutomaticVideos.length, "video otomatis.");
+      rebuildVideos();
+      console.info("Movio: sinkronisasi Firestore selesai.", firestoreVideos.length, "video.");
     }, (error) => {
       console.error("Movio gagal membaca Firestore:", error);
-      const grid = document.getElementById("videoGrid");
-      if (grid && videos.length === 0) {
-        grid.innerHTML = '<div class="empty"><h3>Video belum tersedia</h3><p>Periksa konfigurasi Firestore dan aturan database.</p></div>';
-      }
     });
 }
 
+/* ===== YOUTUBE DATA API v3 ===== */
+const YT_API_KEY = "AIzaSyC60BgD445Fc_KZCQWtaOXkGSr-XsHwXm8";
+const YT_CACHE_KEY = "movio_yt_cache_v1";
+const YT_CACHE_TTL = 6 * 60 * 60 * 1000; // 6 jam
+const YT_QUERIES = {
+  "Pop Nostalgia": "lagu pop nostalgia indonesia 80an 90an",
+  "Pop 2000an":    "lagu pop indonesia 2000an hits",
+  "DJ & Remix":    "dj remix breakbeat indonesia full bass",
+  "Akustik":       "musik akustik santai indonesia"
+};
+const YT_COLORS = ["#e11d48","#2563eb","#059669","#7c3aed","#d97706","#db2777","#0284c7","#16a34a"];
 
+function fmtViews(n){
+  n = Number(n) || 0;
+  if (n >= 1e6) return (n/1e6).toFixed(1).replace(".0","") + "M views";
+  if (n >= 1e3) return Math.round(n/1e3) + "K views";
+  return n + " views";
+}
+
+function fmtDuration(iso){
+  const m = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/.exec(iso || "");
+  if (!m) return "VIDEO";
+  const h = +m[1] || 0, mi = +m[2] || 0, s = +m[3] || 0;
+  const pad = x => String(x).padStart(2, "0");
+  return h ? `${h}:${pad(mi)}:${pad(s)}` : `${mi}:${pad(s)}`;
+}
+
+async function fetchYouTubeCategory(category, query){
+  const searchUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video"
+    + "&videoEmbeddable=true&videoCategoryId=10&maxResults=12&regionCode=ID&relevanceLanguage=id"
+    + "&q=" + encodeURIComponent(query) + "&key=" + YT_API_KEY;
+  const sRes = await fetch(searchUrl);
+  if (!sRes.ok) throw new Error("search " + sRes.status);
+  const ids = ((await sRes.json()).items || []).map(i => i.id && i.id.videoId).filter(Boolean);
+  if (!ids.length) return [];
+
+  const vidUrl = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics"
+    + "&id=" + ids.join(",") + "&key=" + YT_API_KEY;
+  const vRes = await fetch(vidUrl);
+  if (!vRes.ok) throw new Error("videos " + vRes.status);
+  const items = (await vRes.json()).items || [];
+
+  return items.map((it, i) => ({
+    id: it.id,
+    title: it.snippet.title,
+    channel: it.snippet.channelTitle,
+    category,
+    duration: fmtDuration(it.contentDetails.duration),
+    color: YT_COLORS[i % YT_COLORS.length],
+    views: fmtViews(it.statistics.viewCount),
+    rawViews: Number(it.statistics.viewCount || 0),
+    likes: Number(it.statistics.likeCount || 0),
+    subscribers: "Dari YouTube"
+  }));
+}
+
+async function loadYouTubeVideos(){
+  try {
+    const cached = JSON.parse(localStorage.getItem(YT_CACHE_KEY) || "null");
+    if (cached && Date.now() - cached.t < YT_CACHE_TTL && cached.v.length) {
+      youtubeVideos = cached.v;
+      rebuildVideos();
+      return;
+    }
+  } catch(e){}
+
+  const results = await Promise.allSettled(
+    Object.entries(YT_QUERIES).map(([cat, q]) => fetchYouTubeCategory(cat, q))
+  );
+  const list = results.filter(r => r.status === "fulfilled").flatMap(r => r.value);
+  results.filter(r => r.status === "rejected")
+         .forEach(r => console.warn("Movio YouTube API:", r.reason.message));
+
+  if (list.length) {
+    youtubeVideos = list;
+    try { localStorage.setItem(YT_CACHE_KEY, JSON.stringify({ t: Date.now(), v: list })); } catch(e){}
+    rebuildVideos();
+  }
+}
+
+/* ===== STATE ===== */
 let currentUser = null;
 let isGuest = false;
 let isPremium = false;
@@ -1826,14 +995,14 @@ function renderVideos(list=null){
    <article class="video-card" onclick="playVideo(${i})">
     <div class="thumbnail">
      <img src="${thumb}" alt="" loading="lazy">
-     <span class="category-badge">${v.category}</span>
-     <span class="duration">${v.duration}</span>
+     <span class="category-badge">${esc(v.category)}</span>
+     <span class="duration">${esc(v.duration)}</span>
     </div>
     <div class="video-info">
-     <div class="avatar" style="background:${v.color}">${v.channel.charAt(0)}</div>
+     <div class="avatar" style="background:${esc(v.color)}">${esc(v.channel.charAt(0))}</div>
      <div>
-      <div class="video-title">${v.title}</div>
-      <div class="meta">${v.channel} • ${v.views}</div>
+      <div class="video-title">${esc(v.title)}</div>
+      <div class="meta">${esc(v.channel)} • ${esc(v.views)}</div>
      </div>
     </div>
    </article>`;
@@ -1858,7 +1027,7 @@ function playVideo(index){
  document.getElementById("playerAvatar").style.background=v.color;
  document.getElementById("playerDescription").textContent="Kategori Musik: " + v.category + " • " + v.views;
 
- document.getElementById("likeCount").textContent = v.likes.toLocaleString();
+ document.getElementById("likeCount").textContent = Number(v.likes||0).toLocaleString();
 
  isSubscribed = false;
  isLiked = false;
@@ -1872,8 +1041,8 @@ function playVideo(index){
    <div class="related-item" onclick="playVideo(${videos.indexOf(x)})">
     <img src="https://img.youtube.com/vi/${encodeURIComponent(x.id)}/mqdefault.jpg" alt="">
     <div>
-     <div class="related-title">${x.title}</div>
-     <div class="meta">${x.channel}<br>${x.views}</div>
+     <div class="related-title">${esc(x.title)}</div>
+     <div class="meta">${esc(x.channel)}<br>${esc(x.views)}</div>
     </div>
    </div>
   `).join("");
@@ -1888,7 +1057,7 @@ function updateInteractions(){
  subBtn.className = "sub-btn" + (isSubscribed ? " subscribed" : "");
 
  const saveBtn = document.getElementById("saveBtn");
- const isSaved = savedVideos.includes(videos[activeVideoIndex]);
+ const isSaved = savedVideos.some(x => videos[activeVideoIndex] && x.id === videos[activeVideoIndex].id);
  saveBtn.className = "action-btn" + (isSaved ? " active" : "");
 
  document.getElementById("likeBtn").className = "action-btn" + (isLiked ? " active" : "");
@@ -1922,7 +1091,8 @@ function toggleDislike(){
 
 function toggleSave(){
  const v = videos[activeVideoIndex];
- if(savedVideos.includes(v)) {
+ if(!v) return;
+ if(savedVideos.some(x => x.id === v.id)) {
   savedVideos = savedVideos.filter(x => x.id !== v.id);
  } else {
   savedVideos.push(v);
@@ -1932,7 +1102,8 @@ function toggleSave(){
 
 function shareVideo(){
  const v = videos[activeVideoIndex];
- navigator.clipboard.writeText("https://youtu.be/" + v.id);
+ if(!v) return;
+ if(navigator.clipboard) navigator.clipboard.writeText("https://youtu.be/" + v.id).catch(()=>{});
  alert("Link lagu berhasil disalin ke clipboard!");
 }
 
@@ -1941,10 +1112,10 @@ function renderComments(){
  document.getElementById("commentCount").textContent = currentComments.length;
  document.getElementById("commentList").innerHTML = currentComments.map(c => `
   <div class="comment-item">
-   <div class="avatar" style="background:#444;width:32px;height:32px;font-size:12px">${c.author.charAt(0)}</div>
+   <div class="avatar" style="background:#444;width:32px;height:32px;font-size:12px">${esc(c.author.charAt(0))}</div>
    <div>
-    <div class="comment-author">${c.author}</div>
-    <div class="comment-text">${c.text}</div>
+    <div class="comment-author">${esc(c.author)}</div>
+    <div class="comment-text">${esc(c.text)}</div>
    </div>
   </div>
  `).join("");
@@ -1977,12 +1148,17 @@ function showHistory(){
 /* SEARCH */
 document.getElementById("searchForm").addEventListener("submit",e=>{
  e.preventDefault();
- currentQuery=document.getElementById("searchInput").value.trim();
- filterCategory("Semua");
+ const q=document.getElementById("searchInput").value.trim();
+ filterCategory("Semua");            // reset kategori (ini juga mengosongkan input)
+ document.getElementById("searchInput").value=q;
+ currentQuery=q;
+ document.getElementById("pageTitle").textContent=q?'Hasil pencarian: "'+q+'"':"Daftar Musik Pilihan";
+ renderVideos();
 });
 
 renderVideos();
 connectAutomaticVideos();
+loadYouTubeVideos();
 </script>
 </body>
 </html>
